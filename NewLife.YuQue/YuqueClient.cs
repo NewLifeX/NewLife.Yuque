@@ -173,7 +173,7 @@ namespace NewLife.YuQue
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<UserDetail> GetUser(Int64 id)
+        public virtual async Task<UserDetail> GetUser(Int32 id)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
@@ -207,7 +207,7 @@ namespace NewLife.YuQue
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Group[]> GetUserGroups(Int64 id)
+        public virtual async Task<Group[]> GetUserGroups(Int32 id)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
@@ -239,7 +239,7 @@ namespace NewLife.YuQue
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<GroupDetail> GetGroup(Int64 id)
+        public virtual async Task<GroupDetail> GetGroup(Int32 id)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
@@ -323,7 +323,7 @@ namespace NewLife.YuQue
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<GroupUser[]> GetGroupUsers(Int64 id)
+        public virtual async Task<GroupUser[]> GetGroupUsers(Int32 id)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
@@ -417,7 +417,7 @@ namespace NewLife.YuQue
         /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Book[]> GetRepos(Int64 id, String type = "all", Int32 offset = 20)
+        public virtual async Task<Book[]> GetRepos(Int32 id, String type = "all", Int32 offset = 20)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
@@ -492,6 +492,46 @@ namespace NewLife.YuQue
             if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
 
             return await PostAsync<BookDetail>($"/users/{id}/repos", new { name, slug, description });
+        }
+
+        /// <summary>
+        /// 创建团队知识库
+        /// </summary>
+        /// <param name="login">团队</param>
+        /// <param name="name">仓库名称</param>
+        /// <param name="slug"></param>
+        /// <param name="description">说明</param>
+        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
+        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> CreateGroupRepo(String login, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+
+            return await PostAsync<BookDetail>($"/groups/{login}/repos", new { name, slug, description });
+        }
+
+        /// <summary>
+        /// 创建团队知识库
+        /// </summary>
+        /// <param name="id">团队</param>
+        /// <param name="name">仓库名称</param>
+        /// <param name="slug"></param>
+        /// <param name="description">说明</param>
+        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
+        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> CreateGroupRepo(Int32 id, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+
+            return await PostAsync<BookDetail>($"/groups/{id}/repos", new { name, slug, description });
         }
         #endregion
 
