@@ -76,27 +76,27 @@ namespace NewLife.YuQue
         /// <summary>
         /// 根据用户名获取用户
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<UserDetail> GetUser(String userName)
+        public virtual async Task<UserDetail> GetUser(String login)
         {
-            if (userName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(userName));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
 
-            return await GetAsync<UserDetail>($"/users/{userName}");
+            return await GetAsync<UserDetail>($"/users/{login}");
         }
 
         /// <summary>
         /// 根据Id获取用户
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<UserDetail> GetUser(Int64 userId)
+        public virtual async Task<UserDetail> GetUser(Int64 id)
         {
-            if (userId <= 0) throw new ArgumentNullException(nameof(userId));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
 
-            return await GetAsync<UserDetail>($"/users/{userId}");
+            return await GetAsync<UserDetail>($"/users/{id}");
         }
 
         /// <summary>
@@ -108,29 +108,29 @@ namespace NewLife.YuQue
 
         #region 组织
         /// <summary>
-        /// 根据用户名获取用户
+        /// 根据用户名获取用户加入的组织
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Group[]> GetGroups(String userName)
+        public virtual async Task<Group[]> GetUserGroups(String login)
         {
-            if (userName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(userName));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
 
-            return await GetAsync<Group[]>($"/users/{userName}/groups");
+            return await GetAsync<Group[]>($"/users/{login}/groups");
         }
 
         /// <summary>
-        /// 根据Id获取用户
+        /// 根据Id获取用户加入的组织
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Group[]> GetGroups(Int64 userId)
+        public virtual async Task<Group[]> GetUserGroups(Int64 id)
         {
-            if (userId <= 0) throw new ArgumentNullException(nameof(userId));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
 
-            return await GetAsync<Group[]>($"/users/{userId}/groups");
+            return await GetAsync<Group[]>($"/users/{id}/groups");
         }
 
         /// <summary>
@@ -138,6 +138,33 @@ namespace NewLife.YuQue
         /// </summary>
         /// <returns></returns>
         public virtual async Task<Group[]> GetGroups() => await GetAsync<Group[]>($"/groups");
+
+        /// <summary>
+        /// 根据用户名获取组织信息
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> GetGroup(String login)
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await GetAsync<GroupDetail>($"/groups/{login}");
+        }
+
+        /// <summary>
+        /// 根据Id获取组织信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> GetGroup(Int64 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<GroupDetail>($"/groups/{id}");
+        }
+
         #endregion
 
         #region 属性

@@ -2,28 +2,29 @@
 
 namespace NewLife.YuQue.Models
 {
-    /// <summary>用户明细</summary>
-    public class UserDetail
+    /// <summary>组织明细</summary>
+    public class GroupDetail
     {
         /// <summary>编号</summary>
         public Int32 Id { get; set; }
-
-        /// <summary>类型</summary>
-        public String Type { get; set; }
 
         /// <summary>空间</summary>
         [DataMember(Name = "space_id")]
         public Int32 SpaceId { get; set; }
 
-        /// <summary>账号编号</summary>
-        [DataMember(Name = "account_id")]
-        public Int32 AccountId { get; set; }
+        /// <summary>组织编号</summary>
+        [DataMember(Name = "organization_id")]
+        public Int32 OrganizationId { get; set; }
 
         /// <summary>登录名</summary>
         public String Login { get; set; }
 
         /// <summary>名称</summary>
         public String Name { get; set; }
+
+        /// <summary>拥有者</summary>
+        [DataMember(Name = "owner_id")]
+        public Int32 OwnerId { get; set; }
 
         /// <summary>描述</summary>
         public String Description { get; set; }
@@ -40,16 +41,24 @@ namespace NewLife.YuQue.Models
         [DataMember(Name = "public_books_count")]
         public Int32 PublicBooks { get; set; }
 
-        /// <summary>关注者</summary>
-        [DataMember(Name = "followers_count")]
-        public Int32 Followers { get; set; }
+        /// <summary>主题数</summary>
+        [DataMember(Name = "topics_count")]
+        public Int32 Topics { get; set; }
 
-        /// <summary>关注了</summary>
-        [DataMember(Name = "following_count")]
-        public Int32 Following { get; set; }
+        /// <summary>公开主题数</summary>
+        [DataMember(Name = "public_topics_count")]
+        public Int32 PublicTopics { get; set; }
+
+        /// <summary>成员数</summary>
+        [DataMember(Name = "members_count")]
+        public Int32 Members { get; set; }
 
         /// <summary>公开</summary>
         public Int32 Public { get; set; }
+
+        /// <summary>稻谷</summary>
+        [DataMember(Name = "grains_sum")]
+        public Int32 Grains { get; set; }
 
         /// <summary>创建时间</summary>
         [DataMember(Name = "created_at")]
