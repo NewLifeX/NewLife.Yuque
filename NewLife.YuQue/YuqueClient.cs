@@ -623,6 +623,21 @@ namespace NewLife.YuQue
 
             return await GetAsync<Document[]>($"/repos/{id}/docs");
         }
+
+        /// <summary>
+        /// 获取单篇文档的详细信息
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <param name="slug"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> GetDocument(String @namespace, String slug)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+
+            return await GetAsync<DocumentDetail>($"/repos/{@namespace}/docs/{slug}");
+        }
         #endregion
 
         #region 属性

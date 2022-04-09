@@ -25,17 +25,10 @@ namespace XUnitTest
         }
 
         [Fact]
-        public async void GetRepo()
+        public async void GetDocument()
         {
-            var repo = await _client.GetRepo(895145);
-            Assert.NotNull(repo);
-        }
-
-        [Fact]
-        public async void GetRepo2()
-        {
-            var repo = await _client.GetRepo("smartstone/nx");
-            Assert.NotNull(repo);
+            var doc = await _client.GetDocument("smartstone/nx", "redis");
+            Assert.NotNull(doc);
         }
     }
 }
