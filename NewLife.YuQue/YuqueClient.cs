@@ -1,4 +1,5 @@
-﻿using NewLife.Http;
+﻿using System.Text;
+using NewLife.Http;
 using NewLife.Log;
 using NewLife.Remoting;
 using NewLife.Serialization;
@@ -35,6 +36,7 @@ namespace NewLife.YuQue
                 _client = Tracer.CreateHttpClient();
                 _client.SetUserAgent();
                 _client.BaseAddress = uri;
+                _client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
                 _client.DefaultRequestHeaders.Add("X-Auth-Token", Token);
             }
         }
@@ -49,14 +51,8 @@ namespace NewLife.YuQue
 
             var rs = await _client.GetStringAsync(_prefix + action);
             if (rs.IsNullOrEmpty()) return default;
-            if (rs[0] != '{' || rs[^1] != '}') return default;
-
-            var dic = JsonParser.Decode(rs);
-            if (dic == null || dic.Count == 0) return default;
-
-            if (!dic.TryGetValue("data", out var data)) return default;
-
-            return JsonHelper.Convert<TResult>(data);
+           
+            return ConvertResponse<TResult>(rs);
         }
 
         /// <summary>Post调用</summary>
@@ -68,7 +64,68 @@ namespace NewLife.YuQue
         {
             Init();
 
-            return await _client.InvokeAsync<TResult>(HttpMethod.Post, action, args, null, "data");
+            var rs = await _client.PostJsonAsync(_prefix + action, args);
+            if (rs.IsNullOrEmpty()) return default;
+            if (rs[0] != '{' || rs[^1] != '}') return default;
+
+            return ConvertResponse<TResult>(rs);
+        }
+
+        /// <summary>Put调用</summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public virtual async Task<TResult> PutAsync<TResult>(String action, Object args)
+        {
+            Init();
+
+            HttpContent content = null;
+            if (args != null)
+            {
+                content = args is String str
+                    ? new StringContent(str, Encoding.UTF8, "application/json")
+                    : new StringContent(args.ToJson(), Encoding.UTF8, "application/json");
+            }
+            var request = new HttpRequestMessage(HttpMethod.Put, _prefix + action)
+            {
+                Content = content
+            };
+
+            var response = await _client.SendAsync(request);
+            var rs = await response.Content.ReadAsStringAsync();
+
+            return ConvertResponse<TResult>(rs);
+        }
+
+        /// <summary>Delete调用</summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public virtual async Task<TResult> DeleteAsync<TResult>(String action)
+        {
+            Init();
+
+            var response = await _client.DeleteAsync(_prefix + action);
+            var rs = await response.Content.ReadAsStringAsync();
+
+            return ConvertResponse<TResult>(rs);
+        }
+
+        TResult ConvertResponse<TResult>(String rs)
+        {
+            if (rs.IsNullOrEmpty()) return default;
+            if (rs[0] != '{' || rs[^1] != '}') return default;
+
+            var dic = JsonParser.Decode(rs);
+            if (dic == null || dic.Count == 0) return default;
+
+            // 异常处理
+            if (dic.TryGetValue("message", out var message)) throw new ApiException(500, message + "");
+
+            if (!dic.TryGetValue("data", out var data)) return default;
+
+            return JsonHelper.Convert<TResult>(data);
         }
         #endregion
 
@@ -165,6 +222,63 @@ namespace NewLife.YuQue
             return await GetAsync<GroupDetail>($"/groups/{id}");
         }
 
+        /// <summary>
+        /// 创建组织
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="login"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> CreateGroup(String name, String login, String description)
+        {
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await PostAsync<GroupDetail>($"/groups", new { name, login, description });
+        }
+
+        /// <summary>
+        /// 更新组织
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="login"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> UpdateGroup(String name, String login, String description)
+        {
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await PostAsync<GroupDetail>($"/groups", new { name, login, description });
+        }
+
+        /// <summary>
+        /// 删除组织
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> DeleteGroup(String login)
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await DeleteAsync<GroupDetail>($"/groups/{login}");
+        }
+
+        /// <summary>
+        /// 删除组织
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> DeleteGroup(Int32 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await DeleteAsync<GroupDetail>($"/groups/{id}");
+        }
         #endregion
 
         #region 属性

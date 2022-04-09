@@ -49,5 +49,14 @@ namespace XUnitTest
 
             Assert.Equal("新生命", group.Name);
         }
+
+        [Fact(Skip = "不修改数据")]
+        public async void CreateGroup()
+        {
+            var group = await _client.CreateGroup("新生命", "newlifex", null);
+            Assert.NotNull(group);
+
+            Assert.Equal("新生命", group.Name);
+        }
     }
 }
