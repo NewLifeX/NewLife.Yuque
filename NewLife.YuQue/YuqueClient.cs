@@ -157,7 +157,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 根据用户名获取用户
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">登录名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<UserDetail> GetUser(String login)
@@ -191,7 +191,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 根据用户名获取用户加入的组织
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">登录名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<Group[]> GetUserGroups(String login)
@@ -223,7 +223,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 根据用户名获取组织信息
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">团队名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> GetGroup(String login)
@@ -236,7 +236,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 根据Id获取组织信息
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">团队编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> GetGroup(Int32 id)
@@ -250,7 +250,7 @@ namespace NewLife.YuQue
         /// 创建组织
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="login"></param>
+        /// <param name="login">登录名</param>
         /// <param name="description"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
@@ -265,8 +265,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 更新组织
         /// </summary>
-        /// <param name="namespace"></param>
-        /// <param name="login"></param>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="login">登录名</param>
         /// <param name="description"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
@@ -281,7 +281,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除组织
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">团队名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> DeleteGroup(String login)
@@ -294,7 +294,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除组织
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">团队编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> DeleteGroup(Int32 id)
@@ -307,7 +307,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取组织成员信息
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">团队名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupUser[]> GetGroupUsers(String login)
@@ -320,7 +320,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取组织成员信息
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">团队编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupUser[]> GetGroupUsers(Int32 id)
@@ -333,8 +333,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 增加或更新组织成员
         /// </summary>
-        /// <param name="group_login"></param>
-        /// <param name="login"></param>
+        /// <param name="group_login">团队名</param>
+        /// <param name="login">登录名</param>
         /// <param name="role">0 - 管理员, 1 - 普通成员</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
@@ -349,8 +349,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 增加或更新组织成员
         /// </summary>
-        /// <param name="group_id"></param>
-        /// <param name="login"></param>
+        /// <param name="group_id">团队名</param>
+        /// <param name="login">登录名</param>
         /// <param name="role">0 - 管理员, 1 - 普通成员</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
@@ -365,8 +365,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除组织成员
         /// </summary>
-        /// <param name="group_login"></param>
-        /// <param name="login"></param>
+        /// <param name="group_login">团队名</param>
+        /// <param name="login">登录名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> DeleteGroupUser(String group_login, String login)
@@ -380,8 +380,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除组织成员
         /// </summary>
-        /// <param name="group_id"></param>
-        /// <param name="login"></param>
+        /// <param name="group_id">团队编号</param>
+        /// <param name="login">登录名</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<GroupDetail> DeleteGroupUser(Int32 group_id, String login)
@@ -397,7 +397,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取某个用户的知识库列表
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">登录名</param>
         /// <param name="type">Book, Design, all - 所有类型</param>
         /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
@@ -427,7 +427,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取某个团队的知识库列表
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">登录名</param>
         /// <param name="type">Book, Design, all - 所有类型</param>
         /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
@@ -458,7 +458,7 @@ namespace NewLife.YuQue
         /// 创建知识库
         /// </summary>
         /// <param name="login">用户</param>
-        /// <param name="model">仓库</param>
+        /// <param name="model">仓库模型</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> CreateRepo(String login, BookModel model)
@@ -473,7 +473,7 @@ namespace NewLife.YuQue
         /// 创建知识库
         /// </summary>
         /// <param name="id">用户</param>
-        /// <param name="model">仓库</param>
+        /// <param name="model">仓库模型</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> CreateRepo(Int32 id, BookModel model)
@@ -488,7 +488,7 @@ namespace NewLife.YuQue
         /// 创建团队知识库
         /// </summary>
         /// <param name="login">团队</param>
-        /// <param name="model">仓库</param>
+        /// <param name="model">仓库模型</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> CreateGroupRepo(String login, BookModel model)
@@ -517,7 +517,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取知识库详情
         /// </summary>
-        /// <param name="namespace"></param>
+        /// <param name="namespace">仓库路径</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> GetRepo(String @namespace)
@@ -530,7 +530,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取知识库详情
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">仓库编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> GetRepo(Int32 id)
@@ -543,11 +543,11 @@ namespace NewLife.YuQue
         /// <summary>
         /// 更新知识库信息
         /// </summary>
-        /// <param name="namespace"></param>
-        /// <param name="model"></param>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="model">仓库模型</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> UpdateRepo(String @namespace, BookModel model)
+        public virtual async Task<BookDetail> UpdateRepo(String @namespace, BookModel2 model)
         {
             if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
             if (model == null) throw new ArgumentNullException(nameof(model));
@@ -558,11 +558,11 @@ namespace NewLife.YuQue
         /// <summary>
         /// 更新知识库信息
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model"></param>
+        /// <param name="id">仓库编号</param>
+        /// <param name="model">仓库模型</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> UpdateRepo(Int32 id, BookModel model)
+        public virtual async Task<BookDetail> UpdateRepo(Int32 id, BookModel2 model)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
             if (model == null) throw new ArgumentNullException(nameof(model));
@@ -573,7 +573,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除知识库
         /// </summary>
-        /// <param name="namespace"></param>
+        /// <param name="namespace">仓库路径</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> DeleteRepo(String @namespace)
@@ -586,7 +586,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 删除知识库
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">仓库编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<BookDetail> DeleteRepo(Int32 id)
@@ -601,7 +601,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取一个仓库的文档列表
         /// </summary>
-        /// <param name="namespace"></param>
+        /// <param name="namespace">仓库路径</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<Document[]> GetDocuments(String @namespace)
@@ -614,7 +614,7 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取一个仓库的文档列表
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">仓库编号</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<Document[]> GetDocuments(Int32 id)
@@ -627,8 +627,8 @@ namespace NewLife.YuQue
         /// <summary>
         /// 获取单篇文档的详细信息
         /// </summary>
-        /// <param name="namespace"></param>
-        /// <param name="slug"></param>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="slug">文档路径</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<DocumentDetail> GetDocument(String @namespace, String slug)
@@ -637,6 +637,100 @@ namespace NewLife.YuQue
             if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
 
             return await GetAsync<DocumentDetail>($"/repos/{@namespace}/docs/{slug}");
+        }
+
+        /// <summary>
+        /// 创建文档
+        /// </summary>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="model">文档模型</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> CreateDocument(String @namespace, DocumentModel model)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PostAsync<DocumentDetail>($"/repos/{@namespace}/docs", model);
+        }
+
+        /// <summary>
+        /// 创建文档
+        /// </summary>
+        /// <param name="id">仓库编号</param>
+        /// <param name="model">文档模型</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> CreateDocument(Int32 id, DocumentModel model)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PostAsync<DocumentDetail>($"/repos/{id}/docs", model);
+        }
+
+        /// <summary>
+        /// 更新文档
+        /// </summary>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="id">文档编号</param>
+        /// <param name="model">文档模型</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> UpdateDocument(String @namespace, Int32 id, DocumentModel2 model)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PutAsync<DocumentDetail>($"/repos/{@namespace}/docs/{id}", model);
+        }
+
+        /// <summary>
+        /// 更新文档
+        /// </summary>
+        /// <param name="repo_id">仓库编号</param>
+        /// <param name="id">文档编号</param>
+        /// <param name="model">文档模型</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> UpdateDocument(Int32 repo_id, Int32 id, DocumentModel2 model)
+        {
+            if (repo_id <= 0) throw new ArgumentNullException(nameof(repo_id));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PutAsync<DocumentDetail>($"/repos/{repo_id}/docs/{id}", model);
+        }
+
+        /// <summary>
+        /// 删除文档
+        /// </summary>
+        /// <param name="namespace">仓库路径</param>
+        /// <param name="id">文档编号</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> DeleteDocument(String @namespace, Int32 id)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await DeleteAsync<DocumentDetail>($"/repos/{@namespace}/docs/{id}");
+        }
+
+        /// <summary>
+        /// 删除文档
+        /// </summary>
+        /// <param name="repo_id">仓库编号</param>
+        /// <param name="id">文档编号</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<DocumentDetail> DeleteDocument(Int32 repo_id, Int32 id)
+        {
+            if (repo_id <= 0) throw new ArgumentNullException(nameof(repo_id));
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await DeleteAsync<DocumentDetail>($"/repos/{repo_id}/docs/{id}");
         }
         #endregion
 
