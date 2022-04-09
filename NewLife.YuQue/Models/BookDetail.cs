@@ -26,6 +26,13 @@ namespace NewLife.YuQue.Models
         /// <summary>描述</summary>
         public String Description { get; set; }
 
+        /// <summary>目录</summary>
+        public String Toc { get; set; }
+
+        /// <summary>目录原文</summary>
+        [DataMember(Name = "toc_yml")]
+        public String TocYml { get; set; }
+
         /// <summary>创建者</summary>
         [DataMember(Name = "creator_id")]
         public Int32 CreatorId { get; set; }
@@ -45,9 +52,13 @@ namespace NewLife.YuQue.Models
         [DataMember(Name = "watches_count")]
         public Int32 Watches { get; set; }
 
-        /// <summary>内容更新时间</summary>
-        [DataMember(Name = "content_updated_at")]
-        public DateTime ContentUpdated { get; set; }
+        /// <summary></summary>
+        [DataMember(Name = "pinned_at")]
+        public DateTime PinnedTime { get; set; }
+
+        /// <summary>归档时间</summary>
+        [DataMember(Name = "archived_at")]
+        public DateTime ArchivedTime { get; set; }
 
         /// <summary>创建时间</summary>
         [DataMember(Name = "created_at")]

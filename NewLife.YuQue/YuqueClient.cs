@@ -265,17 +265,17 @@ namespace NewLife.YuQue
         /// <summary>
         /// 更新组织
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="namespace"></param>
         /// <param name="login"></param>
         /// <param name="description"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<GroupDetail> UpdateGroup(String name, String login, String description)
+        public virtual async Task<GroupDetail> UpdateGroup(String @namespace, String login, String description)
         {
-            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
             if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
 
-            return await PostAsync<GroupDetail>($"/groups", new { name, login, description });
+            return await PostAsync<GroupDetail>($"/groups", new { @namespace, login, description });
         }
 
         /// <summary>
@@ -458,80 +458,142 @@ namespace NewLife.YuQue
         /// 创建知识库
         /// </summary>
         /// <param name="login">用户</param>
-        /// <param name="name">仓库名称</param>
-        /// <param name="slug"></param>
-        /// <param name="description">说明</param>
-        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
-        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <param name="model">仓库</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> CreateRepo(String login, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        public virtual async Task<BookDetail> CreateRepo(String login, BookModel model)
         {
             if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
-            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
-            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            return await PostAsync<BookDetail>($"/users/{login}/repos", new { name, slug, description });
+            return await PostAsync<BookDetail>($"/users/{login}/repos", model);
         }
 
         /// <summary>
         /// 创建知识库
         /// </summary>
         /// <param name="id">用户</param>
-        /// <param name="name">仓库名称</param>
-        /// <param name="slug"></param>
-        /// <param name="description">说明</param>
-        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
-        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <param name="model">仓库</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> CreateRepo(Int32 id, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        public virtual async Task<BookDetail> CreateRepo(Int32 id, BookModel model)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
-            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
-            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            return await PostAsync<BookDetail>($"/users/{id}/repos", new { name, slug, description });
+            return await PostAsync<BookDetail>($"/users/{id}/repos", model);
         }
 
         /// <summary>
         /// 创建团队知识库
         /// </summary>
         /// <param name="login">团队</param>
-        /// <param name="name">仓库名称</param>
-        /// <param name="slug"></param>
-        /// <param name="description">说明</param>
-        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
-        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <param name="model">仓库</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> CreateGroupRepo(String login, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        public virtual async Task<BookDetail> CreateGroupRepo(String login, BookModel model)
         {
             if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
-            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
-            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            return await PostAsync<BookDetail>($"/groups/{login}/repos", new { name, slug, description });
+            return await PostAsync<BookDetail>($"/groups/{login}/repos", model);
         }
 
         /// <summary>
         /// 创建团队知识库
         /// </summary>
         /// <param name="id">团队</param>
-        /// <param name="name">仓库名称</param>
-        /// <param name="slug"></param>
-        /// <param name="description">说明</param>
-        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
-        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <param name="model">仓库</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<BookDetail> CreateGroupRepo(Int32 id, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        public virtual async Task<BookDetail> CreateGroupRepo(Int32 id, BookModel model)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
-            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
-            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+            if (model == null) throw new ArgumentNullException(nameof(model));
 
-            return await PostAsync<BookDetail>($"/groups/{id}/repos", new { name, slug, description });
+            return await PostAsync<BookDetail>($"/groups/{id}/repos", model);
+        }
+
+        /// <summary>
+        /// 获取知识库详情
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> GetRepo(String @namespace)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+
+            return await GetAsync<BookDetail>($"/repos/{@namespace}");
+        }
+
+        /// <summary>
+        /// 获取知识库详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> GetRepo(Int32 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<BookDetail>($"/repos/{id}");
+        }
+
+        /// <summary>
+        /// 更新知识库信息
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> UpdateRepo(String @namespace, BookModel model)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PutAsync<BookDetail>($"/repos/{@namespace}", model);
+        }
+
+        /// <summary>
+        /// 更新知识库信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> UpdateRepo(Int32 id, BookModel model)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
+            return await PutAsync<BookDetail>($"/repos/{id}", model);
+        }
+
+        /// <summary>
+        /// 删除知识库
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> DeleteRepo(String @namespace)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+
+            return await DeleteAsync<BookDetail>($"/groups/{@namespace}");
+        }
+
+        /// <summary>
+        /// 删除知识库
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> DeleteRepo(Int32 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await DeleteAsync<BookDetail>($"/groups/{id}");
         }
         #endregion
 

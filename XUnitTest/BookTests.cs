@@ -23,5 +23,19 @@ namespace XUnitTest
             Assert.NotNull(list);
             Assert.True(list.Length > 0);
         }
+
+        [Fact]
+        public async void GetRepo()
+        {
+            var repo = await _client.GetRepo(895145);
+            Assert.NotNull(repo);
+        }
+
+        [Fact]
+        public async void GetRepo2()
+        {
+            var repo = await _client.GetRepo("smartstone/nx");
+            Assert.NotNull(repo);
+        }
     }
 }
