@@ -22,5 +22,5 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       env:
-        yuque_token: ${{ yuque_token }}
+        yuque_token: ${{ secrets.yuque_token }}
       run: dotnet test -c Release
