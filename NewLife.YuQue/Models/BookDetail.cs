@@ -13,7 +13,7 @@ namespace NewLife.YuQue.Models
         /// <summary>类型</summary>
         public String Type { get; set; }
 
-        /// <summary>登录名</summary>
+        /// <summary>路径</summary>
         public String Slug { get; set; }
 
         /// <summary>名称</summary>
