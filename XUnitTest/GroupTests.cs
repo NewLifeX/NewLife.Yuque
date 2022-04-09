@@ -58,5 +58,12 @@ namespace XUnitTest
 
             Assert.Equal("新生命", group.Name);
         }
+
+        [Fact]
+        public async void GetGroupUsers()
+        {
+            var list = await _client.GetGroupUsers("newlifex");
+            Assert.NotNull(list);
+        }
     }
 }

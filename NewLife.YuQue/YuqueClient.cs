@@ -279,6 +279,33 @@ namespace NewLife.YuQue
 
             return await DeleteAsync<GroupDetail>($"/groups/{id}");
         }
+
+        /// <summary>
+        /// 获取组织成员信息
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupUser[]> GetGroupUsers(String login)
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await GetAsync<GroupUser[]>($"/groups/{login}/users");
+        }
+
+        /// <summary>
+        /// 获取组织成员信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupUser[]> GetGroupUsers(Int64 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<GroupUser[]>($"/groups/{id}/users");
+        }
+
         #endregion
 
         #region 属性
