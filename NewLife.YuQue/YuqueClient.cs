@@ -447,11 +447,51 @@ namespace NewLife.YuQue
         /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Book[]> GetGroupRepos(Int64 id, String type = "all", Int32 offset = 20)
+        public virtual async Task<Book[]> GetGroupRepos(Int32 id, String type = "all", Int32 offset = 20)
         {
             if (id <= 0) throw new ArgumentNullException(nameof(id));
 
             return await GetAsync<Book[]>($"/groups/{id}/repos", new { type, offset });
+        }
+
+        /// <summary>
+        /// 创建知识库
+        /// </summary>
+        /// <param name="login">用户</param>
+        /// <param name="name">仓库名称</param>
+        /// <param name="slug"></param>
+        /// <param name="description">说明</param>
+        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
+        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> CreateRepo(String login, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+
+            return await PostAsync<BookDetail>($"/users/{login}/repos", new { name, slug, description });
+        }
+
+        /// <summary>
+        /// 创建知识库
+        /// </summary>
+        /// <param name="id">用户</param>
+        /// <param name="name">仓库名称</param>
+        /// <param name="slug"></param>
+        /// <param name="description">说明</param>
+        /// <param name="public">0私密，1公开，2空间成员可见，3空间所有人（含外部联系人）可见，4知识库成员可见</param>
+        /// <param name="type">‘Book’ 文库, ‘Design’ 画板, 请注意大小写</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<BookDetail> CreateRepo(Int32 id, String name, String slug, String description, Int32 @public = 0, String type = "Book")
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+            if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+            if (slug.IsNullOrEmpty()) throw new ArgumentNullException(nameof(slug));
+
+            return await PostAsync<BookDetail>($"/users/{id}/repos", new { name, slug, description });
         }
         #endregion
 
