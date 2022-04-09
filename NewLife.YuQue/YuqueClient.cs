@@ -51,7 +51,7 @@ namespace NewLife.YuQue
 
             var rs = await _client.GetStringAsync(_prefix + action);
             if (rs.IsNullOrEmpty()) return default;
-           
+
             return ConvertResponse<TResult>(rs);
         }
 
@@ -306,6 +306,67 @@ namespace NewLife.YuQue
             return await GetAsync<GroupUser[]>($"/groups/{id}/users");
         }
 
+        /// <summary>
+        /// 增加或更新组织成员
+        /// </summary>
+        /// <param name="group_login"></param>
+        /// <param name="login"></param>
+        /// <param name="role">0 - 管理员, 1 - 普通成员</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> UpdateGroupUser(String group_login, String login, Int32 role = 1)
+        {
+            if (group_login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(group_login));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await PutAsync<GroupDetail>($"/groups/{group_login}/{login}", new { role });
+        }
+
+        /// <summary>
+        /// 增加或更新组织成员
+        /// </summary>
+        /// <param name="group_id"></param>
+        /// <param name="login"></param>
+        /// <param name="role">0 - 管理员, 1 - 普通成员</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> UpdateGroupUser(Int32 group_id, String login, Int32 role = 1)
+        {
+            if (group_id <= 0) throw new ArgumentNullException(nameof(group_id));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await PutAsync<GroupDetail>($"/groups/{group_id}/{login}", new { role });
+        }
+
+        /// <summary>
+        /// 删除组织成员
+        /// </summary>
+        /// <param name="group_login"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> DeleteGroupUser(String group_login, String login)
+        {
+            if (group_login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(group_login));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await DeleteAsync<GroupDetail>($"/groups/{group_login}");
+        }
+
+        /// <summary>
+        /// 删除组织成员
+        /// </summary>
+        /// <param name="group_id"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<GroupDetail> DeleteGroupUser(Int32 group_id, String login)
+        {
+            if (group_id <= 0) throw new ArgumentNullException(nameof(group_id));
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await DeleteAsync<GroupDetail>($"/groups/{group_id}");
+        }
         #endregion
 
         #region 属性

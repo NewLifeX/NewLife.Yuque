@@ -29,7 +29,7 @@ namespace NewLife.YuQue.Models
         public Int32 Status { get; set; }
 
         /// <summary>组织</summary>
-        public String Group { get; set; }
+        public GroupDetail Group { get; set; }
 
         /// <summary>创建时间</summary>
         [DataMember(Name = "created_at")]
