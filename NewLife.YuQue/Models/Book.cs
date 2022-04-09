@@ -47,7 +47,7 @@ namespace NewLife.YuQue.Models
 
         /// <summary>内容更新时间</summary>
         [DataMember(Name = "content_updated_at")]
-        public DateTime ContentUpdatedTime { get; set; }
+        public DateTime ContentUpdateTime { get; set; }
 
         /// <summary>创建时间</summary>
         [DataMember(Name = "created_at")]

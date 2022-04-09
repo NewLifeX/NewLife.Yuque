@@ -54,11 +54,11 @@ namespace NewLife.YuQue.Models
 
         /// <summary></summary>
         [DataMember(Name = "pinned_at")]
-        public DateTime PinnedTime { get; set; }
+        public DateTime PinTime { get; set; }
 
         /// <summary>归档时间</summary>
         [DataMember(Name = "archived_at")]
-        public DateTime ArchivedTime { get; set; }
+        public DateTime ArchiveTime { get; set; }
 
         /// <summary>创建时间</summary>
         [DataMember(Name = "created_at")]

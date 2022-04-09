@@ -597,6 +597,34 @@ namespace NewLife.YuQue
         }
         #endregion
 
+        #region 文档
+        /// <summary>
+        /// 获取一个仓库的文档列表
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Document[]> GetDocuments(String @namespace)
+        {
+            if (@namespace.IsNullOrEmpty()) throw new ArgumentNullException(nameof(@namespace));
+
+            return await GetAsync<Document[]>($"/repos/{@namespace}/docs");
+        }
+
+        /// <summary>
+        /// 获取一个仓库的文档列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Document[]> GetDocuments(Int32 id)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<Document[]>($"/repos/{id}/docs");
+        }
+        #endregion
+
         #region 属性
         /// <summary>性能追踪</summary>
         public ITracer Tracer { get; set; }
