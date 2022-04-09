@@ -39,6 +39,10 @@ namespace NewLife.YuQue
             }
         }
 
+        /// <summary>Get调用</summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public virtual async Task<TResult> GetAsync<TResult>(String action)
         {
             Init();
@@ -55,6 +59,11 @@ namespace NewLife.YuQue
             return JsonHelper.Convert<TResult>(data);
         }
 
+        /// <summary>Post调用</summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public virtual async Task<TResult> PostAsync<TResult>(String action, Object args)
         {
             Init();
@@ -64,6 +73,12 @@ namespace NewLife.YuQue
         #endregion
 
         #region 用户
+        /// <summary>
+        /// 根据用户名获取用户
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<UserDetail> GetUser(String userName)
         {
             if (userName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(userName));
@@ -71,12 +86,24 @@ namespace NewLife.YuQue
             return await GetAsync<UserDetail>($"/users/{userName}");
         }
 
+        /// <summary>
+        /// 根据Id获取用户
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public virtual async Task<UserDetail> GetUser(Int64 userId)
         {
             if (userId <= 0) throw new ArgumentNullException(nameof(userId));
 
             return await GetAsync<UserDetail>($"/users/{userId}");
         }
+
+        /// <summary>
+        /// 获取当前认证用户
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<UserDetail> GetCurrentUser() => await GetAsync<UserDetail>($"/user");
         #endregion
 
         #region 属性

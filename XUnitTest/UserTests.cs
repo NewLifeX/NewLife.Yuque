@@ -59,5 +59,31 @@ namespace XUnitTest
             Assert.True(user.CreateTime.Year >= 2020);
             Assert.True(user.UpdateTime.Year >= 2022);
         }
+
+        [Fact]
+        public async void GetCurrentUser()
+        {
+            var user = await _client.GetCurrentUser();
+            Assert.NotNull(user);
+
+            Assert.Equal(1144030, user.Id);
+            Assert.Equal("User", user.Type);
+            Assert.Equal(0, user.SpaceId);
+            Assert.Equal(915593, user.AccountId);
+            Assert.Equal("smartstone", user.Login);
+            Assert.Equal("大石头", user.Name);
+
+            Assert.NotEmpty(user.Avatar);
+            Assert.NotEmpty(user.Description);
+
+            Assert.True(user.BooksCount > 0);
+            Assert.True(user.PublicBooksCount > 0);
+            Assert.True(user.FollowersCount > 0);
+            Assert.True(user.FollowingCount >= 0);
+            Assert.True(user.Public > 0);
+
+            Assert.True(user.CreateTime.Year >= 2020);
+            Assert.True(user.UpdateTime.Year >= 2022);
+        }
     }
 }
