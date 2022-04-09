@@ -24,10 +24,10 @@ namespace XUnitTest
             Assert.NotEmpty(user.Avatar);
             Assert.NotEmpty(user.Description);
 
-            Assert.True(user.BooksCount > 0);
-            Assert.True(user.PublicBooksCount > 0);
-            Assert.True(user.FollowersCount > 0);
-            Assert.True(user.FollowingCount >= 0);
+            Assert.True(user.Books > 0);
+            Assert.True(user.PublicBooks > 0);
+            Assert.True(user.Followers > 0);
+            Assert.True(user.Following >= 0);
             Assert.True(user.Public > 0);
 
             Assert.True(user.CreateTime.Year >= 2020);
@@ -50,10 +50,10 @@ namespace XUnitTest
             Assert.NotEmpty(user.Avatar);
             Assert.NotEmpty(user.Description);
 
-            Assert.True(user.BooksCount > 0);
-            Assert.True(user.PublicBooksCount > 0);
-            Assert.True(user.FollowersCount > 0);
-            Assert.True(user.FollowingCount >= 0);
+            Assert.True(user.Books > 0);
+            Assert.True(user.PublicBooks > 0);
+            Assert.True(user.Followers > 0);
+            Assert.True(user.Following >= 0);
             Assert.True(user.Public > 0);
 
             Assert.True(user.CreateTime.Year >= 2020);
@@ -63,7 +63,7 @@ namespace XUnitTest
         [Fact]
         public async void GetCurrentUser()
         {
-            var user = await _client.GetCurrentUser();
+            var user = await _client.GetUser();
             Assert.NotNull(user);
 
             Assert.Equal(1144030, user.Id);
@@ -76,10 +76,10 @@ namespace XUnitTest
             Assert.NotEmpty(user.Avatar);
             Assert.NotEmpty(user.Description);
 
-            Assert.True(user.BooksCount > 0);
-            Assert.True(user.PublicBooksCount > 0);
-            Assert.True(user.FollowersCount > 0);
-            Assert.True(user.FollowingCount >= 0);
+            Assert.True(user.Books > 0);
+            Assert.True(user.PublicBooks > 0);
+            Assert.True(user.Followers > 0);
+            Assert.True(user.Following >= 0);
             Assert.True(user.Public > 0);
 
             Assert.True(user.CreateTime.Year >= 2020);
