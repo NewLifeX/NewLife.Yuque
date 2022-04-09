@@ -48,7 +48,7 @@ namespace NewLife.YuQue.Models
         [DataMember(Name = "following_count")]
         public Int32 Following { get; set; }
 
-        /// <summary>公开</summary>
+        /// <summary>公开状态 [1 - 公开, 0 - 私密]</summary>
         public Int32 Public { get; set; }
 
         /// <summary>创建时间</summary>

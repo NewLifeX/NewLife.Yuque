@@ -36,7 +36,7 @@ namespace NewLife.YuQue
                 _client = Tracer.CreateHttpClient();
                 _client.SetUserAgent();
                 _client.BaseAddress = uri;
-                _client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
+                //_client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
                 _client.DefaultRequestHeaders.Add("X-Auth-Token", Token);
             }
         }
@@ -44,12 +44,24 @@ namespace NewLife.YuQue
         /// <summary>Get调用</summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
-        public virtual async Task<TResult> GetAsync<TResult>(String action)
+        public virtual async Task<TResult> GetAsync<TResult>(String action, Object args = null)
         {
             Init();
 
-            var rs = await _client.GetStringAsync(_prefix + action);
+            var url = _prefix + action;
+            if (args != null)
+            {
+                var sb = new StringBuilder();
+                foreach (var item in args.ToDictionary())
+                {
+                    sb.AppendJoin('&', item.Key, "=", item.Value);
+                }
+                if (sb.Length > 0) url += "?" + sb;
+            }
+
+            var rs = await _client.GetStringAsync(url);
             if (rs.IsNullOrEmpty()) return default;
 
             return ConvertResponse<TResult>(rs);
@@ -101,12 +113,24 @@ namespace NewLife.YuQue
         /// <summary>Delete调用</summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
-        public virtual async Task<TResult> DeleteAsync<TResult>(String action)
+        public virtual async Task<TResult> DeleteAsync<TResult>(String action, Object args = null)
         {
             Init();
 
-            var response = await _client.DeleteAsync(_prefix + action);
+            var url = _prefix + action;
+            if (args != null)
+            {
+                var sb = new StringBuilder();
+                foreach (var item in args.ToDictionary())
+                {
+                    sb.AppendJoin('&', item.Key, "=", item.Value);
+                }
+                if (sb.Length > 0) url += "?" + sb;
+            }
+
+            var response = await _client.DeleteAsync(url);
             var rs = await response.Content.ReadAsStringAsync();
 
             return ConvertResponse<TResult>(rs);
@@ -366,6 +390,68 @@ namespace NewLife.YuQue
             if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
 
             return await DeleteAsync<GroupDetail>($"/groups/{group_id}");
+        }
+        #endregion
+
+        #region 知识库
+        /// <summary>
+        /// 获取某个用户的知识库列表
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="type">Book, Design, all - 所有类型</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Book[]> GetRepos(String login, String type = "all", Int32 offset = 20)
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await GetAsync<Book[]>($"/users/{login}/repos", new { type, offset });
+        }
+
+        /// <summary>
+        /// 获取某个用户的知识库列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">Book, Design, all - 所有类型</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Book[]> GetRepos(Int64 id, String type = "all", Int32 offset = 20)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<Book[]>($"/users/{id}/repos", new { type, offset });
+        }
+
+        /// <summary>
+        /// 获取某个团队的知识库列表
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="type">Book, Design, all - 所有类型</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Book[]> GetGroupRepos(String login, String type = "all", Int32 offset = 20)
+        {
+            if (login.IsNullOrEmpty()) throw new ArgumentNullException(nameof(login));
+
+            return await GetAsync<Book[]>($"/groups/{login}/repos", new { type, offset });
+        }
+
+        /// <summary>
+        /// 获取某个团队的知识库列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">Book, Design, all - 所有类型</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public virtual async Task<Book[]> GetGroupRepos(Int64 id, String type = "all", Int32 offset = 20)
+        {
+            if (id <= 0) throw new ArgumentNullException(nameof(id));
+
+            return await GetAsync<Book[]>($"/groups/{id}/repos", new { type, offset });
         }
         #endregion
 
