@@ -52,7 +52,7 @@ public class BookService
                         Slug = item.Slug,
                         Code = item.Slug,
                         Enable = true,
-                        Sync = true,
+                        Sync = item.Public > 0,
                     };
                     book.Insert();
 
@@ -132,7 +132,7 @@ public class BookService
                         BookId = bookId,
                         Slug = item.Slug,
                         Enable = true,
-                        Sync = true
+                        Sync = item.Public > 0,
                     };
                     doc.Insert();
                 }

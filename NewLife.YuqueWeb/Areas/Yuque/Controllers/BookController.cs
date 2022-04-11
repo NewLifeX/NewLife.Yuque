@@ -7,16 +7,51 @@ using XCode.Membership;
 
 namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 {
+    /// <summary>
+    /// 知识库管理
+    /// </summary>
     [YuqueArea]
     [Menu(90, true, Icon = "fa-tachometer")]
     public class BookController : EntityController<Book>
     {
+        static BookController()
+        {
+            LogOnChange = true;
+
+            ListFields.RemoveCreateField();
+            ListFields.RemoveUpdateField();
+
+            ListFields.RemoveField("Namespace");
+
+            {
+                var df = ListFields.AddListField("docments", null, "Enable");
+                df.DisplayName = "文档列表";
+                df.Url = "document?bookId={Id}";
+            }
+        }
+
         private readonly BookService _bookService;
 
+        /// <summary>
+        /// 实例化知识库管理
+        /// </summary>
+        /// <param name="bookService"></param>
         public BookController(BookService bookService) => _bookService = bookService;
 
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         protected override IEnumerable<Book> Search(Pager p)
         {
+            var id = p["id"].ToInt(-1);
+            if (id > 0)
+            {
+                var entity = Book.FindById(id);
+                if (entity != null) return new[] { entity };
+            }
+
             var enable = p["enable"]?.ToBoolean();
 
             var start = p["dtStart"].ToDateTime();
