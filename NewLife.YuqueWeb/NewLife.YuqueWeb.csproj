@@ -4,16 +4,15 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyTitle>语雀Web</AssemblyTitle>
-    <Description>自动语雀内容到本系统，对外呈现内容页面</Description>
+    <Description>自动同步语雀内容到本系统，对外呈现内容页面</Description>
     <Company>新生命开发团队</Company>
     <Copyright>©2002-2022 NewLife</Copyright>
     <VersionPrefix>1.0</VersionPrefix>
     <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
     <Version>$(VersionPrefix).$(VersionSuffix)</Version>
     <FileVersion>$(Version)</FileVersion>
-    <AssemblyVersion>5.0.*</AssemblyVersion>
+    <AssemblyVersion>$(VersionPrefix).*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <OutputPath>..\Bin</OutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
@@ -25,7 +24,7 @@
     <Authors>$(Company)</Authors>
     <PackageProjectUrl>https://www.yuque.com/smartstone/cube</PackageProjectUrl>
     <PackageIcon>leaf.png</PackageIcon>
-    <RepositoryUrl>https://github.com/NewLifeX/NewLife.Cube</RepositoryUrl>
+    <RepositoryUrl>https://github.com/NewLifeX/NewLife.Yuque</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>新生命团队;X组件;NewLife;$(AssemblyName)</PackageTags>
     <PackageReleaseNotes>新增MenuAttribute优化控制器菜单管理；新增魔方管理区域；增强OAuth配置</PackageReleaseNotes>

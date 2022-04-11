@@ -29,7 +29,7 @@ public static class YuqueService
     /// <param name="app"></param>
     /// <param name="env"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseYuque(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static IApplicationBuilder UseYuque(this IApplicationBuilder app, IWebHostEnvironment env = null)
     {
         using var span = DefaultTracer.Instance?.NewSpan(nameof(UseYuque));
 

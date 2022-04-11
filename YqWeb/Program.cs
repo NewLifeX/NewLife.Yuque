@@ -1,21 +1,23 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿using NewLife.Cube;
+using NewLife.Log;
+using NewLife.YuQueWeb;
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+XTrace.UseConsole();
+
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+
+var star = services.AddStardust(null);
+
+services.AddControllersWithViews();
+services.AddYuque();
+services.AddCube();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
-app.UseStaticFiles();
-
-app.UseRouting();
-
+app.UseYuque();
+app.UseCube(builder.Environment);
 app.UseAuthorization();
-
-app.MapRazorPages();
+app.MapControllerRoute(name: "default", pattern: "{controller=Index}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default2", pattern: "{area=Admin}/{controller=Index}/{action=Index}/{id?}");
 
 app.Run();

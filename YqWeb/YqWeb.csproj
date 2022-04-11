@@ -2,9 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <AssemblyTitle>语雀Web</AssemblyTitle>
+    <Description>自动同步语雀内容到本系统，对外呈现内容页面</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>©2002-2022 NewLife</Copyright>
+    <VersionPrefix>1.0</VersionPrefix>
+    <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>5.0.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
+    <OutputPath>..\Bin\Web</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewLife.Stardust.Extensions" Version="2.0.2022.404" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewLife.YuQueWeb\NewLife.YuqueWeb.csproj" />

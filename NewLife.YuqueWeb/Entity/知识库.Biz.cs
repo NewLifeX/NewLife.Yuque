@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -170,17 +170,19 @@ namespace NewLife.YuQueWeb.Entity
         /// <summary>高级查询</summary>
         /// <param name="code">编码。路径唯一标识，默认取Slug</param>
         /// <param name="name">名称</param>
+        /// <param name="enable">启用</param>
         /// <param name="start">更新时间开始</param>
         /// <param name="end">更新时间结束</param>
         /// <param name="key">关键字</param>
         /// <param name="page">分页参数信息。可携带统计和数据权限扩展查询等信息</param>
         /// <returns>实体列表</returns>
-        public static IList<Book> Search(String code, String name, DateTime start, DateTime end, String key, PageParameter page)
+        public static IList<Book> Search(String code, String name, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
         {
             var exp = new WhereExpression();
 
             if (!code.IsNullOrEmpty()) exp &= _.Code == code;
             if (!name.IsNullOrEmpty()) exp &= _.Name == name;
+            if (enable != null) exp &= _.Enable == enable;
             exp &= _.UpdateTime.Between(start, end);
             if (!key.IsNullOrEmpty()) exp &= _.Code.Contains(key) | _.Name.Contains(key) | _.Type.Contains(key) | _.UserName.Contains(key) | _.Slug.Contains(key) | _.Namespace.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
 
