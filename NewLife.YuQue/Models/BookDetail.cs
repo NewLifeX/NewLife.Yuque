@@ -48,7 +48,7 @@ namespace NewLife.YuQue.Models
         [DataMember(Name = "likes_count")]
         public Int32 Likes { get; set; }
 
-        /// <summary> 订阅数量</summary>
+        /// <summary>订阅数量</summary>
         [DataMember(Name = "watches_count")]
         public Int32 Watches { get; set; }
 

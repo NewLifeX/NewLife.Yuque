@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.YuQue", "NewLife.YuQue\NewLife.YuQue.csproj", "{CC0B8977-F646-4211-BC1F-CD2BCA28971D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.Yuque", "NewLife.YuQue\NewLife.Yuque.csproj", "{CC0B8977-F646-4211-BC1F-CD2BCA28971D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.YuqueWeb", "NewLife.YuQueWeb\NewLife.YuqueWeb.csproj", "{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YqWeb", "YQWeb\YqWeb.csproj", "{271C5F95-20EF-43E8-A6E6-22FDCD1B06F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +40,14 @@ Global
 		{CC0B8977-F646-4211-BC1F-CD2BCA28971D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC0B8977-F646-4211-BC1F-CD2BCA28971D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC0B8977-F646-4211-BC1F-CD2BCA28971D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271C5F95-20EF-43E8-A6E6-22FDCD1B06F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271C5F95-20EF-43E8-A6E6-22FDCD1B06F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271C5F95-20EF-43E8-A6E6-22FDCD1B06F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271C5F95-20EF-43E8-A6E6-22FDCD1B06F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

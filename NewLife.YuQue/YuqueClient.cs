@@ -754,7 +754,7 @@ namespace NewLife.YuQue
         }
         #endregion
 
-        #region 属性
+        #region 辅助
         /// <summary>性能追踪</summary>
         public ITracer Tracer { get; set; }
 
