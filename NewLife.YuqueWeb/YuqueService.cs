@@ -2,6 +2,7 @@
 using NewLife.Cube;
 using NewLife.Log;
 using NewLife.YuqueWeb.Areas.Yuque;
+using NewLife.YuqueWeb.Services;
 
 namespace NewLife.YuQueWeb;
 
@@ -17,6 +18,8 @@ public static class YuqueService
 
         XTrace.WriteLine("{0} Start 配置语雀 {0}", new String('=', 32));
         Assembly.GetExecutingAssembly().WriteVersion();
+
+        services.AddSingleton<BookService>();
 
         XTrace.WriteLine("{0} End   配置语雀 {0}", new String('=', 32));
 

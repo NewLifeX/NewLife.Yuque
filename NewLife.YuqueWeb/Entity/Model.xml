@@ -2,7 +2,7 @@
 <Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://www.newlifex.com http://www.newlifex.com/Model2022.xsd" NameSpace="NewLife.YuQueWeb.Entity" ConnName="YuQue" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://www.yuque.com/smartstone/xcode/model" xmlns="http://www.newlifex.com/Model2022.xsd">
   <Table Name="Book" Description="知识库。管理知识库">
     <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
       <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
       <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
       <Column Name="Type" DataType="String" Description="类型" />
@@ -32,9 +32,9 @@
   </Table>
   <Table Name="Document" Description="文档。文档内容">
     <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
       <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
-      <Column Name="Title" DataType="String" Master="True" Nullable="False" Description="标题" />
+      <Column Name="Title" DataType="String" Master="True" Length="200" Nullable="False" Description="标题" />
       <Column Name="BookId" DataType="Int32" Description="知识库" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="UserName" DataType="String" Description="用户" />
@@ -48,7 +48,10 @@
       <Column Name="PublishTime" DataType="DateTime" Description="发布时间" />
       <Column Name="FirstPublishTime" DataType="DateTime" Description="首次发布" />
       <Column Name="WordCount" DataType="Int32" Description="单词数" />
-      <Column Name="Cover" DataType="String" Description="封面" />
+      <Column Name="Cover" DataType="String" Length="200" Description="封面" />
+      <Column Name="Slug" DataType="String" Description="路径" />
+      <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
+      <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" />

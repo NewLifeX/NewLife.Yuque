@@ -623,26 +623,28 @@ namespace NewLife.YuQue
         /// 获取一个仓库的文档列表
         /// </summary>
         /// <param name="bookName">仓库路径</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Document[]> GetDocuments(String bookName)
+        public virtual async Task<Document[]> GetDocuments(String bookName, Int32 offset = 0)
         {
             if (bookName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(bookName));
 
-            return await GetAsync<Document[]>($"/repos/{bookName}/docs");
+            return await GetAsync<Document[]>($"/repos/{bookName}/docs", new { offset });
         }
 
         /// <summary>
         /// 获取一个仓库的文档列表
         /// </summary>
         /// <param name="bookId">仓库编号</param>
+        /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public virtual async Task<Document[]> GetDocuments(Int32 bookId)
+        public virtual async Task<Document[]> GetDocuments(Int32 bookId, Int32 offset = 0)
         {
             if (bookId <= 0) throw new ArgumentNullException(nameof(bookId));
 
-            return await GetAsync<Document[]>($"/repos/{bookId}/docs");
+            return await GetAsync<Document[]>($"/repos/{bookId}/docs", new { offset });
         }
 
         /// <summary>

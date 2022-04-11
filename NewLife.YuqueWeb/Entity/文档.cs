@@ -25,7 +25,7 @@ namespace NewLife.YuQueWeb.Entity
         /// <summary>编号</summary>
         [DisplayName("编号")]
         [Description("编号")]
-        [DataObjectField(true, true, false, 0)]
+        [DataObjectField(true, false, false, 0)]
         [BindColumn("Id", "编号", "")]
         public Int32 Id { get => _Id; set { if (OnPropertyChanging("Id", value)) { _Id = value; OnPropertyChanged("Id"); } } }
 
@@ -41,7 +41,7 @@ namespace NewLife.YuQueWeb.Entity
         /// <summary>标题</summary>
         [DisplayName("标题")]
         [Description("标题")]
-        [DataObjectField(false, false, false, 50)]
+        [DataObjectField(false, false, false, 200)]
         [BindColumn("Title", "标题", "", Master = true)]
         public String Title { get => _Title; set { if (OnPropertyChanging("Title", value)) { _Title = value; OnPropertyChanged("Title"); } } }
 
@@ -153,9 +153,33 @@ namespace NewLife.YuQueWeb.Entity
         /// <summary>封面</summary>
         [DisplayName("封面")]
         [Description("封面")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("Cover", "封面", "")]
         public String Cover { get => _Cover; set { if (OnPropertyChanging("Cover", value)) { _Cover = value; OnPropertyChanged("Cover"); } } }
+
+        private String _Slug;
+        /// <summary>路径</summary>
+        [DisplayName("路径")]
+        [Description("路径")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Slug", "路径", "")]
+        public String Slug { get => _Slug; set { if (OnPropertyChanging("Slug", value)) { _Slug = value; OnPropertyChanged("Slug"); } } }
+
+        private Boolean _Sync;
+        /// <summary>同步。是否自动同步远程内容</summary>
+        [DisplayName("同步")]
+        [Description("同步。是否自动同步远程内容")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Sync", "同步。是否自动同步远程内容", "")]
+        public Boolean Sync { get => _Sync; set { if (OnPropertyChanging("Sync", value)) { _Sync = value; OnPropertyChanged("Sync"); } } }
+
+        private DateTime _SyncTime;
+        /// <summary>同步时间。最后一次同步数据的时间</summary>
+        [DisplayName("同步时间")]
+        [Description("同步时间。最后一次同步数据的时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("SyncTime", "同步时间。最后一次同步数据的时间", "")]
+        public DateTime SyncTime { get => _SyncTime; set { if (OnPropertyChanging("SyncTime", value)) { _SyncTime = value; OnPropertyChanged("SyncTime"); } } }
 
         private String _CreateUser;
         /// <summary>创建者</summary>
@@ -257,6 +281,9 @@ namespace NewLife.YuQueWeb.Entity
                     case "FirstPublishTime": return _FirstPublishTime;
                     case "WordCount": return _WordCount;
                     case "Cover": return _Cover;
+                    case "Slug": return _Slug;
+                    case "Sync": return _Sync;
+                    case "SyncTime": return _SyncTime;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
                     case "CreateIP": return _CreateIP;
@@ -290,6 +317,9 @@ namespace NewLife.YuQueWeb.Entity
                     case "FirstPublishTime": _FirstPublishTime = value.ToDateTime(); break;
                     case "WordCount": _WordCount = value.ToInt(); break;
                     case "Cover": _Cover = Convert.ToString(value); break;
+                    case "Slug": _Slug = Convert.ToString(value); break;
+                    case "Sync": _Sync = value.ToBoolean(); break;
+                    case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
                     case "CreateIP": _CreateIP = Convert.ToString(value); break;
@@ -359,6 +389,15 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>封面</summary>
             public static readonly Field Cover = FindByName("Cover");
+
+            /// <summary>路径</summary>
+            public static readonly Field Slug = FindByName("Slug");
+
+            /// <summary>同步。是否自动同步远程内容</summary>
+            public static readonly Field Sync = FindByName("Sync");
+
+            /// <summary>同步时间。最后一次同步数据的时间</summary>
+            public static readonly Field SyncTime = FindByName("SyncTime");
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUser = FindByName("CreateUser");
@@ -443,6 +482,15 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>封面</summary>
             public const String Cover = "Cover";
+
+            /// <summary>路径</summary>
+            public const String Slug = "Slug";
+
+            /// <summary>同步。是否自动同步远程内容</summary>
+            public const String Sync = "Sync";
+
+            /// <summary>同步时间。最后一次同步数据的时间</summary>
+            public const String SyncTime = "SyncTime";
 
             /// <summary>创建者</summary>
             public const String CreateUser = "CreateUser";
