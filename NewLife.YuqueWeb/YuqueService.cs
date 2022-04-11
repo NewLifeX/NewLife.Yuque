@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
-using NewLife.Common;
 using NewLife.Cube;
 using NewLife.Log;
 using NewLife.YuqueWeb.Areas.Yuque;
-using XCode.DataAccessLayer;
 
 namespace NewLife.YuQueWeb;
 
