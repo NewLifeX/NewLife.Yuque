@@ -6,21 +6,18 @@
 }
 <div class="container">
     <div class="row">
-        @await Html.PartialAsync("_Nav")
-    </div>
-    <div class="row">
         <h2 class="text-center">
             @inf.Title
         </h2>
-        <h3 class="text-center">
-            <em class="e e1">来源：@inf.UserName</em>
-            <em class="e e2">发布时间：@inf.PublishTime.ToFullString()</em>
-            <em class="e e3">浏览：@inf.Hits.ToString("n0")</em>
-        </h3>
         <div class="content">
             <div>
                 @Html.Raw(inf.BodyHtml)
             </div>
         </div>
+        <span class="text-center">
+            <em class="e e1">作者：@inf.UserName</em>
+            <em class="e e2">发布：@inf.PublishTime.ToFullString()</em>
+            <em class="e e3">浏览：@inf.Hits.ToString("n0")</em>
+        </span>
     </div>
 </div>

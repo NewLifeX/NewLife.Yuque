@@ -86,6 +86,8 @@ namespace NewLife.YuqueWeb.Controllers
                 Page = page,
             };
 
+            ViewBag.Title = book.Name;
+
             return View(model);
         }
         #endregion

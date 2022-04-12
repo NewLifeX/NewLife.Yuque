@@ -13,20 +13,20 @@
             <h3>@nav.Name</h3>
             @foreach (var item in nav.Childs)
             {
-                <a href="@item.Url" target="@(item.Url.StartsWithIgnoreCase("http")?"_blank":"")">@item.Name</a><br>
+                <a href="@item.Url" target="@(item.Url.StartsWithIgnoreCase("http")?"_blank":"")">@item.Name</a>
+
+                <br>
             }
         </div>
     }
 </div>
-<div class="container">
-    <div class="row">
-        <p>@SysConfig.Current.Company &copy; @DateTime.Now.Year 设计制作：<a href="http://www.newlifex.com" target="_blank">新生命开发团队</a></p>
-    </div>
+<div style="margin-top:20px;" class="text-center">
+    @if (!set.Copyright.IsNullOrEmpty())
+    {
+        <span>@set.Copyright</span>
+    }
+    @if (!set.Registration.IsNullOrEmpty())
+    {
+        <a href="https://beian.miit.gov.cn" target="_blank">@set.Registration</a>
+    }
 </div>
-@if (set.ShowRunTime)
-{
-    var runInfo = RunTimeMiddleware.GetInfo(this.Context);
-    <div class="panel-footer">
-        @Html.Raw(runInfo)
-    </div>
-}

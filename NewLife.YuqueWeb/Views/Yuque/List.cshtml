@@ -11,22 +11,23 @@
 }
 <div class="container" style="min-height: 600px;">
     <div class="row">
-        @*@await Html.PartialAsync("_Nav")*@
+        <h2>
+            @cat.Name
+        </h2>
     </div>
-    <h2 class="tith2">
-        @cat.Name
-    </h2>
-    @{
-        <ul class="list_news_dl fixed">
-            @foreach (var item in infos)
-            {
-                <li>
-                    <a href="/@cat.Code/@item.Code">
-                        <i></i>@item.Title
-                    </a>
-                </li>
-            }
-        </ul>
-        @await Html.PartialAsync("_Pager", page)
-    }
+    <div class="row">
+        @{
+            <ul class="list_news_dl fixed">
+                @foreach (var item in infos)
+                {
+                    <li>
+                        <a href="/@cat.Code/@item.Code">
+                            <i></i>@item.Title
+                        </a>
+                    </li>
+                }
+            </ul>
+            @await Html.PartialAsync("_Pager", page)
+        }
+    </div>
 </div>
