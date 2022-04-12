@@ -114,11 +114,10 @@ namespace NewLife.YuqueWeb.Controllers
             //inf.Statistics.Increment(null);
             (inf as IEntity).SaveAsync(15);
 
-            ViewData["Title"] = inf.Title;
-            ViewData["Book"] = book;
+            ViewBag.Title = inf.Title;
 
-            //return View(tmp, inf);
-            return Content(inf.BodyHtml, "text/html", Encoding.UTF8);
+            return View("Info", inf);
+            //return Content(inf.BodyHtml, "text/html", Encoding.UTF8);
         }
         #endregion
 

@@ -1,0 +1,16 @@
+﻿@using NewLife.YuQueWeb.Entity
+@{
+    var list = Book.FindAllWithCache().Where(e => e.Enable).ToList();
+}
+<ol class="breadcrumb">
+    <li><a href="~/">首页</a></li>
+    @foreach (var cat in list)
+    {
+        <li>
+            <a href="/@cat.Code">@cat.Name</a>
+        </li>
+    }
+    <li class="active">
+        <a href="#">当前</a>
+    </li>
+</ol>

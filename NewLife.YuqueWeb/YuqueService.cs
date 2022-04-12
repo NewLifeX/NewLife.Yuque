@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using Microsoft.Extensions.FileProviders;
 using NewLife.Cube;
+using NewLife.Cube.Extensions;
 using NewLife.Log;
 using NewLife.YuqueWeb.Areas.Yuque;
 using NewLife.YuqueWeb.Services;
@@ -31,13 +33,24 @@ public static class YuqueService
 
     /// <summary>使用语雀</summary>
     /// <param name="app"></param>
-    /// <param name="env"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseYuque(this IApplicationBuilder app, IWebHostEnvironment env = null)
+    public static IApplicationBuilder UseYuque(this IApplicationBuilder app)
     {
         using var span = DefaultTracer.Instance?.NewSpan(nameof(UseYuque));
 
         XTrace.WriteLine("{0} Start 初始化语雀 {0}", new String('=', 32));
+
+        // 独立静态文件设置，魔方自己的静态资源内嵌在程序集里面
+        var options = new StaticFileOptions();
+        {
+            var env = app.ApplicationServices.GetService<IWebHostEnvironment>();
+            var embeddedProvider = new CubeEmbeddedFileProvider(Assembly.GetExecutingAssembly(), "NewLife.YuqueWeb.wwwroot");
+            if (!env.WebRootPath.IsNullOrEmpty() && Directory.Exists(env.WebRootPath))
+                options.FileProvider = new CompositeFileProvider(new PhysicalFileProvider(env.WebRootPath), embeddedProvider);
+            else
+                options.FileProvider = embeddedProvider;
+        }
+        app.UseStaticFiles(options);
 
         app.UseRouter(endpoints => RegisterRoute(endpoints));
 

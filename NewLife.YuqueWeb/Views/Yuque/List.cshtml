@@ -3,6 +3,8 @@
 @using NewLife.YuQueWeb.Entity
 @using NewLife.YuqueWeb.Models
 @{
+    Layout = "~/Views/Shared/_Layout_yq.cshtml";
+
     var cat = Model.Book;
     var infos = Model.Documents;
     var page = new PageModel { Page = Model.Page, Url = $"/{cat.Code}-pageIndex" };
