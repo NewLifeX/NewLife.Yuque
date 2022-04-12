@@ -1,0 +1,32 @@
+﻿@model NewLife.YuqueWeb.Models.PageModel
+@{
+    var pager = Model.Page;
+    var url = Model.Url;
+}
+@if (pager.PageCount > 1)
+{
+    <div class="page">
+        <span class="cor01">页数：@pager.PageIndex/@pager.PageCount</span>
+        <a class="first" href="@Model.GetUrl(0)" title="首页">首页</a>
+        @if (pager.PageIndex > 1)
+        {
+            <a class="prev" title="上一页" href="@Model.GetUrl( pager.PageIndex - 1)">&lt;</a>
+        }
+        @for (int i = 1; i <= pager.PageCount; i++)
+        {
+            if (i == pager.PageIndex)
+            {
+                <a class="on">@i</a>
+            }
+            else
+            {
+                <a href="@Model.GetUrl( i)">@i</a>
+            }
+        }
+        @if (pager.PageIndex < pager.PageCount)
+        {
+            <a class="next" title="下一页" href="@Model.GetUrl( pager.PageIndex + 1)">&gt;</a>
+        }
+        <a class="first" title="末页" href="@Model.GetUrl( (Int32)pager.PageCount)">末页</a>
+    </div>
+}

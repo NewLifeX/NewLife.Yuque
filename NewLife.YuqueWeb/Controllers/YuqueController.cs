@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Collections;
 using NewLife.Web;
+using NewLife.YuqueWeb.Models;
 using NewLife.YuQueWeb.Entity;
 using XCode;
 
@@ -14,8 +15,8 @@ namespace NewLife.YuqueWeb.Controllers
     [AllowAnonymous]
     public class YuqueController : Controller
     {
-        /// <summary>分页大小。默认10</summary>
-        public static Int32 PageSize => 10;
+        /// <summary>分页大小</summary>
+        public static Int32 PageSize => 20;
 
         static Boolean ViewExists(String vpath) => System.IO.File.Exists(vpath.GetFullPath());
 
@@ -74,14 +75,18 @@ namespace NewLife.YuqueWeb.Controllers
             //var tmp = cat.GetCategoryTemplate();
             //if (tmp.IsNullOrEmpty() || !ViewExists(tmp)) tmp = GetView("Book", cat.Model);
 
-            var pager = new Pager { PageIndex = pageIndex ?? 1, PageSize = PageSize };
+            var page = new Pager { PageIndex = pageIndex ?? 1, PageSize = PageSize };
 
-            ViewData["Title"] = book.Name;
-            ViewData["Book"] = book;
-            ViewBag.Pager = pager;
+            var list = Document.Search(null, null, book.Id, DateTime.MinValue, DateTime.MinValue, null, page);
 
-            //return View(tmp, cat);
-            return View(book);
+            var model = new BookIndexModel
+            {
+                Book = book,
+                Documents = list,
+                Page = page,
+            };
+
+            return View(model);
         }
         #endregion
 
