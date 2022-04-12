@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -187,6 +187,20 @@ namespace NewLife.YuQueWeb.Entity
             if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.Title.EqualIgnoreCase(title));
 
             return FindAll(_.Title == title);
+        }
+
+        /// <summary>
+        /// 根据知识库和编码查找
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static Document FindByBookAndCode(Int32 bookId, String code)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.BookId == bookId && e.Code.EqualIgnoreCase(code));
+
+            return Find(_.BookId == bookId & _.Code == code);
         }
         #endregion
 

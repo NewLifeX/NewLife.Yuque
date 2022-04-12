@@ -14,8 +14,7 @@ namespace NewLife.YuQueWeb.Entity
     [Serializable]
     [DataObject]
     [Description("文档。文档内容")]
-    [BindIndex("IU_Document_Code", true, "Code")]
-    [BindIndex("IX_Document_BookId", false, "BookId")]
+    [BindIndex("IU_Document_BookId_Code", true, "BookId,Code")]
     [BindIndex("IX_Document_Title", false, "Title")]
     [BindTable("Document", Description = "文档。文档内容", ConnName = "YuQue", DbType = DatabaseType.None)]
     public partial class Document
