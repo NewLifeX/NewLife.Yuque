@@ -15,7 +15,7 @@ services.AddCube();
 
 var app = builder.Build();
 app.UseCube(builder.Environment);
-app.UseYuque();
+app.UseYuque(true);
 app.UseAuthorization();
 app.MapControllerRoute(name: "default", pattern: "{controller=Index}/{action=Index}/{id?}");
 app.MapControllerRoute(name: "default2", pattern: "{area=Admin}/{controller=Index}/{action=Index}/{id?}");

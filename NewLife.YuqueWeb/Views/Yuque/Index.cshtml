@@ -1,5 +1,36 @@
-﻿@{
+﻿@model IList<NewLife.YuQueWeb.Entity.Book>
+@using NewLife.YuQueWeb.Entity
+@{
+    Layout = "~/Views/Shared/_Layout_yq.cshtml";
+
+    var list = Model;
+
+    var nav = Nav.Root.FindByPath("巨幕");
+    nav = nav.Childs.FirstOrDefault(e => e.Enable);
 }
-<h2 class="tith2">
-    首页
-</h2>
+<div class="container" style="min-height: 600px;">
+    @if (nav != null)
+    {
+        <div class="jumbotron">
+            <p>
+                <h1>@nav.Name</h1>
+            </p>
+        </div>
+    }
+    <div class="benefits container">
+        <div class="row">
+            @{
+                <ul class="lead">
+                    @foreach (var item in list)
+                    {
+                        <li>
+                            <a href="/@item.Code" title="@item.Remark">
+                                <i></i>@item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

@@ -33,8 +33,9 @@ public static class YuqueService
 
     /// <summary>使用语雀</summary>
     /// <param name="app"></param>
+    /// <param name="useHomeIndex"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UseYuque(this IApplicationBuilder app)
+    public static IApplicationBuilder UseYuque(this IApplicationBuilder app, Boolean useHomeIndex)
     {
         using var span = DefaultTracer.Instance?.NewSpan(nameof(UseYuque));
 
@@ -52,7 +53,7 @@ public static class YuqueService
         }
         app.UseStaticFiles(options);
 
-        app.UseRouter(endpoints => RegisterRoute(endpoints));
+        app.UseRouter(endpoints => RegisterRoute(endpoints, useHomeIndex));
 
         // 自动检查并添加菜单
         AreaBase.RegisterArea<YuqueArea>();
@@ -66,8 +67,18 @@ public static class YuqueService
     /// 注册路由
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void RegisterRoute(IEndpointRouteBuilder endpoints)
+    /// <param name="useHomeIndex"></param>
+    public static void RegisterRoute(IEndpointRouteBuilder endpoints, Boolean useHomeIndex)
     {
+        if (useHomeIndex)
+        {
+            endpoints.MapControllerRoute(
+                name: "Yuque_Index",
+                pattern: "/",
+                defaults: new { controller = "Yuque", action = "Index" }
+            );
+        }
+
         #region 类别
         endpoints.MapControllerRoute(
             name: "Yuque_Category",

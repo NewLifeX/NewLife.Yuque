@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Collections;
+using NewLife.Common;
 using NewLife.Web;
 using NewLife.YuqueWeb.Models;
 using NewLife.YuQueWeb.Entity;
@@ -47,17 +48,15 @@ namespace NewLife.YuqueWeb.Controllers
             });
         }
 
-        //public ActionResult Index()
-        //{
-        //    var name = RouteData.Values["modelName"] + "";
-        //    var model = Model.FindByName(name);
+        public ActionResult Index()
+        {
+            var list = Book.FindAllWithCache().Where(e => e.Enable).ToList();
 
-        //    // 选择模版
-        //    var tmp = model.IndexTemplate;
-        //    if (tmp.IsNullOrEmpty() || !ViewExists(tmp)) tmp = GetView("Index", model);
+            var sys = SysConfig.Current;
+            ViewBag.Title = sys.DisplayName;
 
-        //    return View(tmp, model);
-        //}
+            return View("Index", list);
+        }
 
         #region 分类列表页
         /// <summary>
