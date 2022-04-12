@@ -18,7 +18,7 @@ namespace NewLife.YuQueWeb.Entity
 
             // 过滤器 UserModule、TimeModule、IPModule
             Meta.Modules.Add<UserModule>();
-            Meta.Modules.Add<TimeModule>();
+            //Meta.Modules.Add<TimeModule>();
             Meta.Modules.Add<IPModule>();
         }
 

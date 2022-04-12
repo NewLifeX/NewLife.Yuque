@@ -1,6 +1,7 @@
 ﻿using NewLife.Log;
 using NewLife.YuQue;
 using NewLife.YuQueWeb.Entity;
+using XCode;
 using XCode.Membership;
 
 namespace NewLife.YuqueWeb.Services;
@@ -59,7 +60,8 @@ public class BookService
                     list.Add(book);
                 }
 
-                book.Name = item.Name;
+                if (book.Name.IsNullOrEmpty()) book.Name = item.Name;
+
                 book.Type = item.Type;
                 book.UserName = item.User?.Name;
                 book.Docs = item.Items;
@@ -67,9 +69,10 @@ public class BookService
                 book.Watches = item.Watches;
                 book.Namespace = item.Namespace;
                 book.Remark = item.Description;
-                book.SyncTime = DateTime.Now;
                 book.CreateTime = item.CreateTime;
                 book.UpdateTime = item.UpdateTime;
+
+                book.SyncTime = DateTime.Now;
 
                 book.Update();
             }
@@ -132,6 +135,7 @@ public class BookService
                         Code = item.Slug,
                         Slug = item.Slug,
                         Enable = true,
+                        Sync = item.Public > 0,
                     };
                     doc.Insert();
                 }
@@ -140,7 +144,7 @@ public class BookService
                 doc.Title = item.Title;
                 doc.Slug = item.Slug;
                 doc.BookId = bookId;
-                doc.Sync = item.Public > 0;
+                //doc.Sync = item.Public > 0;
 
                 doc.UserName = item.LastEditor?.Name;
                 doc.Format = item.Format;
@@ -148,12 +152,12 @@ public class BookService
                 doc.Likes = item.Likes;
                 doc.Comments = item.Comments;
                 doc.WordCount = item.WordCount;
-                doc.Cover = item.Cover;
+                if (!item.Cover.IsNullOrEmpty()) doc.Cover = item.Cover;
                 doc.Remark = item.Description;
 
                 //doc.SyncTime = DateTime.Now;
                 doc.PublishTime = item.PublishTime;
-                doc.PublishTime = item.FirstPublishTime;
+                doc.FirstPublishTime = item.FirstPublishTime;
                 doc.CreateTime = item.CreateTime;
                 doc.UpdateTime = item.UpdateTime;
 
@@ -194,14 +198,18 @@ public class BookService
         doc.Likes = detail.Likes;
         doc.Comments = detail.Comments;
         doc.WordCount = detail.WordCount;
-        doc.Cover = detail.Cover;
+
+        if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
         doc.Remark = detail.Description;
 
-        doc.SyncTime = DateTime.Now;
         doc.PublishTime = detail.PublishTime;
-        doc.PublishTime = detail.FirstPublishTime;
+        doc.FirstPublishTime = detail.FirstPublishTime;
         doc.CreateTime = detail.CreateTime;
         doc.UpdateTime = detail.UpdateTime;
+
+        if (!(doc as IEntity).HasDirty) return 0;
+
+        doc.SyncTime = DateTime.Now;
 
         return doc.Update();
     }
