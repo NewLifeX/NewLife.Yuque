@@ -20,3 +20,4 @@ bld/
 *.log
 *.nuspec
 *.nupkg
+/NewLife.YuqueWeb/Entity/Config

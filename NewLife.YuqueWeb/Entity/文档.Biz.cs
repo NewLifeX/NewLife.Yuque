@@ -29,8 +29,8 @@ namespace NewLife.YuQueWeb.Entity
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
 
-            // 这里验证参数范围，建议抛出参数异常，指定参数名，前端用户界面可以捕获参数异常并聚焦到对应的参数输入框
-            if (Title.IsNullOrEmpty()) throw new ArgumentNullException(nameof(Title), "标题不能为空！");
+            //// 这里验证参数范围，建议抛出参数异常，指定参数名，前端用户界面可以捕获参数异常并聚焦到对应的参数输入框
+            //if (Title.IsNullOrEmpty()) throw new ArgumentNullException(nameof(Title), "标题不能为空！");
 
             // 建议先调用基类方法，基类方法会做一些统一处理
             base.Valid(isNew);
@@ -131,6 +131,14 @@ namespace NewLife.YuQueWeb.Entity
 
             return Find(_.BookId == bookId & _.Code == code);
         }
+
+        public static Document FindByBookAndSlug(Int32 bookId, String slug)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.BookId == bookId && e.Slug.EqualIgnoreCase(slug));
+
+            return Find(_.BookId == bookId & _.Slug == slug);
+        }
         #endregion
 
         #region 高级查询
@@ -156,15 +164,23 @@ namespace NewLife.YuQueWeb.Entity
             return FindAll(exp, page);
         }
 
-        // Select Count(Id) as Id,Category From Document Where CreateTime>'2020-01-24 00:00:00' Group By Category Order By Id Desc limit 20
-        //static readonly FieldCache<Document> _CategoryCache = new FieldCache<Document>(nameof(Category))
-        //{
-        //Where = _.CreateTime > DateTime.Today.AddDays(-30) & Expression.Empty
-        //};
+        public static IList<Document> SearchByUpdateTime(DateTime start, DateTime end, PageParameter page)
+        {
+            var exp = new WhereExpression();
 
-        ///// <summary>获取类别列表，字段缓存10分钟，分组统计数据最多的前20种，用于魔方前台下拉选择</summary>
-        ///// <returns></returns>
-        //public static IDictionary<String, String> GetCategoryList() => _CategoryCache.FindAllName();
+            exp &= _.UpdateTime.Between(start, end);
+
+            return FindAll(exp, page);
+        }
+
+        public static IList<Document> SearchBySyncTime(DateTime end, PageParameter page)
+        {
+            var exp = new WhereExpression();
+
+            exp &= _.SyncTime < end | _.SyncTime.IsNull();
+
+            return FindAll(exp, page);
+        }
         #endregion
 
         #region 业务操作

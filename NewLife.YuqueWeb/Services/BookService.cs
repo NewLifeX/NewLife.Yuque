@@ -126,7 +126,7 @@ public class BookService
             foreach (var item in list)
             {
                 var doc = Document.FindById(item.Id);
-                if (doc == null) doc = Document.FindByCode(item.Slug);
+                if (doc == null) doc = Document.FindByBookAndSlug(book.Id, item.Slug);
                 if (doc == null)
                 {
                     doc = new Document
@@ -134,6 +134,7 @@ public class BookService
                         Id = item.Id,
                         Code = item.Slug,
                         Slug = item.Slug,
+                        Title = item.Title,
                         Enable = true,
                         Sync = item.Public > 0,
                     };

@@ -61,12 +61,27 @@ namespace NewLife.YuqueWeb.Services
             //}
 
             // 只同步最近有改变的文章
-            var start = DateTime.Today.AddDays(-7);
-
+            var start = DateTime.Now.AddDays(-1);
             var page = new PageParameter { PageSize = 100 };
             while (true)
             {
-                var list = Document.Search(null, null, -1, start, DateTime.MinValue, null, page);
+                var list = Document.SearchByUpdateTime(start, DateTime.MinValue, page);
+                if (list.Count == 0) break;
+
+                foreach (var item in list)
+                {
+                    await _bookService.Sync(item);
+                }
+
+                page.PageIndex++;
+            }
+
+            // 太久没同步的文章，都刷新一次
+            var time = DateTime.Today.AddDays(-7);
+            page = new PageParameter { PageSize = 100 };
+            while (true)
+            {
+                var list = Document.SearchBySyncTime(time, page);
                 if (list.Count == 0) break;
 
                 foreach (var item in list)

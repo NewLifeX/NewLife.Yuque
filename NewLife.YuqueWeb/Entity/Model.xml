@@ -64,8 +64,10 @@
     </Columns>
     <Indexes>
       <Index Columns="BookId,Code" Unique="True" />
+      <Index Columns="BookId,Slug" />
       <Index Columns="Title" />
       <Index Columns="UpdateTime" />
+      <Index Columns="SyncTime" />
     </Indexes>
   </Table>
 </Tables>
