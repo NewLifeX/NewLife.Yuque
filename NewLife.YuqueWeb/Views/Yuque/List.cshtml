@@ -17,11 +17,11 @@
     </div>
     <div class="row">
         @{
-            <ul class="list_news_dl fixed">
+            <ul class="lead">
                 @foreach (var item in infos)
                 {
                     <li>
-                        <a href="/@cat.Code/@item.Code">
+                        <a href="/@cat.Code/@item.Code" title="@item.Remark">
                             <i></i>@item.Title
                         </a>
                     </li>
