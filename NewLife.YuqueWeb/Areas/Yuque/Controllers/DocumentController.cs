@@ -48,8 +48,6 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             var start = p["dtStart"].ToDateTime();
             var end = p["dtEnd"].ToDateTime();
 
-            p.RetrieveState = true;
-
             return Document.Search(null, null, bookId, start, end, p["Q"], p);
         }
     }

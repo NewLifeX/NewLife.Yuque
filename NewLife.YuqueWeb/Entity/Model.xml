@@ -70,4 +70,29 @@
       <Index Columns="SyncTime" />
     </Indexes>
   </Table>
+  <Table Name="Nav" Description="导航" DbType="SqlServer" BaseType="EntityTree">
+    <Columns>
+      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="ParentId" DataType="Int32" Description="父类" />
+      <Column Name="CategoryId" DataType="Int32" Description="分类" />
+      <Column Name="Url" DataType="String" Description="地址" />
+      <Column Name="NewWindow" DataType="Boolean" Description="新窗口打开" />
+      <Column Name="Sort" DataType="Int32" Description="排序" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Remark" DataType="String" Length="200" Description="备注" />
+    </Columns>
+    <Indexes>
+      <Index Columns="ParentId,Name" Unique="True" />
+      <Index Columns="Name" />
+    </Indexes>
+  </Table>
 </Tables>
