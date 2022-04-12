@@ -65,6 +65,7 @@
     <Indexes>
       <Index Columns="BookId,Code" Unique="True" />
       <Index Columns="Title" />
+      <Index Columns="UpdateTime" />
     </Indexes>
   </Table>
 </Tables>

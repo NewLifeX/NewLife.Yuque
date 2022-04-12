@@ -22,6 +22,8 @@ public static class YuqueService
 
         services.AddSingleton<BookService>();
 
+        services.AddHostedService<SyncService>();
+
         XTrace.WriteLine("{0} End   配置语雀 {0}", new String('=', 32));
 
         return services;

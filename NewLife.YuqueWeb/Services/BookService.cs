@@ -116,26 +116,31 @@ public class BookService
         var offset = 0;
         while (true)
         {
+            // 分批拉取
             var list = await client.GetDocuments(book.Id, offset);
             if (list.Length == 0) break;
 
             foreach (var item in list)
             {
-                var doc = Document.FindByCode(item.Slug);
+                var doc = Document.FindById(item.Id);
+                if (doc == null) doc = Document.FindByCode(item.Slug);
                 if (doc == null)
                 {
                     doc = new Document
                     {
                         Id = item.Id,
                         Code = item.Slug,
-                        Title = item.Title,
-                        BookId = bookId,
                         Slug = item.Slug,
                         Enable = true,
-                        Sync = item.Public > 0,
                     };
                     doc.Insert();
                 }
+
+                doc.Id = item.Id;
+                doc.Title = item.Title;
+                doc.Slug = item.Slug;
+                doc.BookId = bookId;
+                doc.Sync = item.Public > 0;
 
                 doc.UserName = item.LastEditor?.Name;
                 doc.Format = item.Format;
@@ -146,7 +151,7 @@ public class BookService
                 doc.Cover = item.Cover;
                 doc.Remark = item.Description;
 
-                doc.SyncTime = DateTime.Now;
+                //doc.SyncTime = DateTime.Now;
                 doc.PublishTime = item.PublishTime;
                 doc.PublishTime = item.FirstPublishTime;
                 doc.CreateTime = item.CreateTime;
@@ -160,5 +165,44 @@ public class BookService
         }
 
         return count;
+    }
+
+    public async Task<Int32> Sync(Document doc)
+    {
+        var book = doc.Book;
+        if (doc == null || !doc.Sync || book == null || !book.Sync) return 0;
+
+        var token = GetToken();
+        var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
+
+        var detail = await client.GetDocument(book.Namespace, doc.Slug);
+        if (detail == null) return 0;
+
+        doc.Id = detail.Id;
+        doc.Title = detail.Title;
+        doc.BookId = detail.BookId;
+        doc.Slug = detail.Slug;
+
+        doc.UserName = detail.Creator?.Name;
+        doc.Format = detail.Format;
+
+        doc.Body = detail.Body;
+        doc.BodyHtml = detail.BodyHtml;
+        doc.ContentUpdateTime = detail.ContentUpdateTime;
+
+        doc.Hits = detail.Hits;
+        doc.Likes = detail.Likes;
+        doc.Comments = detail.Comments;
+        doc.WordCount = detail.WordCount;
+        doc.Cover = detail.Cover;
+        doc.Remark = detail.Description;
+
+        doc.SyncTime = DateTime.Now;
+        doc.PublishTime = detail.PublishTime;
+        doc.PublishTime = detail.FirstPublishTime;
+        doc.CreateTime = detail.CreateTime;
+        doc.UpdateTime = detail.UpdateTime;
+
+        return doc.Update();
     }
 }

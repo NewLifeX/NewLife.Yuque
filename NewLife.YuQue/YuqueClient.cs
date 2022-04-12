@@ -8,6 +8,9 @@ using NewLife.YuQue.Models;
 namespace NewLife.YuQue
 {
     /// <summary>语雀客户端</summary>
+    /// <remarks>
+    /// 文档 https://www.yuque.com/yuque/developer/api
+    /// </remarks>
     public class YuqueClient
     {
         #region 属性

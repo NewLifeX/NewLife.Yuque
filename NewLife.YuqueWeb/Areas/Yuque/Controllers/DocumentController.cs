@@ -1,4 +1,5 @@
 ﻿using NewLife.Cube;
+using NewLife.Cube.ViewModels;
 using NewLife.Web;
 using NewLife.YuQueWeb.Entity;
 using XCode.Membership;
@@ -23,10 +24,15 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 
             var list = ListFields;
             list.Clear();
-            var allows = new[] { "BookName", "Title", "Enable", "UserName", "Hits", "Likes", "Comments", "PublishTime", "WordCount", "Sync", "SyncTime" };
+            var allows = new[] { "BookName", "Title", "Code", "Enable", "UserName", "Hits", "Likes", "Comments", "PublishTime", "WordCount", "Sync", "SyncTime" };
             foreach (var item in allows)
             {
                 list.AddListField(item);
+            }
+
+            {
+                var df = list.GetField("Code") as ListField;
+                df.Url = "/{BookCode}/{Code}";
             }
         }
 
