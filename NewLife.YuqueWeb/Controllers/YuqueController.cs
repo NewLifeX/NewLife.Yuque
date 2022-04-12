@@ -75,7 +75,12 @@ namespace NewLife.YuqueWeb.Controllers
             //var tmp = cat.GetCategoryTemplate();
             //if (tmp.IsNullOrEmpty() || !ViewExists(tmp)) tmp = GetView("Book", cat.Model);
 
-            var page = new Pager { PageIndex = pageIndex ?? 1, PageSize = PageSize };
+            var page = new Pager
+            {
+                PageIndex = pageIndex ?? 1,
+                PageSize = PageSize,
+                RetrieveTotalCount = true,
+            };
 
             var list = Document.Search(null, null, book.Id, DateTime.MinValue, DateTime.MinValue, null, page);
 

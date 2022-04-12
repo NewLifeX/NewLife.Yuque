@@ -5,28 +5,31 @@
 }
 @if (pager.PageCount > 1)
 {
-    <div class="page">
-        <span class="cor01">页数：@pager.PageIndex/@pager.PageCount</span>
-        <a class="first" href="@Model.GetUrl(0)" title="首页">首页</a>
-        @if (pager.PageIndex > 1)
-        {
-            <a class="prev" title="上一页" href="@Model.GetUrl( pager.PageIndex - 1)">&lt;</a>
-        }
-        @for (int i = 1; i <= pager.PageCount; i++)
-        {
-            if (i == pager.PageIndex)
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= pager.PageCount; i++)
             {
-                <a class="on">@i</a>
+                if (i == pager.PageIndex)
+                {
+                    <li class="disabled">
+                        <span>@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="@Model.GetUrl(i)">@i</a></li>
+                }
             }
-            else
-            {
-                <a href="@Model.GetUrl( i)">@i</a>
-            }
-        }
-        @if (pager.PageIndex < pager.PageCount)
-        {
-            <a class="next" title="下一页" href="@Model.GetUrl( pager.PageIndex + 1)">&gt;</a>
-        }
-        <a class="first" title="末页" href="@Model.GetUrl( (Int32)pager.PageCount)">末页</a>
-    </div>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 }

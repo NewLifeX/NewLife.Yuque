@@ -25,7 +25,7 @@ namespace NewLife.YuqueWeb.Models
         public String GetUrl(Int32 pageIndex)
         {
             if (pageIndex <= 1)
-                return Url.Replace("", null);
+                return Url.Replace("-pageIndex", null);
             else
                 return Url.Replace("-pageIndex", "-" + pageIndex);
         }
