@@ -24,9 +24,15 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             ListFields.RemoveField("Namespace");
 
             {
-                var df = ListFields.AddListField("docments", null, "Enable");
+                var df = ListFields.AddListField("documents", null, "Enable");
                 df.DisplayName = "文档列表";
                 df.Url = "document?bookId={Id}";
+            }
+
+            {
+                var df = ListFields.AddListField("documents2", null, "Enable");
+                df.DisplayName = "前台列表";
+                df.Url = "/{Code}";
             }
         }
 
