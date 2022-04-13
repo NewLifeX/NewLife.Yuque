@@ -282,13 +282,17 @@ public class BookService
             var url = match.Groups[1].Value;
             if (url.IsNullOrEmpty()) return url;
 
+            var fileName = Path.GetFileName(url);
+            var p = fileName.IndexOf('?');
+            if (p > 0) fileName = fileName[..p];
+
             var att = list.FirstOrDefault(e => e.Remark == url);
             if (att == null) att = new Attachment();
 
             att.Category = "Yuque";
             att.Key = doc.Id + "";
             att.Title = doc.Title;
-            att.FileName = Path.GetFileName(url);
+            att.FileName = fileName;
             att.Remark = url;
 
             att.Save();
@@ -319,18 +323,30 @@ public class BookService
         var ext = Path.GetExtension(att.FileName);
         var set = NewLife.Cube.Setting.Current;
         var fileName = set.UploadPath.CombinePath(att.Category, DateTime.Today.Year + "", att.ID + ext);
+        var fileName2 = fileName.GetFullPath();
 
         XTrace.WriteLine("抓取附件 {0}，保存到 {1}", url, fileName);
 
         fileName.EnsureDirectory(true);
+        if (File.Exists(fileName2)) File.Delete(fileName2);
 
         var client = new HttpClient();
-        await client.DownloadFileAsync(url, fileName.GetFullPath());
+        //await client.DownloadFileAsync(url, fileName.GetFullPath());
+        var rs = await client.GetAsync(url);
+        att.ContentType = rs.Content.Headers.ContentType + "";
+
+        {
+            using var fs = new FileStream(fileName2, FileMode.Create);
+            await rs.Content.CopyToAsync(fs);
+        }
 
         var fi = fileName.AsFile();
         att.Size = fi.Length;
         att.Hash = fi.MD5().ToHex();
         att.Path = fileName;
+
+        if (att.ContentType.IsNullOrEmpty() && ext.EqualIgnoreCase(".png")) att.ContentType = "image/png";
+
         att.Update();
 
         return 1;
