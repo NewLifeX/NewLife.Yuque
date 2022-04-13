@@ -103,6 +103,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("Comments", "评论数", "")]
         public Int32 Comments { get => _Comments; set { if (OnPropertyChanging("Comments", value)) { _Comments = value; OnPropertyChanged("Comments"); } } }
 
+        private Int32 _LocalHits;
+        /// <summary>本地点击量</summary>
+        [DisplayName("本地点击量")]
+        [Description("本地点击量")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("LocalHits", "本地点击量", "")]
+        public Int32 LocalHits { get => _LocalHits; set { if (OnPropertyChanging("LocalHits", value)) { _LocalHits = value; OnPropertyChanged("LocalHits"); } } }
+
         private String _Body;
         /// <summary>正文。Markdown格式</summary>
         [DisplayName("正文")]
@@ -276,6 +284,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Hits": return _Hits;
                     case "Likes": return _Likes;
                     case "Comments": return _Comments;
+                    case "LocalHits": return _LocalHits;
                     case "Body": return _Body;
                     case "BodyHtml": return _BodyHtml;
                     case "ContentUpdateTime": return _ContentUpdateTime;
@@ -312,6 +321,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Hits": _Hits = value.ToInt(); break;
                     case "Likes": _Likes = value.ToInt(); break;
                     case "Comments": _Comments = value.ToInt(); break;
+                    case "LocalHits": _LocalHits = value.ToInt(); break;
                     case "Body": _Body = Convert.ToString(value); break;
                     case "BodyHtml": _BodyHtml = Convert.ToString(value); break;
                     case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
@@ -370,6 +380,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>评论数</summary>
             public static readonly Field Comments = FindByName("Comments");
+
+            /// <summary>本地点击量</summary>
+            public static readonly Field LocalHits = FindByName("LocalHits");
 
             /// <summary>正文。Markdown格式</summary>
             public static readonly Field Body = FindByName("Body");
@@ -463,6 +476,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>评论数</summary>
             public const String Comments = "Comments";
+
+            /// <summary>本地点击量</summary>
+            public const String LocalHits = "LocalHits";
 
             /// <summary>正文。Markdown格式</summary>
             public const String Body = "Body";

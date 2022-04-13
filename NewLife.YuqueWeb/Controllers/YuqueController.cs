@@ -116,7 +116,7 @@ namespace NewLife.YuqueWeb.Controllers
             //if (tmp.IsNullOrEmpty() || !ViewExists(tmp)) tmp = GetView("Info", inf.Model);
 
             // 增加浏览数
-            inf.Hits++;
+            inf.LocalHits++;
             //inf.Statistics.Increment(null);
             (inf as IEntity).SaveAsync(15);
 

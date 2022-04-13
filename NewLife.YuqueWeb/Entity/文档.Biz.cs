@@ -13,8 +13,8 @@ namespace NewLife.YuQueWeb.Entity
         static Document()
         {
             // 累加字段，生成 Update xx Set Count=Count+1234 Where xxx
-            //var df = Meta.Factory.AdditionalFields;
-            //df.Add(nameof(BookId));
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(nameof(LocalHits));
 
             // 过滤器 UserModule、TimeModule、IPModule
             Meta.Modules.Add<UserModule>();

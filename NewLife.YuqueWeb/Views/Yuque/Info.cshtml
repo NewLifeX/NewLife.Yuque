@@ -19,7 +19,7 @@
         <span class="text-center">
             <em class="e e1">作者：@inf.UserName</em>
             <em class="e e2">发布：@inf.PublishTime.ToFullString()</em>
-            <em class="e e3">浏览：@inf.Hits.ToString("n0")</em>
+            <em class="e e3">浏览：@(inf.Hits+inf.LocalHits).ToString("n0")</em>
         </span>
     </div>
 </div>
