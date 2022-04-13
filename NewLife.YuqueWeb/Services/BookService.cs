@@ -247,7 +247,7 @@ public class BookService
 
         // 处理HTML
         //if (ProcessHtml(doc) > 0) _ = Task.Run(() => FetchAttachment(doc));
-        if (ProcessHtml(doc) == 0) doc.Html = doc.BodyHtml;
+        ProcessHtml(doc);
 
         if (!(doc as IEntity).HasDirty) return 0;
 
@@ -256,22 +256,53 @@ public class BookService
         return doc.Update();
     }
 
-    private static readonly Regex _regex = new("<img.*?src=\"(.*?)\".*?>");
     public Int32 ProcessHtml(Document doc)
     {
         var html = doc?.BodyHtml;
         if (html.IsNullOrEmpty()) return 0;
 
-        var ms = _regex.Matches(html);
-        if (ms.Count == 0) return 0;
+        var rules = HtmlRule.FindAllWithCache().Where(e => e.Enable).ToList();
+        foreach (var rule in rules)
+        {
+            switch (rule.Kind)
+            {
+                case RuleKinds.图片:
+                    html = ProcessImage(doc, rule, html);
+                    break;
+                case RuleKinds.超链接:
+                    html = ProcessLink(doc, rule, html);
+                    break;
+                case RuleKinds.文本:
+                    html = ProcessText(doc, rule, html);
+                    break;
+            }
+        }
+
+        doc.Html = html;
+
+        return 1;
+    }
+
+    private static readonly Regex _regexImage = new("<img.*?src=\"(.*?)\".*?>");
+    public String ProcessImage(Document doc, HtmlRule rule, String html)
+    {
+        var ms = _regexImage.Matches(html);
+        if (ms.Count == 0) return html;
 
         // 所有附件
         var list = Attachment.FindAllByCategoryAndKey("Yuque", doc.Id + "");
 
-        var rs = _regex.Replace(html, match =>
+        var rs = _regexImage.Replace(html, match =>
         {
             var url = match.Groups[1].Value;
             if (url.IsNullOrEmpty()) return url;
+
+            // 判断域名
+            if (!rule.Rule.IsNullOrEmpty() && rule.Rule != "*")
+            {
+                var uri = new Uri(url);
+                if (uri.Host != rule.Rule) return url;
+            }
 
             try
             {
@@ -279,6 +310,7 @@ public class BookService
                 var p = fileName.IndexOf('?');
                 if (p > 0) fileName = fileName[..p];
 
+                // 生成附件
                 var att = list.FirstOrDefault(e => e.Source == url);
                 if (att == null) att = new Attachment { Enable = true };
 
@@ -319,9 +351,40 @@ public class BookService
             }
         });
 
-        doc.Html = rs;
+        return rs;
+    }
 
-        return ms.Count;
+    private static readonly Regex _regexLink = new("<a.*?href=\"(.*?)\".*?>");
+    public String ProcessLink(Document doc, HtmlRule rule, String html)
+    {
+        var ms = _regexLink.Matches(html);
+        if (ms.Count == 0) return html;
+
+        var rs = _regexLink.Replace(html, match =>
+        {
+            var url = match.Groups[1].Value;
+            if (url.IsNullOrEmpty()) return url;
+
+            // 判断规则
+            if (!rule.Rule.IsMatch(url)) return url;
+
+            if (!rule.Target.IsNullOrEmpty() && rule.Target.Contains("$1"))
+            {
+                var str = url.Replace(rule.Rule.Trim('*'), null);
+                return rule.Target.Replace("$1", str);
+            }
+
+            return rule.Target;
+        });
+
+        return rs;
+    }
+
+    public String ProcessText(Document doc, HtmlRule rule, String html)
+    {
+        if (rule.Rule.IsNullOrEmpty()) return html;
+
+        return html.Replace(rule.Rule, rule.Target);
     }
 
     /// <summary>
