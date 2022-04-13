@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using NewLife.Http;
 using NewLife.Cube.Entity;
 using NewLife.Log;
 using NewLife.Yuque;
@@ -275,7 +274,7 @@ public class BookService
         //if (!_regex.IsMatch(html)) return 0;
 
         // 所有附件
-        var list = FindAllAttachment(doc.Id);
+        var list = Attachment.FindAllByCategoryAndKey("Yuque", doc.Id + "");
 
         var rs = _regex.Replace(html, match =>
         {
@@ -286,19 +285,23 @@ public class BookService
             var p = fileName.IndexOf('?');
             if (p > 0) fileName = fileName[..p];
 
-            var att = list.FirstOrDefault(e => e.Remark == url);
-            if (att == null) att = new Attachment();
+            var att = list.FirstOrDefault(e => e.Source == url);
+            if (att == null) att = new Attachment { Enable = true };
 
             att.Category = "Yuque";
             att.Key = doc.Id + "";
             att.Title = doc.Title;
             att.FileName = fileName;
-            att.Remark = url;
+            att.Source = url;
+            att.Url = $"/{doc.BookCode}/{doc.Code}";
 
             att.Save();
 
+            // 异步抓取
+            if (!File.Exists(fileName.GetFullPath())) _ = Task.Run(() => FetchAttachment(att));
+
             var ext = Path.GetExtension(url);
-            var url2 = $"/images/{att.ID}{ext}";
+            var url2 = $"/images/{att.Id}{ext}";
 
             return match.Groups[0].Value.Replace(url, url2);
         });
@@ -308,8 +311,6 @@ public class BookService
         return ms.Count;
     }
 
-    static IList<Attachment> FindAllAttachment(Int32 docId) => Attachment.FindAll(Attachment._.Category == "" & Attachment._.Key == docId + "");
-
     /// <summary>
     /// 处理附件
     /// </summary>
@@ -317,37 +318,19 @@ public class BookService
     /// <returns></returns>
     public async Task<Int32> FetchAttachment(Attachment att)
     {
-        var url = att.Remark;
+        var url = att.Source;
         if (url.IsNullOrEmpty()) return 0;
 
-        var ext = Path.GetExtension(att.FileName);
-        var set = NewLife.Cube.Setting.Current;
-        var fileName = set.UploadPath.CombinePath(att.Category, DateTime.Today.Year + "", att.ID + ext);
-        var fileName2 = fileName.GetFullPath();
-
-        XTrace.WriteLine("抓取附件 {0}，保存到 {1}", url, fileName);
-
-        fileName.EnsureDirectory(true);
-        if (File.Exists(fileName2)) File.Delete(fileName2);
-
-        var client = new HttpClient();
-        //await client.DownloadFileAsync(url, fileName.GetFullPath());
-        var rs = await client.GetAsync(url);
-        att.ContentType = rs.Content.Headers.ContentType + "";
-
+        try
         {
-            using var fs = new FileStream(fileName2, FileMode.Create);
-            await rs.Content.CopyToAsync(fs);
+            await att.Fetch(url);
         }
+        catch (Exception ex)
+        {
+            XTrace.WriteException(ex);
 
-        var fi = fileName.AsFile();
-        att.Size = fi.Length;
-        att.Hash = fi.MD5().ToHex();
-        att.Path = fileName;
-
-        if (att.ContentType.IsNullOrEmpty() && ext.EqualIgnoreCase(".png")) att.ContentType = "image/png";
-
-        att.Update();
+            return 0;
+        }
 
         return 1;
     }

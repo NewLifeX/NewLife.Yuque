@@ -41,7 +41,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NewLife.Cube.Core" Version="5.0.2022.401" />
+    <PackageReference Include="NewLife.Cube.Core" Version="5.0.2022.413-beta1327" />
   </ItemGroup>
 
   <ItemGroup>

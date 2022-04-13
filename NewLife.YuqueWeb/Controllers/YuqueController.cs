@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewLife.Collections;
 using NewLife.Common;
 using NewLife.Cube.Entity;
+using NewLife.Log;
 using NewLife.Web;
 using NewLife.YuqueWeb.Models;
 using NewLife.YuqueWeb.Services;
@@ -161,26 +162,29 @@ namespace NewLife.YuqueWeb.Controllers
         {
             if (id.IsNullOrEmpty()) return NotFound();
 
+            // 去掉仅用于装饰的后缀名
             var p = id.IndexOf('.');
             if (p > 0) id = id[..p];
 
-            var att = Attachment.FindByID(id.ToInt());
+            var att = Attachment.FindById(id.ToLong());
             if (att == null) return NotFound();
 
+            var set = NewLife.Cube.Setting.Current;
+
             // 如果附件不存在，则抓取
-            var fileName = att.Path?.GetFullPath();
-            if (fileName.IsNullOrEmpty() || !System.IO.File.Exists(fileName))
+            var filePath = att.GetFilePath();
+            if (filePath.IsNullOrEmpty() || !System.IO.File.Exists(filePath))
             {
                 var rs = await _bookService.FetchAttachment(att);
                 if (rs == 0) return NotFound();
 
-                fileName = att.Path?.GetFullPath();
+                filePath = att.GetFilePath();
             }
 
             if (!att.ContentType.IsNullOrEmpty())
-                return PhysicalFile(fileName, att.ContentType);
+                return PhysicalFile(filePath, att.ContentType);
             else
-                return PhysicalFile(fileName, "image/png");
+                return PhysicalFile(filePath, "image/png");
         }
         #endregion
     }
