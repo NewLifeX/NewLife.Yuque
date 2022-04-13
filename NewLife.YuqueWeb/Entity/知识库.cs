@@ -60,6 +60,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get => _Enable; set { if (OnPropertyChanging("Enable", value)) { _Enable = value; OnPropertyChanged("Enable"); } } }
 
+        private Int32 _Sort;
+        /// <summary>排序。降序，数字越大越靠前</summary>
+        [DisplayName("排序")]
+        [Description("排序。降序，数字越大越靠前")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Sort", "排序。降序，数字越大越靠前", "")]
+        public Int32 Sort { get => _Sort; set { if (OnPropertyChanging("Sort", value)) { _Sort = value; OnPropertyChanged("Sort"); } } }
+
         private String _UserName;
         /// <summary>用户</summary>
         [DisplayName("用户")]
@@ -212,6 +220,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Name": return _Name;
                     case "Type": return _Type;
                     case "Enable": return _Enable;
+                    case "Sort": return _Sort;
                     case "UserName": return _UserName;
                     case "Docs": return _Docs;
                     case "Likes": return _Likes;
@@ -241,6 +250,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Name": _Name = Convert.ToString(value); break;
                     case "Type": _Type = Convert.ToString(value); break;
                     case "Enable": _Enable = value.ToBoolean(); break;
+                    case "Sort": _Sort = value.ToInt(); break;
                     case "UserName": _UserName = Convert.ToString(value); break;
                     case "Docs": _Docs = value.ToInt(); break;
                     case "Likes": _Likes = value.ToInt(); break;
@@ -282,6 +292,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName("Enable");
+
+            /// <summary>排序。降序，数字越大越靠前</summary>
+            public static readonly Field Sort = FindByName("Sort");
 
             /// <summary>用户</summary>
             public static readonly Field UserName = FindByName("UserName");
@@ -354,6 +367,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
+
+            /// <summary>排序。降序，数字越大越靠前</summary>
+            public const String Sort = "Sort";
 
             /// <summary>用户</summary>
             public const String UserName = "UserName";

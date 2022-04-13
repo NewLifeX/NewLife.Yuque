@@ -41,7 +41,7 @@ namespace NewLife.YuqueWeb.Services
         {
             using var span = _tracer.NewSpan(nameof(DoSyncBook));
 
-            var list = Book.FindAllWithCache();
+            var list = Book.GetValids();
             foreach (var item in list)
             {
                 if (item.Enable && item.Sync) await _bookService.Sync(item.Id);

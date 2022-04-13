@@ -6,7 +6,7 @@
     var list = Model;
 
     var nav = Nav.Root.FindByPath("巨幕");
-    nav = nav.Childs.FirstOrDefault(e => e.Enable);
+    nav = nav?.Childs.FirstOrDefault(e => e.Enable);
 }
 <div class="container" style="min-height: 600px;">
     @if (nav != null)

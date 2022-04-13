@@ -7,6 +7,7 @@
       <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
       <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
       <Column Name="UserName" DataType="String" Description="用户" />
       <Column Name="Docs" DataType="Int32" Description="文章数" />
       <Column Name="Likes" DataType="Int32" Description="点赞数" />

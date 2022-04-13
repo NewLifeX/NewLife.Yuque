@@ -92,6 +92,12 @@ namespace NewLife.YuQueWeb.Entity
 
             return FindAll(_.Name == name);
         }
+
+        /// <summary>
+        /// 获取可用知识库，并处理好排序
+        /// </summary>
+        /// <returns></returns>
+        public static IList<Book> GetValids() => FindAllWithCache().Where(e => e.Enable).OrderByDescending(e => e.Sort).ToList();
         #endregion
 
         #region 高级查询

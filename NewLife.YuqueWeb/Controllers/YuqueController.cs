@@ -50,7 +50,7 @@ namespace NewLife.YuqueWeb.Controllers
 
         public ActionResult Index()
         {
-            var list = Book.FindAllWithCache().Where(e => e.Enable).ToList();
+            var list = Book.GetValids();
 
             var sys = SysConfig.Current;
             ViewBag.Title = sys.DisplayName;
