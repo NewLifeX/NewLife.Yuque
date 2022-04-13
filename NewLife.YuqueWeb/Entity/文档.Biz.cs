@@ -159,7 +159,7 @@ namespace NewLife.YuqueWeb.Entity
             if (!title.IsNullOrEmpty()) exp &= _.Title == title;
             if (bookId >= 0) exp &= _.BookId == bookId;
             exp &= _.UpdateTime.Between(start, end);
-            if (!key.IsNullOrEmpty()) exp &= _.Code.Contains(key) | _.Title.Contains(key) | _.UserName.Contains(key) | _.Format.Contains(key) | _.Body.Contains(key) | _.BodyHtml.Contains(key) | _.Cover.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
+            if (!key.IsNullOrEmpty()) exp &= _.Code == key | _.Title.Contains(key) | _.UserName.Contains(key) | _.Format == key | _.Html.Contains(key) | _.Cover.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
 
             return FindAll(exp, page);
         }

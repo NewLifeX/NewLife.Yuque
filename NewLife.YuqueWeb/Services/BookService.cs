@@ -283,7 +283,7 @@ public class BookService
         return 1;
     }
 
-    private static readonly Regex _regexImage = new("<img.*?src=\"(.*?)\".*?>");
+    private static readonly Regex _regexImage = new("<img.*?src=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Multiline);
     public String ProcessImage(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexImage.Matches(html);
@@ -355,7 +355,7 @@ public class BookService
         return rs;
     }
 
-    private static readonly Regex _regexLink = new("<a.*?href=\"(.*?)\".*?>");
+    private static readonly Regex _regexLink = new("<a.*?href=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Multiline);
     public String ProcessLink(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexLink.Matches(html);

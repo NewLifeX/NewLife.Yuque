@@ -70,6 +70,36 @@ namespace XUnitTest
         }
 
         [Fact]
+        public void ProcessLink2()
+        {
+            var doc = new Document
+            {
+                BodyHtml = File.ReadAllText("link.htm".GetFullPath())
+            };
+            var rule = new HtmlRule
+            {
+                Rule = "https://www.yuque.com/smartstone/*",
+                Target = "https://www.newlifex.com/$1",
+            };
+
+            var html = doc.BodyHtml;
+            Assert.Contains(rule.Rule.TrimEnd("*"), html);
+            Assert.DoesNotContain(rule.Target.TrimEnd("$1"), html);
+            Assert.Contains("href=\"https://www.yuque.com/smartstone/xcode/100billion\"", html);
+            Assert.Contains("https://www.yuque.com/smartstone/xcode/100billion", html);
+
+            var svc = new BookService(null);
+            html = svc.ProcessLink(doc, rule, html);
+
+            // 还有一个Url，不在链接里面
+            Assert.Contains(rule.Rule.TrimEnd("*"), html);
+            //Assert.DoesNotContain(rule.Rule.TrimEnd("*"), html);
+            Assert.Contains(rule.Target.TrimEnd("$1"), html);
+            Assert.DoesNotContain("href=\"https://www.yuque.com/smartstone/xcode/100billion\"", html);
+            Assert.Contains("https://www.yuque.com/smartstone/xcode/100billion", html);
+        }
+
+        [Fact]
         public void ProcessText()
         {
             var doc = new Document
