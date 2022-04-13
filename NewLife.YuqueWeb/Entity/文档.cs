@@ -135,6 +135,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("BodyHtml", "HTML正文", "")]
         public String BodyHtml { get => _BodyHtml; set { if (OnPropertyChanging("BodyHtml", value)) { _BodyHtml = value; OnPropertyChanged("BodyHtml"); } } }
 
+        private String _Html;
+        /// <summary>HTML。处理后的HTML内容，用于前端展示</summary>
+        [DisplayName("HTML")]
+        [Description("HTML。处理后的HTML内容，用于前端展示")]
+        [DataObjectField(false, false, true, -1)]
+        [BindColumn("Html", "HTML。处理后的HTML内容，用于前端展示", "")]
+        public String Html { get => _Html; set { if (OnPropertyChanging("Html", value)) { _Html = value; OnPropertyChanged("Html"); } } }
+
         private DateTime _ContentUpdateTime;
         /// <summary>内容更新时间</summary>
         [DisplayName("内容更新时间")]
@@ -320,6 +328,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "LocalHits": return _LocalHits;
                     case "Body": return _Body;
                     case "BodyHtml": return _BodyHtml;
+                    case "Html": return _Html;
                     case "ContentUpdateTime": return _ContentUpdateTime;
                     case "PublishTime": return _PublishTime;
                     case "FirstPublishTime": return _FirstPublishTime;
@@ -361,6 +370,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "LocalHits": _LocalHits = value.ToInt(); break;
                     case "Body": _Body = Convert.ToString(value); break;
                     case "BodyHtml": _BodyHtml = Convert.ToString(value); break;
+                    case "Html": _Html = Convert.ToString(value); break;
                     case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
                     case "PublishTime": _PublishTime = value.ToDateTime(); break;
                     case "FirstPublishTime": _FirstPublishTime = value.ToDateTime(); break;
@@ -432,6 +442,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>HTML正文</summary>
             public static readonly Field BodyHtml = FindByName("BodyHtml");
+
+            /// <summary>HTML。处理后的HTML内容，用于前端展示</summary>
+            public static readonly Field Html = FindByName("Html");
 
             /// <summary>内容更新时间</summary>
             public static readonly Field ContentUpdateTime = FindByName("ContentUpdateTime");
@@ -540,6 +553,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>HTML正文</summary>
             public const String BodyHtml = "BodyHtml";
+
+            /// <summary>HTML。处理后的HTML内容，用于前端展示</summary>
+            public const String Html = "Html";
 
             /// <summary>内容更新时间</summary>
             public const String ContentUpdateTime = "ContentUpdateTime";

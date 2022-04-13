@@ -18,7 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NewLife.YuQueWeb\NewLife.YuqueWeb.csproj" />
     <ProjectReference Include="..\NewLife.Yuque\NewLife.Yuque.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="img.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using NewLife.Log;
+﻿using System.Text.RegularExpressions;
+using NewLife.Cube.Entity;
+using NewLife.Log;
 using NewLife.Yuque;
 using NewLife.YuQueWeb.Entity;
 using XCode;
@@ -17,10 +19,7 @@ public class BookService
     /// 实例化知识库服务
     /// </summary>
     /// <param name="tracer"></param>
-    public BookService(ITracer tracer)
-    {
-        _tracer = tracer;
-    }
+    public BookService(ITracer tracer) => _tracer = tracer;
 
     /// <summary>
     /// 扫描发现所有知识库
@@ -86,7 +85,7 @@ public class BookService
         return count;
     }
 
-    String GetToken()
+    private String GetToken()
     {
         // 获取令牌
         var p = Parameter.GetOrAdd(0, "Yuque", "Token");
@@ -246,10 +245,72 @@ public class BookService
 
         if (detail.DeleteTime.Year > 2000) doc.Enable = false;
 
+        // 处理HTML
+        //if (ProcessHtml(doc) > 0) _ = Task.Run(() => FetchAttachment(doc));
+        if (ProcessHtml(doc) == 0) doc.Html = doc.BodyHtml;
+
         if (!(doc as IEntity).HasDirty) return 0;
 
         doc.SyncTime = DateTime.Now;
 
         return doc.Update();
+    }
+
+    static Regex _regex = new("<img.*?src=\"(.*?)\".*?>");
+    public Int32 ProcessHtml(Document doc)
+    {
+        var html = doc?.BodyHtml;
+        if (html.IsNullOrEmpty()) return 0;
+
+        var ms = _regex.Matches(html);
+        if (ms.Count == 0) return 0;
+
+        //foreach (Match item in ms)
+        //{
+        //    var url = item.Groups[1].Value;
+        //    XTrace.WriteLine(url);
+        //}
+
+        //if (!_regex.IsMatch(html)) return 0;
+
+        // 所有附件
+        var list = FindAllAttachment(doc.Id);
+
+        var rs = _regex.Replace(html, match =>
+        {
+            var url = match.Groups[1].Value;
+            if (url.IsNullOrEmpty()) return url;
+
+            var att = list.FirstOrDefault(e => e.Remark == url);
+            if (att == null) att = new Attachment();
+
+            att.Category = "Yuque";
+            att.Key = doc.Id + "";
+            att.Title = doc.Title;
+            att.FileName = Path.GetFileName(url);
+            att.Remark = url;
+
+            att.Save();
+
+            var url2 = $"/attach?id={att.ID}";
+
+            return match.Groups[0].Value.Replace(url, url2);
+        });
+
+        doc.Html = rs;
+
+        return ms.Count;
+    }
+
+    static IList<Attachment> FindAllAttachment(Int32 docId) => Attachment.FindAll(Attachment._.Category == "" & Attachment._.Key == docId + "");
+
+    /// <summary>
+    /// 处理附件
+    /// </summary>
+    /// <param name="doc"></param>
+    /// <returns></returns>
+    public async Task<Int32> FetchAttachment(Document doc)
+    {
+        return 0;
     }
 }

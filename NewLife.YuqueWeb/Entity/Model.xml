@@ -50,6 +50,7 @@
       <Column Name="LocalHits" DataType="Int32" Description="本地点击量" />
       <Column Name="Body" DataType="String" Length="-1" Description="正文。Markdown格式" />
       <Column Name="BodyHtml" DataType="String" Length="-1" Description="HTML正文" />
+      <Column Name="Html" DataType="String" Length="-1" Description="HTML。处理后的HTML内容，用于前端展示" />
       <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
       <Column Name="PublishTime" DataType="DateTime" Description="发布时间" />
       <Column Name="FirstPublishTime" DataType="DateTime" Description="首次发布" />
