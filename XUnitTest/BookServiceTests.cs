@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NewLife.YuqueWeb.Services;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 using Xunit;
 
 namespace XUnitTest

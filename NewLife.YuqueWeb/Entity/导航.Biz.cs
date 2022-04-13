@@ -4,7 +4,7 @@ using NewLife.Log;
 using XCode;
 using XCode.Membership;
 
-namespace NewLife.YuQueWeb.Entity
+namespace NewLife.YuqueWeb.Entity
 {
     /// <summary>导航</summary>
     public partial class Nav : EntityTree<Nav>
@@ -31,22 +31,6 @@ namespace NewLife.YuQueWeb.Entity
 
             // 建议先调用基类方法，基类方法会做一些统一处理
             base.Valid(isNew);
-
-            // 在新插入数据或者修改了指定字段时进行修正
-            // 处理当前已登录用户信息，可以由UserModule过滤器代劳
-            /*var user = ManageProvider.User;
-            if (user != null)
-            {
-                if (isNew && !Dirtys[nameof(CreateUserID)]) CreateUserID = user.ID;
-                if (!Dirtys[nameof(UpdateUserID)]) UpdateUserID = user.ID;
-            }*/
-            //if (isNew && !Dirtys[nameof(CreateTime)]) CreateTime = DateTime.Now;
-            //if (!Dirtys[nameof(UpdateTime)]) UpdateTime = DateTime.Now;
-            //if (isNew && !Dirtys[nameof(CreateIP)]) CreateIP = ManageProvider.UserHost;
-            //if (!Dirtys[nameof(UpdateIP)]) UpdateIP = ManageProvider.UserHost;
-
-            // 检查唯一索引
-            // CheckExist(isNew, nameof(ParentId), nameof(Name));
         }
 
         /// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
@@ -62,22 +46,24 @@ namespace NewLife.YuQueWeb.Entity
             // 需要注意的是，如果该方法调用了其它实体类的首次数据库操作，目标实体类的数据初始化将会在同一个线程完成
             if (XTrace.Debug) XTrace.WriteLine("开始初始化{0}[{1}]数据……", typeof(Nav).Name, Meta.Table.DataTable.DisplayName);
 
-            var fn = $"../InitData/{Meta.TableName}.json".GetFullPath();
-
             var header = Root.Add("头部");
             header.Add("首页", "/");
-            header.Add("关于", "/About");
-            header.Add("联系我们", "/Contact");
+            header.Add("产品方案", "#")
+                .Add("物联网平台", "http://iot.feifan.link")
+                .Add("星尘分布式系统", "http://star.newlifex.com");
+            header.Add("关于我们", "/About");
 
             var footer = Root.Add("尾部");
             var link = footer.Add("友情链接");
             link.Add("新生命团队", "https://www.NewLifeX.com");
             link.Add("开源项目", "https://github.com/NewLifeX");
 
-            footer.Add("文档").Add("文档资料", "https://www.yuque.com/smartstone/cube");
+            footer.Add("文档").Add("文档资料", "https://www.newlifex.com");
             footer.Add("关于")
-                .Add("关于我们", "/About")
-                .Add("联系我们", "/Contact");
+                .Add("关于我们", "/About");
+
+            var jumbotron = Root.Add("巨幕");
+            jumbotron.Add("学无先后达者为师！");
 
             if (XTrace.Debug) XTrace.WriteLine("完成初始化{0}[{1}]数据！", typeof(Nav).Name, Meta.Table.DataTable.DisplayName);
         }

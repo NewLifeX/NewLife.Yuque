@@ -2,7 +2,7 @@
 using NewLife.Cube.Entity;
 using NewLife.Log;
 using NewLife.Yuque;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 using XCode;
 using XCode.Membership;
 
@@ -256,7 +256,7 @@ public class BookService
         return doc.Update();
     }
 
-    static Regex _regex = new("<img.*?src=\"(.*?)\".*?>");
+    private static readonly Regex _regex = new("<img.*?src=\"(.*?)\".*?>");
     public Int32 ProcessHtml(Document doc)
     {
         var html = doc?.BodyHtml;

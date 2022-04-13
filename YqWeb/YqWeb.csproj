@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewLife.YuQueWeb\NewLife.YuqueWeb.csproj" />
+    <ProjectReference Include="..\NewLife.YuqueWeb\NewLife.YuqueWeb.csproj" />
   </ItemGroup>
 
 </Project>

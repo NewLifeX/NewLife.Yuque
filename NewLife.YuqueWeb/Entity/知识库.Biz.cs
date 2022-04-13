@@ -2,7 +2,7 @@
 using XCode;
 using XCode.Membership;
 
-namespace NewLife.YuQueWeb.Entity
+namespace NewLife.YuqueWeb.Entity
 {
     /// <summary>知识库。管理知识库</summary>
     public partial class Book : Entity<Book>

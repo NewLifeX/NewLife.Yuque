@@ -1,5 +1,5 @@
 ﻿using NewLife.Data;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 
 namespace NewLife.YuqueWeb.Models
 {

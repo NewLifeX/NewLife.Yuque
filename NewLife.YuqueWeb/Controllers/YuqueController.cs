@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using NewLife.Collections;
 using NewLife.Common;
 using NewLife.Cube.Entity;
-using NewLife.Log;
 using NewLife.Web;
+using NewLife.YuqueWeb.Entity;
 using NewLife.YuqueWeb.Models;
 using NewLife.YuqueWeb.Services;
-using NewLife.YuQueWeb.Entity;
 using XCode;
 
 namespace NewLife.YuqueWeb.Controllers

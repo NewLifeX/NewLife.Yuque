@@ -8,7 +8,7 @@ using XCode;
 using XCode.Configuration;
 using XCode.DataAccessLayer;
 
-namespace NewLife.YuQueWeb.Entity
+namespace NewLife.YuqueWeb.Entity
 {
     /// <summary>文档。文档内容</summary>
     [Serializable]
@@ -19,7 +19,7 @@ namespace NewLife.YuQueWeb.Entity
     [BindIndex("IX_Document_Title", false, "Title")]
     [BindIndex("IX_Document_UpdateTime", false, "UpdateTime")]
     [BindIndex("IX_Document_SyncTime", false, "SyncTime")]
-    [BindTable("Document", Description = "文档。文档内容", ConnName = "YuQue", DbType = DatabaseType.None)]
+    [BindTable("Document", Description = "文档。文档内容", ConnName = "Yuque", DbType = DatabaseType.None)]
     public partial class Document
     {
         #region 属性

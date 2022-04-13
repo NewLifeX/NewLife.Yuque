@@ -10,14 +10,13 @@ using XCode.DataAccessLayer;
 
 namespace NewLife.YuqueWeb.Entity
 {
-    /// <summary>导航</summary>
+    /// <summary>Html规则。用于替换Html中的连接或字符串</summary>
     [Serializable]
     [DataObject]
-    [Description("导航")]
-    [BindIndex("IU_Nav_ParentId_Name", true, "ParentId,Name")]
-    [BindIndex("IX_Nav_Name", false, "Name")]
-    [BindTable("Nav", Description = "导航", ConnName = "Yuque", DbType = DatabaseType.SqlServer)]
-    public partial class Nav
+    [Description("Html规则。用于替换Html中的连接或字符串")]
+    [BindIndex("IX_HtmlRule_Kind", false, "Kind")]
+    [BindTable("HtmlRule", Description = "Html规则。用于替换Html中的连接或字符串", ConnName = "Yuque", DbType = DatabaseType.None)]
+    public partial class HtmlRule
     {
         #region 属性
         private Int32 _Id;
@@ -28,53 +27,29 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("Id", "编号", "")]
         public Int32 Id { get => _Id; set { if (OnPropertyChanging("Id", value)) { _Id = value; OnPropertyChanged("Id"); } } }
 
-        private String _Name;
-        /// <summary>名称</summary>
-        [DisplayName("名称")]
-        [Description("名称")]
+        private RuleKinds _Kind;
+        /// <summary>种类。图片、链接、文本</summary>
+        [DisplayName("种类")]
+        [Description("种类。图片、链接、文本")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Kind", "种类。图片、链接、文本", "")]
+        public RuleKinds Kind { get => _Kind; set { if (OnPropertyChanging("Kind", value)) { _Kind = value; OnPropertyChanged("Kind"); } } }
+
+        private String _Rule;
+        /// <summary>规则</summary>
+        [DisplayName("规则")]
+        [Description("规则")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "", Master = true)]
-        public String Name { get => _Name; set { if (OnPropertyChanging("Name", value)) { _Name = value; OnPropertyChanged("Name"); } } }
+        [BindColumn("Rule", "规则", "", Master = true)]
+        public String Rule { get => _Rule; set { if (OnPropertyChanging("Rule", value)) { _Rule = value; OnPropertyChanged("Rule"); } } }
 
-        private Int32 _ParentId;
-        /// <summary>父类</summary>
-        [DisplayName("父类")]
-        [Description("父类")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("ParentId", "父类", "")]
-        public Int32 ParentId { get => _ParentId; set { if (OnPropertyChanging("ParentId", value)) { _ParentId = value; OnPropertyChanged("ParentId"); } } }
-
-        private Int32 _CategoryId;
-        /// <summary>分类</summary>
-        [DisplayName("分类")]
-        [Description("分类")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("CategoryId", "分类", "")]
-        public Int32 CategoryId { get => _CategoryId; set { if (OnPropertyChanging("CategoryId", value)) { _CategoryId = value; OnPropertyChanged("CategoryId"); } } }
-
-        private String _Url;
-        /// <summary>地址</summary>
-        [DisplayName("地址")]
-        [Description("地址")]
+        private String _Target;
+        /// <summary>目标</summary>
+        [DisplayName("目标")]
+        [Description("目标")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Url", "地址", "")]
-        public String Url { get => _Url; set { if (OnPropertyChanging("Url", value)) { _Url = value; OnPropertyChanged("Url"); } } }
-
-        private Boolean _NewWindow;
-        /// <summary>新窗口打开</summary>
-        [DisplayName("新窗口打开")]
-        [Description("新窗口打开")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("NewWindow", "新窗口打开", "")]
-        public Boolean NewWindow { get => _NewWindow; set { if (OnPropertyChanging("NewWindow", value)) { _NewWindow = value; OnPropertyChanged("NewWindow"); } } }
-
-        private Int32 _Sort;
-        /// <summary>排序</summary>
-        [DisplayName("排序")]
-        [Description("排序")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Sort", "排序", "")]
-        public Int32 Sort { get => _Sort; set { if (OnPropertyChanging("Sort", value)) { _Sort = value; OnPropertyChanged("Sort"); } } }
+        [BindColumn("Target", "目标", "")]
+        public String Target { get => _Target; set { if (OnPropertyChanging("Target", value)) { _Target = value; OnPropertyChanged("Target"); } } }
 
         private Boolean _Enable;
         /// <summary>启用</summary>
@@ -168,12 +143,9 @@ namespace NewLife.YuqueWeb.Entity
                 switch (name)
                 {
                     case "Id": return _Id;
-                    case "Name": return _Name;
-                    case "ParentId": return _ParentId;
-                    case "CategoryId": return _CategoryId;
-                    case "Url": return _Url;
-                    case "NewWindow": return _NewWindow;
-                    case "Sort": return _Sort;
+                    case "Kind": return _Kind;
+                    case "Rule": return _Rule;
+                    case "Target": return _Target;
                     case "Enable": return _Enable;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
@@ -192,12 +164,9 @@ namespace NewLife.YuqueWeb.Entity
                 switch (name)
                 {
                     case "Id": _Id = value.ToInt(); break;
-                    case "Name": _Name = Convert.ToString(value); break;
-                    case "ParentId": _ParentId = value.ToInt(); break;
-                    case "CategoryId": _CategoryId = value.ToInt(); break;
-                    case "Url": _Url = Convert.ToString(value); break;
-                    case "NewWindow": _NewWindow = value.ToBoolean(); break;
-                    case "Sort": _Sort = value.ToInt(); break;
+                    case "Kind": _Kind = (RuleKinds)value.ToInt(); break;
+                    case "Rule": _Rule = Convert.ToString(value); break;
+                    case "Target": _Target = Convert.ToString(value); break;
                     case "Enable": _Enable = value.ToBoolean(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
@@ -215,29 +184,20 @@ namespace NewLife.YuqueWeb.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得导航字段信息的快捷方式</summary>
+        /// <summary>取得Html规则字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
             public static readonly Field Id = FindByName("Id");
 
-            /// <summary>名称</summary>
-            public static readonly Field Name = FindByName("Name");
+            /// <summary>种类。图片、链接、文本</summary>
+            public static readonly Field Kind = FindByName("Kind");
 
-            /// <summary>父类</summary>
-            public static readonly Field ParentId = FindByName("ParentId");
+            /// <summary>规则</summary>
+            public static readonly Field Rule = FindByName("Rule");
 
-            /// <summary>分类</summary>
-            public static readonly Field CategoryId = FindByName("CategoryId");
-
-            /// <summary>地址</summary>
-            public static readonly Field Url = FindByName("Url");
-
-            /// <summary>新窗口打开</summary>
-            public static readonly Field NewWindow = FindByName("NewWindow");
-
-            /// <summary>排序</summary>
-            public static readonly Field Sort = FindByName("Sort");
+            /// <summary>目标</summary>
+            public static readonly Field Target = FindByName("Target");
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName("Enable");
@@ -272,29 +232,20 @@ namespace NewLife.YuqueWeb.Entity
             static Field FindByName(String name) => Meta.Table.FindByName(name);
         }
 
-        /// <summary>取得导航字段名称的快捷方式</summary>
+        /// <summary>取得Html规则字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
             public const String Id = "Id";
 
-            /// <summary>名称</summary>
-            public const String Name = "Name";
+            /// <summary>种类。图片、链接、文本</summary>
+            public const String Kind = "Kind";
 
-            /// <summary>父类</summary>
-            public const String ParentId = "ParentId";
+            /// <summary>规则</summary>
+            public const String Rule = "Rule";
 
-            /// <summary>分类</summary>
-            public const String CategoryId = "CategoryId";
-
-            /// <summary>地址</summary>
-            public const String Url = "Url";
-
-            /// <summary>新窗口打开</summary>
-            public const String NewWindow = "NewWindow";
-
-            /// <summary>排序</summary>
-            public const String Sort = "Sort";
+            /// <summary>目标</summary>
+            public const String Target = "Target";
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";

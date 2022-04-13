@@ -8,7 +8,7 @@ using XCode;
 using XCode.Configuration;
 using XCode.DataAccessLayer;
 
-namespace NewLife.YuQueWeb.Entity
+namespace NewLife.YuqueWeb.Entity
 {
     /// <summary>知识库。管理知识库</summary>
     [Serializable]
@@ -16,7 +16,7 @@ namespace NewLife.YuQueWeb.Entity
     [Description("知识库。管理知识库")]
     [BindIndex("IU_Book_Code", true, "Code")]
     [BindIndex("IX_Book_Name", false, "Name")]
-    [BindTable("Book", Description = "知识库。管理知识库", ConnName = "YuQue", DbType = DatabaseType.None)]
+    [BindTable("Book", Description = "知识库。管理知识库", ConnName = "Yuque", DbType = DatabaseType.None)]
     public partial class Book
     {
         #region 属性

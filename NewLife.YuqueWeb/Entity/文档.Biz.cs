@@ -4,7 +4,7 @@ using NewLife.Data;
 using XCode;
 using XCode.Membership;
 
-namespace NewLife.YuQueWeb.Entity
+namespace NewLife.YuqueWeb.Entity
 {
     /// <summary>文档。文档内容</summary>
     public partial class Document : Entity<Document>

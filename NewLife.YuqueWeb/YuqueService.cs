@@ -5,9 +5,9 @@ using NewLife.Cube.Extensions;
 using NewLife.Log;
 using NewLife.YuqueWeb.Areas.Yuque;
 using NewLife.YuqueWeb.Services;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 
-namespace NewLife.YuQueWeb;
+namespace NewLife.YuqueWeb;
 
 /// <summary>语雀服务</summary>
 public static class YuqueService
@@ -71,13 +71,11 @@ public static class YuqueService
     public static void RegisterRoute(IEndpointRouteBuilder endpoints, Boolean useHomeIndex)
     {
         if (useHomeIndex)
-        {
             endpoints.MapControllerRoute(
                 name: "Yuque_Index",
                 pattern: "/",
                 defaults: new { controller = "Yuque", action = "Index" }
             );
-        }
 
         #region 类别
         endpoints.MapControllerRoute(

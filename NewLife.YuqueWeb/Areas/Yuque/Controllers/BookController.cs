@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewLife.Cube;
 using NewLife.Web;
+using NewLife.YuqueWeb.Entity;
 using NewLife.YuqueWeb.Services;
-using NewLife.YuQueWeb.Entity;
 using XCode.Membership;
 
 namespace NewLife.YuqueWeb.Areas.Yuque.Controllers

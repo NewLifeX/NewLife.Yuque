@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "NewLife.YuQueWeb": {
+    "NewLife.YuqueWeb": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

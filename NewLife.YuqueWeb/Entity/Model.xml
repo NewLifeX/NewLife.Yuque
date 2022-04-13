@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://www.newlifex.com http://www.newlifex.com/Model2022.xsd" NameSpace="NewLife.YuQueWeb.Entity" ConnName="YuQue" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://www.yuque.com/smartstone/xcode/model" xmlns="http://www.newlifex.com/Model2022.xsd">
+<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://www.newlifex.com http://www.newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://www.yuque.com/smartstone/xcode/model" xmlns="http://www.newlifex.com/Model2022.xsd">
   <Table Name="Book" Description="知识库。管理知识库">
     <Columns>
       <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
@@ -103,6 +103,27 @@
     <Indexes>
       <Index Columns="ParentId,Name" Unique="True" />
       <Index Columns="Name" />
+    </Indexes>
+  </Table>
+  <Table Name="HtmlRule" Description="Html规则。用于替换Html中的连接或字符串">
+    <Columns>
+      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Kind" DataType="Int32" Description="种类。图片、链接、文本" Type="RuleKinds" />
+      <Column Name="Rule" DataType="String" Master="True" Description="规则" />
+      <Column Name="Target" DataType="String" Description="目标" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Remark" DataType="String" Length="200" Description="备注" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Kind" />
     </Indexes>
   </Table>
 </Tables>

@@ -1,6 +1,6 @@
 ﻿using NewLife.Cube;
 using NewLife.Web;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 using XCode.Membership;
 
 namespace NewLife.YuqueWeb.Areas.Yuque.Controllers

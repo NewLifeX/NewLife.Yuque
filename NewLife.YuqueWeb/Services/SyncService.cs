@@ -1,7 +1,7 @@
 ﻿using NewLife.Data;
 using NewLife.Log;
 using NewLife.Threading;
-using NewLife.YuQueWeb.Entity;
+using NewLife.YuqueWeb.Entity;
 
 namespace NewLife.YuqueWeb.Services
 {

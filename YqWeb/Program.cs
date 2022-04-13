@@ -1,6 +1,6 @@
 ﻿using NewLife.Cube;
 using NewLife.Log;
-using NewLife.YuQueWeb;
+using NewLife.YuqueWeb;
 
 XTrace.UseConsole();
 
