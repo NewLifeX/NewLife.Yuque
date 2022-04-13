@@ -1,10 +1,11 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Collections;
 using NewLife.Common;
+using NewLife.Cube.Entity;
 using NewLife.Web;
 using NewLife.YuqueWeb.Models;
+using NewLife.YuqueWeb.Services;
 using NewLife.YuQueWeb.Entity;
 using XCode;
 
@@ -19,10 +20,15 @@ namespace NewLife.YuqueWeb.Controllers
         /// <summary>分页大小</summary>
         public static Int32 PageSize => 20;
 
-        static Boolean ViewExists(String vpath) => System.IO.File.Exists(vpath.GetFullPath());
+        private readonly BookService _bookService;
 
-        static DictionaryCache<String, String> _cache = new(StringComparer.OrdinalIgnoreCase);
-        static String GetView(String name, String category)
+        public YuqueController(BookService bookService) => _bookService = bookService;
+
+        private static Boolean ViewExists(String vpath) => System.IO.File.Exists(vpath.GetFullPath());
+
+        private static readonly DictionaryCache<String, String> _cache = new(StringComparer.OrdinalIgnoreCase);
+
+        private static String GetView(String name, String category)
         {
             var viewName = $"../{category}/{name}";
 
@@ -147,6 +153,34 @@ namespace NewLife.YuqueWeb.Controllers
             ViewData["Title"] = $"搜索[{key}]";
 
             return View(list);
+        }
+        #endregion
+
+        #region 附件
+        public async Task<ActionResult> Image(String id)
+        {
+            if (id.IsNullOrEmpty()) return NotFound();
+
+            var p = id.IndexOf('.');
+            if (p > 0) id = id[..p];
+
+            var att = Attachment.FindByID(id.ToInt());
+            if (att == null) return NotFound();
+
+            // 如果附件不存在，则抓取
+            var fileName = att.Path?.GetFullPath();
+            if (fileName.IsNullOrEmpty() || !System.IO.File.Exists(fileName))
+            {
+                var rs = await _bookService.FetchAttachment(att);
+                if (rs == 0) return NotFound();
+
+                fileName = att.Path?.GetFullPath();
+            }
+
+            if (!att.ContentType.IsNullOrEmpty())
+                return PhysicalFile(fileName, att.ContentType);
+            else
+                return PhysicalFile(fileName, "image/png");
         }
         #endregion
     }

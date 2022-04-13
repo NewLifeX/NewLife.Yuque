@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using NewLife.Http;
 using NewLife.Cube.Entity;
 using NewLife.Log;
 using NewLife.Yuque;
@@ -292,7 +293,8 @@ public class BookService
 
             att.Save();
 
-            var url2 = $"/attach?id={att.ID}";
+            var ext = Path.GetExtension(url);
+            var url2 = $"/images/{att.ID}{ext}";
 
             return match.Groups[0].Value.Replace(url, url2);
         });
@@ -307,10 +309,30 @@ public class BookService
     /// <summary>
     /// 处理附件
     /// </summary>
-    /// <param name="doc"></param>
+    /// <param name="att"></param>
     /// <returns></returns>
-    public async Task<Int32> FetchAttachment(Document doc)
+    public async Task<Int32> FetchAttachment(Attachment att)
     {
-        return 0;
+        var url = att.Remark;
+        if (url.IsNullOrEmpty()) return 0;
+
+        var ext = Path.GetExtension(att.FileName);
+        var set = NewLife.Cube.Setting.Current;
+        var fileName = set.UploadPath.CombinePath(att.Category, DateTime.Today.Year + "", att.ID + ext);
+
+        XTrace.WriteLine("抓取附件 {0}，保存到 {1}", url, fileName);
+
+        fileName.EnsureDirectory(true);
+
+        var client = new HttpClient();
+        await client.DownloadFileAsync(url, fileName.GetFullPath());
+
+        var fi = fileName.AsFile();
+        att.Size = fi.Length;
+        att.Hash = fi.MD5().ToHex();
+        att.Path = fileName;
+        att.Update();
+
+        return 1;
     }
 }

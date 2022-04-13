@@ -109,14 +109,22 @@ public static class YuqueService
             name: "Yuque_Search",
             pattern: "search-{key}-{pageIndex}",
             defaults: new { controller = "Yuque", action = "Search" },
-            constraints: null
+            constraints: new { pageIndex = "[\\d]+" }
         );
 
         endpoints.MapControllerRoute(
             name: "Yuque_Search2",
             pattern: "{categoryCode}-{key}-{pageIndex}",
             defaults: new { controller = "Yuque", action = "Search" },
-            constraints: new { categoryCode = new CategoryUrlConstraint() }
+            constraints: new { categoryCode = new CategoryUrlConstraint(), pageIndex = "[\\d]+" }
+        );
+        #endregion
+
+        #region 附件
+        endpoints.MapControllerRoute(
+            name: "Yuque_Image",
+            pattern: "/images/{id}",
+            defaults: new { controller = "Yuque", action = "Image" }
         );
         #endregion
     }
