@@ -17,6 +17,7 @@
       <Column Name="Slug" DataType="String" Description="路径" />
       <Column Name="Namespace" DataType="String" Description="全路径" />
       <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
+      <Column Name="ToC" DataType="String" Length="5000" Description="目录" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />

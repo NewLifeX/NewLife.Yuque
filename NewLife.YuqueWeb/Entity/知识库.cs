@@ -140,6 +140,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("ContentUpdateTime", "内容更新时间", "")]
         public DateTime ContentUpdateTime { get => _ContentUpdateTime; set { if (OnPropertyChanging("ContentUpdateTime", value)) { _ContentUpdateTime = value; OnPropertyChanged("ContentUpdateTime"); } } }
 
+        private String _ToC;
+        /// <summary>目录</summary>
+        [DisplayName("目录")]
+        [Description("目录")]
+        [DataObjectField(false, false, true, 5000)]
+        [BindColumn("ToC", "目录", "")]
+        public String ToC { get => _ToC; set { if (OnPropertyChanging("ToC", value)) { _ToC = value; OnPropertyChanged("ToC"); } } }
+
         private DateTime _SyncTime;
         /// <summary>同步时间。最后一次同步数据的时间</summary>
         [DisplayName("同步时间")]
@@ -246,6 +254,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Slug": return _Slug;
                     case "Namespace": return _Namespace;
                     case "ContentUpdateTime": return _ContentUpdateTime;
+                    case "ToC": return _ToC;
                     case "SyncTime": return _SyncTime;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
@@ -278,6 +287,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Slug": _Slug = Convert.ToString(value); break;
                     case "Namespace": _Namespace = Convert.ToString(value); break;
                     case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
+                    case "ToC": _ToC = Convert.ToString(value); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
@@ -342,6 +352,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>内容更新时间</summary>
             public static readonly Field ContentUpdateTime = FindByName("ContentUpdateTime");
+
+            /// <summary>目录</summary>
+            public static readonly Field ToC = FindByName("ToC");
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public static readonly Field SyncTime = FindByName("SyncTime");
@@ -423,6 +436,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>内容更新时间</summary>
             public const String ContentUpdateTime = "ContentUpdateTime";
+
+            /// <summary>目录</summary>
+            public const String ToC = "ToC";
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public const String SyncTime = "SyncTime";

@@ -41,38 +41,38 @@ public class BookService
             var repos = await client.GetRepos(user.Id, "all", offset);
             if (repos.Length == 0) break;
 
-            foreach (var item in repos)
+            foreach (var repo in repos)
             {
-                var book = list.FirstOrDefault(e => e.Id == item.Id || e.Slug == item.Slug);
+                var book = list.FirstOrDefault(e => e.Id == repo.Id || e.Slug == repo.Slug);
                 if (book == null)
                 {
                     book = new Book
                     {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Slug = item.Slug,
-                        Code = item.Slug,
+                        Id = repo.Id,
+                        Name = repo.Name,
+                        Slug = repo.Slug,
+                        Code = repo.Slug,
                         Enable = true,
-                        Sync = item.Public > 0,
+                        Sync = repo.Public > 0,
                     };
                     book.Insert();
 
                     list.Add(book);
                 }
 
-                if (book.Name.IsNullOrEmpty()) book.Name = item.Name;
-
-                book.Public = item.Public > 0;
-                book.Type = item.Type;
-                book.UserName = item.User?.Name;
-                book.Docs = item.Items;
-                book.Likes = item.Likes;
-                book.Watches = item.Watches;
-                book.Namespace = item.Namespace;
-                book.ContentUpdateTime = item.ContentUpdateTime;
-                book.Remark = item.Description;
-                book.CreateTime = item.CreateTime;
-                book.UpdateTime = item.UpdateTime;
+                if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
+                book.Slug = repo.Slug;
+                book.Public = repo.Public > 0;
+                book.Type = repo.Type;
+                book.UserName = repo.User?.Name;
+                book.Docs = repo.Items;
+                book.Likes = repo.Likes;
+                book.Watches = repo.Watches;
+                book.Namespace = repo.Namespace;
+                book.ContentUpdateTime = repo.ContentUpdateTime;
+                book.Remark = repo.Description;
+                book.CreateTime = repo.CreateTime;
+                book.UpdateTime = repo.UpdateTime;
 
                 book.SyncTime = DateTime.Now;
 
@@ -116,6 +116,30 @@ public class BookService
 
         var token = GetToken();
         var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
+
+        // 同步知识库详细
+        var repo = await client.GetRepo(bookId);
+        if (repo != null)
+        {
+            if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
+            book.Slug = repo.Slug;
+            book.Public = repo.Public > 0;
+            book.Type = repo.Type;
+            book.UserName = repo.User?.Name;
+            book.Docs = repo.Items;
+            book.Likes = repo.Likes;
+            book.Watches = repo.Watches;
+            book.Namespace = repo.Namespace;
+            book.ToC = repo.Toc;
+            //book.ContentUpdateTime = repo.ContentUpdateTime;
+            book.Remark = repo.Description;
+            book.CreateTime = repo.CreateTime;
+            book.UpdateTime = repo.UpdateTime;
+
+            book.SyncTime = DateTime.Now;
+
+            book.Update();
+        }
 
         var count = 0;
         var offset = 0;
