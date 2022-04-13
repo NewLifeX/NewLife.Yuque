@@ -59,6 +59,14 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get => _Enable; set { if (OnPropertyChanging("Enable", value)) { _Enable = value; OnPropertyChanged("Enable"); } } }
 
+        private Int32 _Priority;
+        /// <summary>优先级。较大优先</summary>
+        [DisplayName("优先级")]
+        [Description("优先级。较大优先")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Priority", "优先级。较大优先", "")]
+        public Int32 Priority { get => _Priority; set { if (OnPropertyChanging("Priority", value)) { _Priority = value; OnPropertyChanged("Priority"); } } }
+
         private String _CreateUser;
         /// <summary>创建人</summary>
         [DisplayName("创建人")]
@@ -147,6 +155,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Rule": return _Rule;
                     case "Target": return _Target;
                     case "Enable": return _Enable;
+                    case "Priority": return _Priority;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
                     case "CreateTime": return _CreateTime;
@@ -168,6 +177,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Rule": _Rule = Convert.ToString(value); break;
                     case "Target": _Target = Convert.ToString(value); break;
                     case "Enable": _Enable = value.ToBoolean(); break;
+                    case "Priority": _Priority = value.ToInt(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
                     case "CreateTime": _CreateTime = value.ToDateTime(); break;
@@ -201,6 +211,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName("Enable");
+
+            /// <summary>优先级。较大优先</summary>
+            public static readonly Field Priority = FindByName("Priority");
 
             /// <summary>创建人</summary>
             public static readonly Field CreateUser = FindByName("CreateUser");
@@ -249,6 +262,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
+
+            /// <summary>优先级。较大优先</summary>
+            public const String Priority = "Priority";
 
             /// <summary>创建人</summary>
             public const String CreateUser = "CreateUser";

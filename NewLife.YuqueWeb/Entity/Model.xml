@@ -112,6 +112,7 @@
       <Column Name="Rule" DataType="String" Master="True" Description="规则" />
       <Column Name="Target" DataType="String" Description="目标" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="Priority" DataType="Int32" Description="优先级。较大优先" />
       <Column Name="CreateUser" DataType="String" Description="创建人" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />

@@ -147,6 +147,12 @@ namespace NewLife.YuqueWeb.Entity
 
             return FindAll(_.Kind == kind);
         }
+
+        /// <summary>
+        /// 获取有效规则，优先级降序
+        /// </summary>
+        /// <returns></returns>
+        public static IList<HtmlRule> GetValids()=> FindAllWithCache().Where(e => e.Enable).OrderByDescending(e => e.Priority).ToList();
         #endregion
 
         #region 高级查询

@@ -57,6 +57,7 @@ namespace XUnitTest
             var html = doc.BodyHtml;
             Assert.Contains(rule.Rule.TrimEnd("*"), html);
             Assert.DoesNotContain(rule.Target.TrimEnd("$1"), html);
+            Assert.Contains("<a href=\"https://gitee.com/NewLifeX/Stardust\" data-href=\"https://gitee.com/NewLifeX/Stardust\" target=\"_blank\" class=\"ne-link\"><span class=\"ne-text\">https://gitee.com/NewLifeX/Stardust</span></a>",html);
 
             var svc = new BookService(null);
             html = svc.ProcessLink(doc, rule, html);
@@ -65,6 +66,7 @@ namespace XUnitTest
             Assert.Contains(rule.Rule.TrimEnd("*"), html);
             //Assert.DoesNotContain(rule.Rule.TrimEnd("*"), html);
             Assert.Contains(rule.Target.TrimEnd("$1"), html);
+            Assert.Contains("<a href=\"https://git.newlifex.com/NewLife/Stardust\" data-href=\"https://git.newlifex.com/NewLife/Stardust\" target=\"_blank\" class=\"ne-link\"><span class=\"ne-text\">https://gitee.com/NewLifeX/Stardust</span></a>", html);
         }
 
         [Fact]

@@ -261,7 +261,7 @@ public class BookService
         var html = doc?.BodyHtml;
         if (html.IsNullOrEmpty()) return 0;
 
-        var rules = HtmlRule.FindAllWithCache().Where(e => e.Enable).ToList();
+        var rules = HtmlRule.GetValids();
         foreach (var rule in rules)
         {
             switch (rule.Kind)
@@ -294,14 +294,15 @@ public class BookService
 
         var rs = _regexImage.Replace(html, match =>
         {
+            var full = match.Groups[0].Value;
             var url = match.Groups[1].Value;
-            if (url.IsNullOrEmpty()) return url;
+            if (url.IsNullOrEmpty()) return full;
 
             // 判断域名
             if (!rule.Rule.IsNullOrEmpty() && rule.Rule != "*")
             {
                 var uri = new Uri(url);
-                if (uri.Host != rule.Rule) return url;
+                if (uri.Host != rule.Rule) return full;
             }
 
             try
@@ -342,12 +343,12 @@ public class BookService
                 var ext = Path.GetExtension(url);
                 var url2 = $"/images/{att.Id}{ext}";
 
-                return match.Groups[0].Value.Replace(url, url2);
+                return full.Replace(url, url2);
             }
             catch (Exception ex)
             {
                 XTrace.WriteException(ex);
-                return url;
+                return full;
             }
         });
 
@@ -362,19 +363,21 @@ public class BookService
 
         var rs = _regexLink.Replace(html, match =>
         {
+            var full = match.Groups[0].Value;
             var url = match.Groups[1].Value;
-            if (url.IsNullOrEmpty()) return url;
+            if (url.IsNullOrEmpty()) return full;
 
             // 判断规则
-            if (!rule.Rule.IsMatch(url)) return url;
+            if (!rule.Rule.IsMatch(url)) return full;
 
-            if (!rule.Target.IsNullOrEmpty() && rule.Target.Contains("$1"))
+            var url2 = rule.Target;
+            if (!url2.IsNullOrEmpty() && url2.Contains("$1"))
             {
                 var str = url.Replace(rule.Rule.Trim('*'), null);
-                return rule.Target.Replace("$1", str);
+                url2 = url2.Replace("$1", str);
             }
 
-            return rule.Target;
+            return full.Replace(url, url2);
         });
 
         return rs;
