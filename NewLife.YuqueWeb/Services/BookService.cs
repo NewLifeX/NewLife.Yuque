@@ -149,44 +149,48 @@ public class BookService
             var list = await client.GetDocuments(book.Id, offset);
             if (list.Length == 0) break;
 
-            foreach (var item in list)
+            foreach (var detail in list)
             {
-                var doc = Document.FindById(item.Id);
-                if (doc == null) doc = Document.FindByBookAndSlug(book.Id, item.Slug);
+                var doc = Document.FindById(detail.Id);
+                if (doc == null) doc = Document.FindByBookAndSlug(book.Id, detail.Slug);
                 if (doc == null)
                 {
                     doc = new Document
                     {
-                        Id = item.Id,
-                        Code = item.Slug,
-                        Slug = item.Slug,
-                        Title = item.Title,
+                        Id = detail.Id,
+                        Code = detail.Slug,
+                        Slug = detail.Slug,
+                        Title = detail.Title,
                         Enable = true,
-                        Sync = item.Public > 0,
+                        Sync = detail.Public > 0,
                     };
                     doc.Insert();
                 }
 
-                doc.Id = item.Id;
-                doc.Title = item.Title;
-                doc.Slug = item.Slug;
-                doc.BookId = bookId;
-                //doc.Sync = item.Public > 0;
+                doc.Id = detail.Id;
+                doc.Title = detail.Title;
+                doc.Slug = detail.Slug;
+                doc.BookId = detail.BookId;
+                doc.Public = detail.Public > 0;
+                doc.Status = detail.Status > 0;
 
-                doc.UserName = item.LastEditor?.Name;
-                doc.Format = item.Format;
+                doc.UserName = detail.LastEditor?.Name;
+                doc.Format = detail.Format;
                 //doc.Hits = item.Hits;
-                doc.Likes = item.Likes;
-                doc.Comments = item.Comments;
-                doc.WordCount = item.WordCount;
-                if (!item.Cover.IsNullOrEmpty()) doc.Cover = item.Cover;
-                doc.Remark = item.Description;
+                doc.Likes = detail.Likes;
+                doc.Reads = detail.Reads;
+                doc.Comments = detail.Comments;
+                doc.WordCount = detail.WordCount;
+                if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
+                doc.Remark = detail.Description;
 
+                doc.DraftVersion = detail.DraftVersion;
+                doc.ContentUpdateTime = detail.ContentUpdateTime;
                 //doc.SyncTime = DateTime.Now;
-                doc.PublishTime = item.PublishTime;
-                doc.FirstPublishTime = item.FirstPublishTime;
-                doc.CreateTime = item.CreateTime;
-                doc.UpdateTime = item.UpdateTime;
+                doc.PublishTime = detail.PublishTime;
+                doc.FirstPublishTime = detail.FirstPublishTime;
+                doc.CreateTime = detail.CreateTime;
+                doc.UpdateTime = detail.UpdateTime;
 
                 doc.Update();
             }
@@ -216,12 +220,15 @@ public class BookService
 
         doc.UserName = detail.Creator?.Name;
         doc.Format = detail.Format;
+        doc.Public = detail.Public > 0;
+        doc.Status = detail.Status > 0;
 
         doc.Body = detail.Body;
         doc.BodyHtml = detail.BodyHtml;
         doc.ContentUpdateTime = detail.ContentUpdateTime;
 
         doc.Hits = detail.Hits;
+        //doc.Reads = detail.Reads;
         doc.Likes = detail.Likes;
         doc.Comments = detail.Comments;
         doc.WordCount = detail.WordCount;
@@ -233,6 +240,8 @@ public class BookService
         doc.FirstPublishTime = detail.FirstPublishTime;
         doc.CreateTime = detail.CreateTime;
         doc.UpdateTime = detail.UpdateTime;
+
+        if (detail.DeleteTime.Year > 2000) doc.Enable = false;
 
         if (!(doc as IEntity).HasDirty) return 0;
 

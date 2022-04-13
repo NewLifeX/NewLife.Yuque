@@ -95,6 +95,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("Likes", "点赞数", "")]
         public Int32 Likes { get => _Likes; set { if (OnPropertyChanging("Likes", value)) { _Likes = value; OnPropertyChanged("Likes"); } } }
 
+        private Int32 _Reads;
+        /// <summary>阅读数</summary>
+        [DisplayName("阅读数")]
+        [Description("阅读数")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Reads", "阅读数", "")]
+        public Int32 Reads { get => _Reads; set { if (OnPropertyChanging("Reads", value)) { _Reads = value; OnPropertyChanged("Reads"); } } }
+
         private Int32 _Comments;
         /// <summary>评论数</summary>
         [DisplayName("评论数")]
@@ -190,6 +198,14 @@ namespace NewLife.YuQueWeb.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("Status", "正式。正式或草稿", "")]
         public Boolean Status { get => _Status; set { if (OnPropertyChanging("Status", value)) { _Status = value; OnPropertyChanged("Status"); } } }
+
+        private Int32 _DraftVersion;
+        /// <summary>版本。草案版本</summary>
+        [DisplayName("版本")]
+        [Description("版本。草案版本")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("DraftVersion", "版本。草案版本", "")]
+        public Int32 DraftVersion { get => _DraftVersion; set { if (OnPropertyChanging("DraftVersion", value)) { _DraftVersion = value; OnPropertyChanged("DraftVersion"); } } }
 
         private Boolean _Sync;
         /// <summary>同步。是否自动同步远程内容</summary>
@@ -299,6 +315,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Format": return _Format;
                     case "Hits": return _Hits;
                     case "Likes": return _Likes;
+                    case "Reads": return _Reads;
                     case "Comments": return _Comments;
                     case "LocalHits": return _LocalHits;
                     case "Body": return _Body;
@@ -311,6 +328,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Slug": return _Slug;
                     case "Public": return _Public;
                     case "Status": return _Status;
+                    case "DraftVersion": return _DraftVersion;
                     case "Sync": return _Sync;
                     case "SyncTime": return _SyncTime;
                     case "CreateUser": return _CreateUser;
@@ -338,6 +356,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Format": _Format = Convert.ToString(value); break;
                     case "Hits": _Hits = value.ToInt(); break;
                     case "Likes": _Likes = value.ToInt(); break;
+                    case "Reads": _Reads = value.ToInt(); break;
                     case "Comments": _Comments = value.ToInt(); break;
                     case "LocalHits": _LocalHits = value.ToInt(); break;
                     case "Body": _Body = Convert.ToString(value); break;
@@ -350,6 +369,7 @@ namespace NewLife.YuQueWeb.Entity
                     case "Slug": _Slug = Convert.ToString(value); break;
                     case "Public": _Public = value.ToBoolean(); break;
                     case "Status": _Status = value.ToBoolean(); break;
+                    case "DraftVersion": _DraftVersion = value.ToInt(); break;
                     case "Sync": _Sync = value.ToBoolean(); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
@@ -398,6 +418,9 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>点赞数</summary>
             public static readonly Field Likes = FindByName("Likes");
 
+            /// <summary>阅读数</summary>
+            public static readonly Field Reads = FindByName("Reads");
+
             /// <summary>评论数</summary>
             public static readonly Field Comments = FindByName("Comments");
 
@@ -433,6 +456,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>正式。正式或草稿</summary>
             public static readonly Field Status = FindByName("Status");
+
+            /// <summary>版本。草案版本</summary>
+            public static readonly Field DraftVersion = FindByName("DraftVersion");
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public static readonly Field Sync = FindByName("Sync");
@@ -500,6 +526,9 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>点赞数</summary>
             public const String Likes = "Likes";
 
+            /// <summary>阅读数</summary>
+            public const String Reads = "Reads";
+
             /// <summary>评论数</summary>
             public const String Comments = "Comments";
 
@@ -535,6 +564,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>正式。正式或草稿</summary>
             public const String Status = "Status";
+
+            /// <summary>版本。草案版本</summary>
+            public const String DraftVersion = "DraftVersion";
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public const String Sync = "Sync";

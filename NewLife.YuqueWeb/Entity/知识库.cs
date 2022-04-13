@@ -93,11 +93,11 @@ namespace NewLife.YuQueWeb.Entity
         public Int32 Likes { get => _Likes; set { if (OnPropertyChanging("Likes", value)) { _Likes = value; OnPropertyChanged("Likes"); } } }
 
         private Int32 _Watches;
-        /// <summary>订阅数</summary>
-        [DisplayName("订阅数")]
-        [Description("订阅数")]
+        /// <summary>关注</summary>
+        [DisplayName("关注")]
+        [Description("关注")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Watches", "订阅数", "")]
+        [BindColumn("Watches", "关注", "")]
         public Int32 Watches { get => _Watches; set { if (OnPropertyChanging("Watches", value)) { _Watches = value; OnPropertyChanged("Watches"); } } }
 
         private Boolean _Public;
@@ -335,7 +335,7 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>点赞数</summary>
             public static readonly Field Likes = FindByName("Likes");
 
-            /// <summary>订阅数</summary>
+            /// <summary>关注</summary>
             public static readonly Field Watches = FindByName("Watches");
 
             /// <summary>公开。公开或私密</summary>
@@ -419,7 +419,7 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>点赞数</summary>
             public const String Likes = "Likes";
 
-            /// <summary>订阅数</summary>
+            /// <summary>关注</summary>
             public const String Watches = "Watches";
 
             /// <summary>公开。公开或私密</summary>
