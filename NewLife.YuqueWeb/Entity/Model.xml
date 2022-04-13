@@ -12,9 +12,11 @@
       <Column Name="Docs" DataType="Int32" Description="文章数" />
       <Column Name="Likes" DataType="Int32" Description="点赞数" />
       <Column Name="Watches" DataType="Int32" Description="订阅数" />
+      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
       <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
       <Column Name="Slug" DataType="String" Description="路径" />
       <Column Name="Namespace" DataType="String" Description="全路径" />
+      <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
@@ -52,6 +54,8 @@
       <Column Name="WordCount" DataType="Int32" Description="单词数" />
       <Column Name="Cover" DataType="String" Length="200" Description="封面" />
       <Column Name="Slug" DataType="String" Description="路径" />
+      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
+      <Column Name="Status" DataType="Boolean" Description="正式。正式或草稿" />
       <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />

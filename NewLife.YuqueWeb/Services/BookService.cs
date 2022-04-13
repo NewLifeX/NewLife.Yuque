@@ -62,12 +62,14 @@ public class BookService
 
                 if (book.Name.IsNullOrEmpty()) book.Name = item.Name;
 
+                book.Public = item.Public > 0;
                 book.Type = item.Type;
                 book.UserName = item.User?.Name;
                 book.Docs = item.Items;
                 book.Likes = item.Likes;
                 book.Watches = item.Watches;
                 book.Namespace = item.Namespace;
+                book.ContentUpdateTime = item.ContentUpdateTime;
                 book.Remark = item.Description;
                 book.CreateTime = item.CreateTime;
                 book.UpdateTime = item.UpdateTime;

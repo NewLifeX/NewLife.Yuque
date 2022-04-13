@@ -175,6 +175,22 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("Slug", "路径", "")]
         public String Slug { get => _Slug; set { if (OnPropertyChanging("Slug", value)) { _Slug = value; OnPropertyChanged("Slug"); } } }
 
+        private Boolean _Public;
+        /// <summary>公开。公开或私密</summary>
+        [DisplayName("公开")]
+        [Description("公开。公开或私密")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Public", "公开。公开或私密", "")]
+        public Boolean Public { get => _Public; set { if (OnPropertyChanging("Public", value)) { _Public = value; OnPropertyChanged("Public"); } } }
+
+        private Boolean _Status;
+        /// <summary>正式。正式或草稿</summary>
+        [DisplayName("正式")]
+        [Description("正式。正式或草稿")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Status", "正式。正式或草稿", "")]
+        public Boolean Status { get => _Status; set { if (OnPropertyChanging("Status", value)) { _Status = value; OnPropertyChanged("Status"); } } }
+
         private Boolean _Sync;
         /// <summary>同步。是否自动同步远程内容</summary>
         [DisplayName("同步")]
@@ -293,6 +309,8 @@ namespace NewLife.YuQueWeb.Entity
                     case "WordCount": return _WordCount;
                     case "Cover": return _Cover;
                     case "Slug": return _Slug;
+                    case "Public": return _Public;
+                    case "Status": return _Status;
                     case "Sync": return _Sync;
                     case "SyncTime": return _SyncTime;
                     case "CreateUser": return _CreateUser;
@@ -330,6 +348,8 @@ namespace NewLife.YuQueWeb.Entity
                     case "WordCount": _WordCount = value.ToInt(); break;
                     case "Cover": _Cover = Convert.ToString(value); break;
                     case "Slug": _Slug = Convert.ToString(value); break;
+                    case "Public": _Public = value.ToBoolean(); break;
+                    case "Status": _Status = value.ToBoolean(); break;
                     case "Sync": _Sync = value.ToBoolean(); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
@@ -407,6 +427,12 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>路径</summary>
             public static readonly Field Slug = FindByName("Slug");
+
+            /// <summary>公开。公开或私密</summary>
+            public static readonly Field Public = FindByName("Public");
+
+            /// <summary>正式。正式或草稿</summary>
+            public static readonly Field Status = FindByName("Status");
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public static readonly Field Sync = FindByName("Sync");
@@ -503,6 +529,12 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>路径</summary>
             public const String Slug = "Slug";
+
+            /// <summary>公开。公开或私密</summary>
+            public const String Public = "Public";
+
+            /// <summary>正式。正式或草稿</summary>
+            public const String Status = "Status";
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public const String Sync = "Sync";

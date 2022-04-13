@@ -31,7 +31,7 @@ public class Book
     public Int32 CreatorId { get; set; }
 
     /// <summary>公开状态 [1 - 公开, 0 - 私密]</summary>
-    public PublicKinds Public { get; set; }
+    public Int32 Public { get; set; }
 
     /// <summary>文章数</summary>
     [DataMember(Name = "items_count")]

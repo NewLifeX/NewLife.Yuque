@@ -100,6 +100,14 @@ namespace NewLife.YuQueWeb.Entity
         [BindColumn("Watches", "订阅数", "")]
         public Int32 Watches { get => _Watches; set { if (OnPropertyChanging("Watches", value)) { _Watches = value; OnPropertyChanged("Watches"); } } }
 
+        private Boolean _Public;
+        /// <summary>公开。公开或私密</summary>
+        [DisplayName("公开")]
+        [Description("公开。公开或私密")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Public", "公开。公开或私密", "")]
+        public Boolean Public { get => _Public; set { if (OnPropertyChanging("Public", value)) { _Public = value; OnPropertyChanged("Public"); } } }
+
         private Boolean _Sync;
         /// <summary>同步。是否自动同步远程内容</summary>
         [DisplayName("同步")]
@@ -123,6 +131,14 @@ namespace NewLife.YuQueWeb.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Namespace", "全路径", "")]
         public String Namespace { get => _Namespace; set { if (OnPropertyChanging("Namespace", value)) { _Namespace = value; OnPropertyChanged("Namespace"); } } }
+
+        private DateTime _ContentUpdateTime;
+        /// <summary>内容更新时间</summary>
+        [DisplayName("内容更新时间")]
+        [Description("内容更新时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("ContentUpdateTime", "内容更新时间", "")]
+        public DateTime ContentUpdateTime { get => _ContentUpdateTime; set { if (OnPropertyChanging("ContentUpdateTime", value)) { _ContentUpdateTime = value; OnPropertyChanged("ContentUpdateTime"); } } }
 
         private DateTime _SyncTime;
         /// <summary>同步时间。最后一次同步数据的时间</summary>
@@ -225,9 +241,11 @@ namespace NewLife.YuQueWeb.Entity
                     case "Docs": return _Docs;
                     case "Likes": return _Likes;
                     case "Watches": return _Watches;
+                    case "Public": return _Public;
                     case "Sync": return _Sync;
                     case "Slug": return _Slug;
                     case "Namespace": return _Namespace;
+                    case "ContentUpdateTime": return _ContentUpdateTime;
                     case "SyncTime": return _SyncTime;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
@@ -255,9 +273,11 @@ namespace NewLife.YuQueWeb.Entity
                     case "Docs": _Docs = value.ToInt(); break;
                     case "Likes": _Likes = value.ToInt(); break;
                     case "Watches": _Watches = value.ToInt(); break;
+                    case "Public": _Public = value.ToBoolean(); break;
                     case "Sync": _Sync = value.ToBoolean(); break;
                     case "Slug": _Slug = Convert.ToString(value); break;
                     case "Namespace": _Namespace = Convert.ToString(value); break;
+                    case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
@@ -308,6 +328,9 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>订阅数</summary>
             public static readonly Field Watches = FindByName("Watches");
 
+            /// <summary>公开。公开或私密</summary>
+            public static readonly Field Public = FindByName("Public");
+
             /// <summary>同步。是否自动同步远程内容</summary>
             public static readonly Field Sync = FindByName("Sync");
 
@@ -316,6 +339,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>全路径</summary>
             public static readonly Field Namespace = FindByName("Namespace");
+
+            /// <summary>内容更新时间</summary>
+            public static readonly Field ContentUpdateTime = FindByName("ContentUpdateTime");
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public static readonly Field SyncTime = FindByName("SyncTime");
@@ -383,6 +409,9 @@ namespace NewLife.YuQueWeb.Entity
             /// <summary>订阅数</summary>
             public const String Watches = "Watches";
 
+            /// <summary>公开。公开或私密</summary>
+            public const String Public = "Public";
+
             /// <summary>同步。是否自动同步远程内容</summary>
             public const String Sync = "Sync";
 
@@ -391,6 +420,9 @@ namespace NewLife.YuQueWeb.Entity
 
             /// <summary>全路径</summary>
             public const String Namespace = "Namespace";
+
+            /// <summary>内容更新时间</summary>
+            public const String ContentUpdateTime = "ContentUpdateTime";
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public const String SyncTime = "SyncTime";
