@@ -218,6 +218,9 @@ public class BookService
         doc.BookId = detail.BookId;
         doc.Slug = detail.Slug;
 
+        // 未正式公开时，允许修改Code
+        if (detail.Public == 0) doc.Code = detail.Slug;
+
         doc.UserName = detail.Creator?.Name;
         doc.Format = detail.Format;
         doc.Public = detail.Public > 0;
