@@ -18,13 +18,13 @@ namespace NewLife.YuqueWeb.Services
         public SyncService(BookService bookService, ITracer tracer)
         {
             _bookService = bookService;
-            this._tracer = tracer;
+            _tracer = tracer;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new TimerX(DoSyncBook, null, 1_000, 60_000) { Async = true };
-            _timer2 = new TimerX(DoSyncDocument, null, 5_000, 60_000) { Async = true };
+            _timer = new TimerX(DoSyncBook, null, 1_000, 600_000) { Async = true };
+            _timer2 = new TimerX(DoSyncDocument, null, 10_000, 600_000) { Async = true };
 
             return Task.CompletedTask;
         }

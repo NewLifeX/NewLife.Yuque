@@ -265,14 +265,6 @@ public class BookService
         var ms = _regex.Matches(html);
         if (ms.Count == 0) return 0;
 
-        //foreach (Match item in ms)
-        //{
-        //    var url = item.Groups[1].Value;
-        //    XTrace.WriteLine(url);
-        //}
-
-        //if (!_regex.IsMatch(html)) return 0;
-
         // 所有附件
         var list = Attachment.FindAllByCategoryAndKey("Yuque", doc.Id + "");
 
@@ -281,29 +273,50 @@ public class BookService
             var url = match.Groups[1].Value;
             if (url.IsNullOrEmpty()) return url;
 
-            var fileName = Path.GetFileName(url);
-            var p = fileName.IndexOf('?');
-            if (p > 0) fileName = fileName[..p];
+            try
+            {
+                var fileName = Path.GetFileName(url);
+                var p = fileName.IndexOf('?');
+                if (p > 0) fileName = fileName[..p];
 
-            var att = list.FirstOrDefault(e => e.Source == url);
-            if (att == null) att = new Attachment { Enable = true };
+                var att = list.FirstOrDefault(e => e.Source == url);
+                if (att == null) att = new Attachment { Enable = true };
 
-            att.Category = "Yuque";
-            att.Key = doc.Id + "";
-            att.Title = doc.Title;
-            att.FileName = fileName;
-            att.Source = url;
-            att.Url = $"/{doc.BookCode}/{doc.Code}";
+                att.Category = "Yuque";
+                att.Key = doc.Id + "";
+                att.Title = doc.Title;
+                att.FileName = fileName;
+                att.Source = url;
+                att.Url = $"/{doc.BookCode}/{doc.Code}";
 
-            att.Save();
+                // 尝试从文件名中解析出来原始上传时间
+                if (att.UploadTime.Year < 2000)
+                {
+                    // 第一段是毫秒
+                    var ss = fileName.Split('-');
+                    if (ss.Length > 0)
+                    {
+                        var time = ss[0].ToLong().ToDateTime().ToLocalTime();
+                        if (time.Year > 2000) att.UploadTime = time;
+                    }
+                }
 
-            // 异步抓取
-            if (!File.Exists(fileName.GetFullPath())) _ = Task.Run(() => FetchAttachment(att));
+                att.Save();
 
-            var ext = Path.GetExtension(url);
-            var url2 = $"/images/{att.Id}{ext}";
+                // 异步抓取
+                var filePath = att.GetFilePath().GetBasePath();
+                if (!File.Exists(filePath)) _ = Task.Run(() => FetchAttachment(att));
 
-            return match.Groups[0].Value.Replace(url, url2);
+                var ext = Path.GetExtension(url);
+                var url2 = $"/images/{att.Id}{ext}";
+
+                return match.Groups[0].Value.Replace(url, url2);
+            }
+            catch (Exception ex)
+            {
+                XTrace.WriteException(ex);
+                return url;
+            }
         });
 
         doc.Html = rs;
