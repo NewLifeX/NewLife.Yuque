@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace NewLife.YuQue.Models
+namespace NewLife.Yuque.Models
 {
     /// <summary>组织</summary>
     public class Group

@@ -1,4 +1,4 @@
-﻿# NewLife.YuQue - 语雀SDK
+﻿# NewLife.Yuque - 语雀SDK
 
 ![GitHub top language](https://img.shields.io/github/languages/top/newlifex/newlife.yuque?logo=github)
 ![GitHub License](https://img.shields.io/github/license/newlifex/newlife.yuque?logo=github)
@@ -8,8 +8,8 @@
 
 语雀SDK  
 
-源码： https://github.com/NewLifeX/NewLife.YuQue  
-Nuget：NewLife.YuQue  
+源码： https://github.com/NewLifeX/NewLife.Yuque  
+Nuget：NewLife.Yuque  
 
 
 ## 新生命项目矩阵

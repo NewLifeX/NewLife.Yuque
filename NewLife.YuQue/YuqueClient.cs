@@ -3,9 +3,9 @@ using NewLife.Http;
 using NewLife.Log;
 using NewLife.Remoting;
 using NewLife.Serialization;
-using NewLife.YuQue.Models;
+using NewLife.Yuque.Models;
 
-namespace NewLife.YuQue
+namespace NewLife.Yuque
 {
     /// <summary>语雀客户端</summary>
     /// <remarks>

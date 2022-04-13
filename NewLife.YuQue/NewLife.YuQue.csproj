@@ -22,7 +22,7 @@
     <Authors>$(Company)</Authors>
     <PackageProjectUrl>https://www.yuque.com/smartstone/nx</PackageProjectUrl>
     <PackageIcon>leaf.png</PackageIcon>
-    <RepositoryUrl>https://github.com/NewLifeX/NewLife.YuQue</RepositoryUrl>
+    <RepositoryUrl>https://github.com/NewLifeX/NewLife.Yuque</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>物联网;IoT;边缘计算;Edge;新生命团队;NewLife;$(AssemblyName)</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>

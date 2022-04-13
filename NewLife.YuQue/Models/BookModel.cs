@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NewLife.YuQue.Models
+namespace NewLife.Yuque.Models
 {
     /// <summary>
     /// 知识库模型

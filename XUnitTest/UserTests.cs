@@ -1,4 +1,4 @@
-﻿using NewLife.YuQue;
+﻿using NewLife.Yuque;
 using Xunit;
 
 namespace XUnitTest

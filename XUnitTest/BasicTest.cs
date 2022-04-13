@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using NewLife;
-using NewLife.YuQue;
+using NewLife.Yuque;
 
 namespace XUnitTest
 {

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewLife.YuQue\NewLife.Yuque.csproj" />
+    <ProjectReference Include="..\NewLife.Yuque\NewLife.Yuque.csproj" />
   </ItemGroup>
 
 </Project>

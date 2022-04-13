@@ -1,5 +1,5 @@
 ﻿using NewLife.Log;
-using NewLife.YuQue;
+using NewLife.Yuque;
 using NewLife.YuQueWeb.Entity;
 using XCode;
 using XCode.Membership;
