@@ -168,8 +168,6 @@ namespace NewLife.YuqueWeb.Controllers
             var att = Attachment.FindById(id.ToLong());
             if (att == null) return NotFound();
 
-            var set = NewLife.Cube.Setting.Current;
-
             // 如果附件不存在，则抓取
             var filePath = att.GetFilePath();
             if (filePath.IsNullOrEmpty() || !System.IO.File.Exists(filePath))

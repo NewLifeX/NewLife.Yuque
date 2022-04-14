@@ -1,7 +1,9 @@
-﻿using NewLife.Cube;
+﻿using Microsoft.AspNetCore.Mvc;
+using NewLife.Cube;
 using NewLife.Cube.ViewModels;
 using NewLife.Web;
 using NewLife.YuqueWeb.Entity;
+using NewLife.YuqueWeb.Services;
 using XCode.Membership;
 
 namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
@@ -13,6 +15,14 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
     [Menu(80)]
     public class DocumentController : EntityController<Document>
     {
+        private readonly BookService _bookService;
+
+        /// <summary>
+        /// 实例化知识库管理
+        /// </summary>
+        /// <param name="bookService"></param>
+        public DocumentController(BookService bookService) => _bookService = bookService;
+
         static DocumentController()
         {
             LogOnChange = true;
@@ -49,6 +59,22 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             var end = p["dtEnd"].ToDateTime();
 
             return Document.Search(null, null, bookId, start, end, p["Q"], p);
+        }
+
+        /// <summary>同步知识库</summary>
+        /// <returns></returns>
+        [EntityAuthorize(PermissionFlags.Update)]
+        public async Task<ActionResult> SyncAll()
+        {
+            var count = 0;
+            var ids = GetRequest("keys").SplitAsInt();
+            foreach (var id in ids.OrderBy(e => e))
+            {
+                var doc = Document.FindById(id);
+                if (doc != null) count += await _bookService.Sync(doc);
+            }
+
+            return JsonRefresh($"共刷新[{count}]篇文章");
         }
     }
 }

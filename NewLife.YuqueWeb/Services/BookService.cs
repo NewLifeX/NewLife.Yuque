@@ -400,12 +400,14 @@ public class BookService
         var url = att.Source;
         if (url.IsNullOrEmpty()) return 0;
 
+        using var span = _tracer.NewSpan(nameof(FetchAttachment), url);
         try
         {
             await att.Fetch(url);
         }
         catch (Exception ex)
         {
+            span.SetError(ex, att);
             XTrace.WriteException(ex);
 
             return 0;
