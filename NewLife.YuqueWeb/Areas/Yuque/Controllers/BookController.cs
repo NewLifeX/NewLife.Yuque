@@ -81,7 +81,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
                 count += await _bookService.Sync(id);
             }
 
-            return JsonRefresh($"共刷新[{count}]个知识库");
+            return JsonRefresh($"共刷新[{count}]篇文章");
         }
 
         /// <summary>扫描全部知识库</summary>

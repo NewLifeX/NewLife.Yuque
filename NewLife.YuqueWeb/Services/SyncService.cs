@@ -77,7 +77,7 @@ namespace NewLife.YuqueWeb.Services
             }
 
             // 太久没同步的文章，都刷新一次
-            var time = DateTime.Today.AddDays(-7);
+            var time = DateTime.Today.AddDays(1 - 1);
             page = new PageParameter { PageSize = 100 };
             while (true)
             {
