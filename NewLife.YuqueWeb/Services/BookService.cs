@@ -373,8 +373,26 @@ public class BookService
             var url2 = rule.Target;
             if (!url2.IsNullOrEmpty() && url2.Contains("$1"))
             {
-                var str = url.Replace(rule.Rule.Trim('*'), null);
-                url2 = url2.Replace("$1", str);
+                // 特殊处理卡片跳转，把id链接替换为真实链接
+                var flag = false;
+                var p = url.ToLower().IndexOf("/go/doc/");
+                if (p > 0)
+                {
+                    p += "/go/doc/".Length;
+                    var id = url[p..].ToInt();
+                    var doc = Document.FindById(id);
+                    if (doc != null)
+                    {
+                        url2 = $"/{doc.BookCode}/{doc.Code}";
+                        flag = true;
+                    }
+                }
+
+                if (flag)
+                {
+                    var str = url.Replace(rule.Rule.Trim('*'), null);
+                    url2 = url2.Replace("$1", str);
+                }
             }
 
             return full.Replace(url, url2);

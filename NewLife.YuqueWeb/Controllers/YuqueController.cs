@@ -184,5 +184,20 @@ namespace NewLife.YuqueWeb.Controllers
                 return PhysicalFile(filePath, "image/png");
         }
         #endregion
+
+        #region 跳转
+        public ActionResult Go(String type, String id)
+        {
+            if (id.IsNullOrEmpty()) return NotFound();
+
+            if (type.EqualIgnoreCase("doc"))
+            {
+                var doc = Document.FindById(id.ToInt());
+                if (doc != null) return Redirect($"/{doc.BookCode}/{doc.Code}");
+            }
+
+            return NotFound();
+        }
+        #endregion
     }
 }

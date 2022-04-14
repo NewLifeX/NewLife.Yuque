@@ -125,6 +125,14 @@ public static class YuqueService
             defaults: new { controller = "Yuque", action = "Image" }
         );
         #endregion
+
+        #region 跳转
+        endpoints.MapControllerRoute(
+            name: "Yuque_Go",
+            pattern: "/go/{type}/{id}",
+            defaults: new { controller = "Yuque", action = "Go" }
+        );
+        #endregion
     }
 }
 
