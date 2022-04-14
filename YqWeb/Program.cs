@@ -14,6 +14,7 @@ services.AddYuque();
 services.AddCube();
 
 var app = builder.Build();
+app.UseStaticFiles();
 app.UseStardust();
 app.UseCube(builder.Environment);
 app.UseYuque(true);
