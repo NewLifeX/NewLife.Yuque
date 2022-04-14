@@ -14,6 +14,7 @@ services.AddYuque();
 services.AddCube();
 
 var app = builder.Build();
+app.UseStardust();
 app.UseCube(builder.Environment);
 app.UseYuque(true);
 app.UseAuthorization();
