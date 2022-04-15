@@ -388,7 +388,7 @@ public class BookService
                     }
                 }
 
-                if (flag)
+                if (!flag)
                 {
                     var str = url.Replace(rule.Rule.Trim('*'), null);
                     url2 = url2.Replace("$1", str);

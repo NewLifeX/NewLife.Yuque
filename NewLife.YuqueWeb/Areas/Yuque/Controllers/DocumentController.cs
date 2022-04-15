@@ -68,15 +68,20 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
         [EntityAuthorize(PermissionFlags.Update)]
         public async Task<ActionResult> SyncAll()
         {
-            var count = 0;
+            var success = 0;
+            var total = 0;
             var ids = GetRequest("keys").SplitAsInt();
             foreach (var id in ids.OrderBy(e => e))
             {
                 var doc = Document.FindById(id);
-                if (doc != null) count += await _bookService.Sync(doc);
+                if (doc != null)
+                {
+                    total++;
+                    success += await _bookService.Sync(doc);
+                }
             }
 
-            return JsonRefresh($"共刷新[{count}]篇文章");
+            return JsonRefresh($"共刷新[{success}/{total}]篇文章");
         }
     }
 }
