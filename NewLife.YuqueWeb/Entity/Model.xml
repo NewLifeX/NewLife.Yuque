@@ -47,7 +47,8 @@
       <Column Name="Likes" DataType="Int32" Description="点赞数" />
       <Column Name="Reads" DataType="Int32" Description="阅读数" />
       <Column Name="Comments" DataType="Int32" Description="评论数" />
-      <Column Name="LocalHits" DataType="Int32" Description="本地点击量" />
+      <Column Name="LocalHits" DataType="Int32" Description="本地点击" />
+      <Column Name="TotalHits" DataType="Int32" Description="总点击" />
       <Column Name="Body" DataType="String" Length="-1" Description="正文。Markdown格式" />
       <Column Name="BodyHtml" DataType="String" Length="-1" Description="HTML正文" />
       <Column Name="Html" DataType="String" Length="-1" Description="HTML。处理后的HTML内容，用于前端展示" />

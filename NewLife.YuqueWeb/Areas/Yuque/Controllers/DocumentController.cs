@@ -34,7 +34,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 
             var list = ListFields;
             list.Clear();
-            var allows = new[] { "BookName", "Title", "Code", "Enable", "UserName", "Hits", "Likes", "Reads", "Comments", "Public", "Status", "PublishTime", "WordCount", "Sync", "SyncTime" };
+            var allows = new[] { "BookName", "Title", "Code", "Enable", "UserName", "Hits", "TotalHits", "Likes", "Reads", "Comments", "Public", "Status", "PublishTime", "WordCount", "Sync", "SyncTime" };
             foreach (var item in allows)
             {
                 list.AddListField(item);
@@ -57,6 +57,8 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 
             var start = p["dtStart"].ToDateTime();
             var end = p["dtEnd"].ToDateTime();
+
+            p.RetrieveState = true;
 
             return Document.Search(null, null, bookId, start, end, p["Q"], p);
         }

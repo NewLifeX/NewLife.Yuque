@@ -112,12 +112,20 @@ namespace NewLife.YuqueWeb.Entity
         public Int32 Comments { get => _Comments; set { if (OnPropertyChanging("Comments", value)) { _Comments = value; OnPropertyChanged("Comments"); } } }
 
         private Int32 _LocalHits;
-        /// <summary>本地点击量</summary>
-        [DisplayName("本地点击量")]
-        [Description("本地点击量")]
+        /// <summary>本地点击</summary>
+        [DisplayName("本地点击")]
+        [Description("本地点击")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("LocalHits", "本地点击量", "")]
+        [BindColumn("LocalHits", "本地点击", "")]
         public Int32 LocalHits { get => _LocalHits; set { if (OnPropertyChanging("LocalHits", value)) { _LocalHits = value; OnPropertyChanged("LocalHits"); } } }
+
+        private Int32 _TotalHits;
+        /// <summary>总点击</summary>
+        [DisplayName("总点击")]
+        [Description("总点击")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("TotalHits", "总点击", "")]
+        public Int32 TotalHits { get => _TotalHits; set { if (OnPropertyChanging("TotalHits", value)) { _TotalHits = value; OnPropertyChanged("TotalHits"); } } }
 
         private String _Body;
         /// <summary>正文。Markdown格式</summary>
@@ -326,6 +334,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Reads": return _Reads;
                     case "Comments": return _Comments;
                     case "LocalHits": return _LocalHits;
+                    case "TotalHits": return _TotalHits;
                     case "Body": return _Body;
                     case "BodyHtml": return _BodyHtml;
                     case "Html": return _Html;
@@ -368,6 +377,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Reads": _Reads = value.ToInt(); break;
                     case "Comments": _Comments = value.ToInt(); break;
                     case "LocalHits": _LocalHits = value.ToInt(); break;
+                    case "TotalHits": _TotalHits = value.ToInt(); break;
                     case "Body": _Body = Convert.ToString(value); break;
                     case "BodyHtml": _BodyHtml = Convert.ToString(value); break;
                     case "Html": _Html = Convert.ToString(value); break;
@@ -434,8 +444,11 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>评论数</summary>
             public static readonly Field Comments = FindByName("Comments");
 
-            /// <summary>本地点击量</summary>
+            /// <summary>本地点击</summary>
             public static readonly Field LocalHits = FindByName("LocalHits");
+
+            /// <summary>总点击</summary>
+            public static readonly Field TotalHits = FindByName("TotalHits");
 
             /// <summary>正文。Markdown格式</summary>
             public static readonly Field Body = FindByName("Body");
@@ -545,8 +558,11 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>评论数</summary>
             public const String Comments = "Comments";
 
-            /// <summary>本地点击量</summary>
+            /// <summary>本地点击</summary>
             public const String LocalHits = "LocalHits";
+
+            /// <summary>总点击</summary>
+            public const String TotalHits = "TotalHits";
 
             /// <summary>正文。Markdown格式</summary>
             public const String Body = "Body";
