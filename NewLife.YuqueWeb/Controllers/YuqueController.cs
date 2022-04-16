@@ -109,7 +109,7 @@ namespace NewLife.YuqueWeb.Controllers
         /// <param name="categoryCode"></param>
         /// <param name="infoCode"></param>
         /// <returns></returns>
-        public ActionResult Detail(String categoryCode, String infoCode)
+        public async Task<ActionResult> Detail(String categoryCode, String infoCode)
         {
             var book = Book.FindByCode(categoryCode);
             if (book == null) return NotFound();
@@ -117,19 +117,19 @@ namespace NewLife.YuqueWeb.Controllers
             var inf = Document.FindByBookAndCode(book.Id, infoCode);
             if (inf == null) return NotFound();
 
-            //// 选择模版
-            //var tmp = cat.GetInfoTemplate();
-            //if (tmp.IsNullOrEmpty() || !ViewExists(tmp)) tmp = GetView("Info", inf.Model);
+            // 正文不存在时，去同步一份
+            if (inf.Html.IsNullOrEmpty())
+            {
+                await _bookService.Sync(inf);
+            }
 
             // 增加浏览数
             inf.LocalHits++;
-            //inf.Statistics.Increment(null);
-            (inf as IEntity).SaveAsync(15);
+            (inf as IEntity).SaveAsync(15_000);
 
             ViewBag.Title = inf.Title;
 
             return View("Info", inf);
-            //return Content(inf.BodyHtml, "text/html", Encoding.UTF8);
         }
         #endregion
 
