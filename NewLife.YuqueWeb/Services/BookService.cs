@@ -5,6 +5,7 @@ using NewLife.Yuque;
 using NewLife.YuqueWeb.Entity;
 using XCode;
 using XCode.Membership;
+using Group = NewLife.YuqueWeb.Entity.Group;
 
 namespace NewLife.YuqueWeb.Services;
 
@@ -28,79 +29,48 @@ public class BookService
     public async Task<Int32> ScanAll()
     {
         var count = 0;
-        var token = GetToken();
-
-        var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
-        var user = await client.GetUser();
 
         var list = Book.FindAll();
-        var offset = 0;
-        while (true)
+        foreach (var item in Group.FindAllWithCache())
         {
-            var repos = await client.GetRepos(user.Id, "all", offset);
-            if (repos.Length == 0) break;
+            if (!item.Enable && item.Token.IsNullOrEmpty()) continue;
 
-            foreach (var repo in repos)
+            var client = new YuqueClient { Token = item.Token, Log = XTrace.Log, Tracer = _tracer };
+            var user = await client.GetUser();
+
+            var offset = 0;
+            while (true)
             {
-                var book = list.FirstOrDefault(e => e.Id == repo.Id || e.Slug == repo.Slug);
-                if (book == null)
-                {
-                    book = new Book
-                    {
-                        Id = repo.Id,
-                        Name = repo.Name,
-                        Slug = repo.Slug,
-                        Code = repo.Slug,
-                        Enable = true,
-                        Sync = repo.Public > 0,
-                    };
-                    book.Insert();
+                var repos = await client.GetRepos(user.Id, "all", offset);
+                if (repos.Length == 0) break;
 
-                    list.Add(book);
+                foreach (var repo in repos)
+                {
+                    var book = list.FirstOrDefault(e => e.Id == repo.Id || e.Slug == repo.Slug);
+                    if (book == null)
+                        book = new Book { Id = repo.Id, Enable = true, };
+
+                    book.Fill(repo);
+                    book.SyncTime = DateTime.Now;
+
+                    book.Save();
                 }
 
-                if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
-                book.Slug = repo.Slug;
-                book.Public = repo.Public > 0;
-                book.Type = repo.Type;
-                book.UserName = repo.User?.Name;
-                book.Docs = repo.Items;
-                book.Likes = repo.Likes;
-                book.Watches = repo.Watches;
-                book.Namespace = repo.Namespace;
-                book.ContentUpdateTime = repo.ContentUpdateTime;
-                book.Remark = repo.Description;
-                book.CreateTime = repo.CreateTime;
-                book.UpdateTime = repo.UpdateTime;
-
-                book.SyncTime = DateTime.Now;
-
-                book.Update();
+                count += repos.Length;
+                offset += repos.Length;
             }
-
-            count += repos.Length;
-            offset += repos.Length;
         }
 
         return count;
     }
 
-    private String GetToken()
+    private String GetToken(Book book)
     {
-        // 获取令牌
-        var p = Parameter.GetOrAdd(0, "Yuque", "Token");
-        if (p.Value.IsNullOrEmpty())
-        {
-            if (p.Remark.IsNullOrEmpty())
-            {
-                p.Remark = "访问语雀的令牌，账户设置/Token，https://www.yuque.com/settings/tokens";
-                p.Update();
-            }
+        var token = book?.Group?.Token;
 
-            throw new Exception("未设置令牌！[系统管理/字典参数/Yuque/Token]");
-        }
+        if (token.IsNullOrEmpty()) throw new Exception("未设置令牌！[系统管理/字典参数/Yuque/Token]");
 
-        return p.Value;
+        return token;
     }
 
     /// <summary>
@@ -113,7 +83,7 @@ public class BookService
         var book = Book.FindById(bookId);
         if (book == null || !book.Sync) return 0;
 
-        var token = GetToken();
+        var token = GetToken(book);
         var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
 
         // 同步知识库详细
@@ -206,7 +176,7 @@ public class BookService
         var book = doc.Book;
         if (doc == null || !doc.Sync || book == null || !book.Sync) return 0;
 
-        var token = GetToken();
+        var token = GetToken(book);
         var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
 
         var detail = await client.GetDocument(book.Namespace, doc.Slug);

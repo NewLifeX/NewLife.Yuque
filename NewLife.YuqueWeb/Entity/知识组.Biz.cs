@@ -83,16 +83,20 @@ namespace NewLife.YuqueWeb.Entity
 
             var entity = new Group
             {
+                Id = 1,
                 Code = "smartstone",
                 Name = "大石头",
+                Type = "user",
                 Enable = true
             };
             entity.Insert();
 
             entity = new Group
             {
+                Id = 2,
                 Code = "newlifex",
                 Name = "新生命",
+                Type = "group",
                 Enable = true
             };
             entity.Insert();

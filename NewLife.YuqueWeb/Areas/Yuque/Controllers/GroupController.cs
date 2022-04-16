@@ -19,22 +19,23 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
         {
             LogOnChange = true;
 
+            ListFields.RemoveField("Token");
             //ListFields.RemoveCreateField();
             //ListFields.RemoveUpdateField();
 
             {
-                var df = ListFields.GetField("book") as ListField;
-                df.Url = "book?Id={GroupId}";
+                var df = ListFields.GetField("Books") as ListField;
+                df.Url = "book?groupId={Id}";
             }
         }
 
-        private readonly GroupService _bookService;
+        private readonly GroupService _groupService;
 
         /// <summary>
-        /// 实例化知识库管理
+        /// 实例化知识组管理
         /// </summary>
-        /// <param name="bookService"></param>
-        public GroupController(GroupService bookService) => _bookService = bookService;
+        /// <param name="groupService"></param>
+        public GroupController(GroupService groupService) => _groupService = groupService;
 
         /// <summary>
         /// 搜索
@@ -69,7 +70,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             var ids = GetRequest("keys").SplitAsInt();
             foreach (var id in ids.OrderBy(e => e))
             {
-                count += await _bookService.Sync(id);
+                count += await _groupService.Sync(id);
             }
 
             return JsonRefresh($"共刷新[{count}]个知识组");

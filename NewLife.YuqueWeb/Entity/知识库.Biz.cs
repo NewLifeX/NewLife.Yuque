@@ -1,4 +1,6 @@
-﻿using NewLife.Data;
+﻿using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using NewLife.Data;
 using XCode;
 using XCode.Membership;
 
@@ -52,6 +54,14 @@ namespace NewLife.YuqueWeb.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>知识组</summary>
+        [XmlIgnore, IgnoreDataMember]
+        //[ScriptIgnore]
+        public Group Group => Extends.Get(nameof(Group), k => Group.FindById(GroupId));
+
+        /// <summary>知识组</summary>
+        [Map(nameof(GroupId), typeof(Group), "Id")]
+        public String GroupName => Group?.Name;
         #endregion
 
         #region 扩展查询
@@ -135,6 +145,27 @@ namespace NewLife.YuqueWeb.Entity
         #endregion
 
         #region 业务操作
+        public void Fill(NewLife.Yuque.Models.Book repo)
+        {
+            var book = this;
+
+            book.Code = repo.Slug;
+            if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
+            book.Slug = repo.Slug;
+            book.Public = repo.Public > 0;
+            book.Type = repo.Type;
+            book.UserName = repo.User?.Name;
+            book.Docs = repo.Items;
+            book.Likes = repo.Likes;
+            book.Watches = repo.Watches;
+            book.Namespace = repo.Namespace;
+            book.ContentUpdateTime = repo.ContentUpdateTime;
+            book.Remark = repo.Description;
+            book.CreateTime = repo.CreateTime;
+            book.UpdateTime = repo.UpdateTime;
+
+            book.SyncTime = DateTime.Now;
+        }
         #endregion
     }
 }

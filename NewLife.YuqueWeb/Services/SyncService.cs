@@ -40,56 +40,62 @@ namespace NewLife.YuqueWeb.Services
         async void DoSyncBook(Object state)
         {
             using var span = _tracer.NewSpan(nameof(DoSyncBook));
-
-            var list = Book.GetValids();
-            foreach (var item in list)
+            try
             {
-                if (item.Enable && item.Sync) await _bookService.Sync(item.Id);
+                var list = Book.GetValids();
+                foreach (var item in list)
+                {
+                    if (item.Enable && item.Sync) await _bookService.Sync(item.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                span?.SetError(ex, null);
+                XTrace.WriteException(ex);
             }
         }
 
         async void DoSyncDocument(Object state)
         {
             using var span = _tracer.NewSpan(nameof(DoSyncDocument));
-
-            //var list = Book.FindAllWithCache();
-            //foreach (var item in list)
-            //{
-            //    if (item.Enable && item.Sync)
-            //    {
-            //    }
-            //}
-
-            // 只同步最近有改变的文章
-            var start = DateTime.Now.AddDays(-1);
-            var page = new PageParameter { PageSize = 100 };
-            while (true)
+            try
             {
-                var list = Document.SearchByUpdateTime(start, DateTime.MinValue, page);
-                if (list.Count == 0) break;
-
-                foreach (var item in list)
+                // 只同步最近有改变的文章
+                var start = DateTime.Now.AddDays(-1);
+                var page = new PageParameter { PageSize = 100 };
+                while (true)
                 {
-                    await _bookService.Sync(item);
+                    var list = Document.SearchByUpdateTime(start, DateTime.MinValue, page);
+                    if (list.Count == 0) break;
+
+                    foreach (var item in list)
+                    {
+                        await _bookService.Sync(item);
+                    }
+
+                    page.PageIndex++;
                 }
 
-                page.PageIndex++;
+                // 太久没同步的文章，都刷新一次
+                var time = DateTime.Today.AddDays(1 - 1);
+                page = new PageParameter { PageSize = 100 };
+                while (true)
+                {
+                    var list = Document.SearchBySyncTime(time, page);
+                    if (list.Count == 0) break;
+
+                    foreach (var item in list)
+                    {
+                        await _bookService.Sync(item);
+                    }
+
+                    page.PageIndex++;
+                }
             }
-
-            // 太久没同步的文章，都刷新一次
-            var time = DateTime.Today.AddDays(1 - 1);
-            page = new PageParameter { PageSize = 100 };
-            while (true)
+            catch (Exception ex)
             {
-                var list = Document.SearchBySyncTime(time, page);
-                if (list.Count == 0) break;
-
-                foreach (var item in list)
-                {
-                    await _bookService.Sync(item);
-                }
-
-                page.PageIndex++;
+                span?.SetError(ex, null);
+                XTrace.WriteException(ex);
             }
         }
     }

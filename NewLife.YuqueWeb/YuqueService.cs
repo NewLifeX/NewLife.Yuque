@@ -23,6 +23,7 @@ public static class YuqueService
         Assembly.GetExecutingAssembly().WriteVersion();
 
         services.AddSingleton<BookService>();
+        services.AddSingleton<GroupService>();
 
         services.AddHostedService<SyncService>();
 
