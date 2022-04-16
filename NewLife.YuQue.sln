@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.Yuque", "NewLife.YuQue\NewLife.Yuque.csproj", "{CC0B8977-F646-4211-BC1F-CD2BCA28971D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.Yuque", "NewLife.Yuque\NewLife.Yuque.csproj", "{CC0B8977-F646-4211-BC1F-CD2BCA28971D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewLife.YuqueWeb", "NewLife.YuQueWeb\NewLife.YuqueWeb.csproj", "{D7B1576C-2B4D-4733-A6A3-DAEFCA95B8B4}"
 EndProject
