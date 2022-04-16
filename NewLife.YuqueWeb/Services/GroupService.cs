@@ -106,7 +106,7 @@ public class GroupService
             {
                 var book = Book.FindById(repo.Id);
                 if (book == null)
-                    book = new Book { Id = repo.Id, Enable = true, };
+                    book = new Book { Id = repo.Id, Enable = group.Enable, Sync = repo.Public > 0 };
 
                 book.Fill(repo);
                 book.GroupId = group.Id;

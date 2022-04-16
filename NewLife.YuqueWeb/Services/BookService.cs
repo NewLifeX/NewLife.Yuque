@@ -4,7 +4,6 @@ using NewLife.Log;
 using NewLife.Yuque;
 using NewLife.YuqueWeb.Entity;
 using XCode;
-using XCode.Membership;
 using Group = NewLife.YuqueWeb.Entity.Group;
 
 namespace NewLife.YuqueWeb.Services;
@@ -90,20 +89,7 @@ public class BookService
         var repo = await client.GetRepo(bookId);
         if (repo != null)
         {
-            if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
-            book.Slug = repo.Slug;
-            book.Public = repo.Public > 0;
-            book.Type = repo.Type;
-            book.UserName = repo.User?.Name;
-            book.Docs = repo.Items;
-            book.Likes = repo.Likes;
-            book.Watches = repo.Watches;
-            book.Namespace = repo.Namespace;
-            book.ToC = repo.Toc;
-            //book.ContentUpdateTime = repo.ContentUpdateTime;
-            book.Remark = repo.Description;
-            book.CreateTime = repo.CreateTime;
-            book.UpdateTime = repo.UpdateTime;
+            book.Fill(repo);
 
             book.SyncTime = DateTime.Now;
 
@@ -123,45 +109,11 @@ public class BookService
                 var doc = Document.FindById(detail.Id);
                 if (doc == null) doc = Document.FindByBookAndSlug(book.Id, detail.Slug);
                 if (doc == null)
-                {
-                    doc = new Document
-                    {
-                        Id = detail.Id,
-                        Code = detail.Slug,
-                        Slug = detail.Slug,
-                        Title = detail.Title,
-                        Enable = true,
-                        Sync = detail.Public > 0,
-                    };
-                    doc.Insert();
-                }
+                    doc = new Document { Id = detail.Id, Enable = true, Sync = detail.Public > 0, };
 
-                doc.Id = detail.Id;
-                doc.Title = detail.Title;
-                doc.Slug = detail.Slug;
-                doc.BookId = detail.BookId;
-                doc.Public = detail.Public > 0;
-                doc.Status = detail.Status > 0;
+                doc.Fill(detail);
 
-                doc.UserName = detail.LastEditor?.Name;
-                doc.Format = detail.Format;
-                //doc.Hits = item.Hits;
-                doc.Likes = detail.Likes;
-                doc.Reads = detail.Reads;
-                doc.Comments = detail.Comments;
-                doc.WordCount = detail.WordCount;
-                if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
-                doc.Remark = detail.Description;
-
-                doc.DraftVersion = detail.DraftVersion;
-                doc.ContentUpdateTime = detail.ContentUpdateTime;
-                //doc.SyncTime = DateTime.Now;
-                doc.PublishTime = detail.PublishTime;
-                doc.FirstPublishTime = detail.FirstPublishTime;
-                doc.CreateTime = detail.CreateTime;
-                doc.UpdateTime = detail.UpdateTime;
-
-                doc.Update();
+                doc.Save();
             }
 
             count += list.Length;
@@ -182,38 +134,7 @@ public class BookService
         var detail = await client.GetDocument(book.Namespace, doc.Slug);
         if (detail == null) return 0;
 
-        doc.Id = detail.Id;
-        doc.Title = detail.Title;
-        doc.BookId = detail.BookId;
-        doc.Slug = detail.Slug;
-
-        // 未正式公开时，允许修改Code
-        if (detail.Public == 0) doc.Code = detail.Slug;
-
-        doc.UserName = detail.Creator?.Name;
-        doc.Format = detail.Format;
-        doc.Public = detail.Public > 0;
-        doc.Status = detail.Status > 0;
-
-        doc.Body = detail.Body;
-        doc.BodyHtml = detail.BodyHtml;
-        doc.ContentUpdateTime = detail.ContentUpdateTime;
-
-        doc.Hits = detail.Hits;
-        //doc.Reads = detail.Reads;
-        doc.Likes = detail.Likes;
-        doc.Comments = detail.Comments;
-        doc.WordCount = detail.WordCount;
-
-        if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
-        doc.Remark = detail.Description;
-
-        doc.PublishTime = detail.PublishTime;
-        doc.FirstPublishTime = detail.FirstPublishTime;
-        doc.CreateTime = detail.CreateTime;
-        doc.UpdateTime = detail.UpdateTime;
-
-        if (detail.DeleteTime.Year > 2000) doc.Enable = false;
+        doc.Fill(detail);
 
         // 处理HTML
         //if (ProcessHtml(doc) > 0) _ = Task.Run(() => FetchAttachment(doc));

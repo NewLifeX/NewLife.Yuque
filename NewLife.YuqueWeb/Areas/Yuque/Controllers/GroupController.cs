@@ -70,7 +70,8 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             var ids = GetRequest("keys").SplitAsInt();
             foreach (var id in ids.OrderBy(e => e))
             {
-                count += await _groupService.Sync(id);
+                await _groupService.Sync(id);
+                count++;
             }
 
             return JsonRefresh($"共刷新[{count}]个知识组");

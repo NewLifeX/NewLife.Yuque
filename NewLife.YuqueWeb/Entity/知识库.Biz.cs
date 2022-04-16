@@ -163,8 +163,26 @@ namespace NewLife.YuqueWeb.Entity
             book.Remark = repo.Description;
             book.CreateTime = repo.CreateTime;
             book.UpdateTime = repo.UpdateTime;
+        }
 
-            book.SyncTime = DateTime.Now;
+        public void Fill(NewLife.Yuque.Models.BookDetail repo)
+        {
+            var book = this;
+
+            //book.Code = repo.Slug;
+            if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
+            book.Slug = repo.Slug;
+            book.Public = repo.Public > 0;
+            book.Type = repo.Type;
+            book.UserName = repo.User?.Name;
+            book.Docs = repo.Items;
+            book.Likes = repo.Likes;
+            book.Watches = repo.Watches;
+            book.Namespace = repo.Namespace;
+            book.ToC = repo.Toc;
+            book.Remark = repo.Description;
+            book.CreateTime = repo.CreateTime;
+            book.UpdateTime = repo.UpdateTime;
         }
         #endregion
     }

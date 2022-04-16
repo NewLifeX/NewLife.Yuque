@@ -170,6 +170,80 @@ namespace NewLife.YuqueWeb.Entity
         #endregion
 
         #region 业务操作
+        public void Fill(NewLife.Yuque.Models.Document detail)
+        {
+            var doc = this;
+
+            //doc.Id = detail.Id;
+            if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
+
+            // 未正式公开时，允许修改Code
+            if (detail.Public == 0) doc.Code = detail.Slug;
+            
+            doc.Title = detail.Title;
+            doc.Slug = detail.Slug;
+            doc.BookId = detail.BookId;
+            doc.Public = detail.Public > 0;
+            doc.Status = detail.Status > 0;
+
+            doc.UserName = detail.LastEditor?.Name;
+            doc.Format = detail.Format;
+            //doc.Hits = item.Hits;
+            doc.Likes = detail.Likes;
+            doc.Reads = detail.Reads;
+            doc.Comments = detail.Comments;
+            doc.WordCount = detail.WordCount;
+            if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
+            doc.Remark = detail.Description;
+
+            doc.DraftVersion = detail.DraftVersion;
+            doc.ContentUpdateTime = detail.ContentUpdateTime;
+            //doc.SyncTime = DateTime.Now;
+            doc.PublishTime = detail.PublishTime;
+            doc.FirstPublishTime = detail.FirstPublishTime;
+            doc.CreateTime = detail.CreateTime;
+            doc.UpdateTime = detail.UpdateTime;
+        }
+
+        public void Fill(NewLife.Yuque.Models.DocumentDetail detail)
+        {
+            var doc = this;
+
+            //doc.Id = detail.Id;
+            if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
+
+            // 未正式公开时，允许修改Code
+            if (detail.Public == 0) doc.Code = detail.Slug;
+            
+            doc.Title = detail.Title;
+            doc.Slug = detail.Slug;
+            doc.BookId = detail.BookId;
+
+            doc.UserName = detail.Creator?.Name;
+            doc.Format = detail.Format;
+            doc.Public = detail.Public > 0;
+            doc.Status = detail.Status > 0;
+
+            doc.Body = detail.Body;
+            doc.BodyHtml = detail.BodyHtml;
+            doc.ContentUpdateTime = detail.ContentUpdateTime;
+
+            doc.Hits = detail.Hits;
+            //doc.Reads = detail.Reads;
+            doc.Likes = detail.Likes;
+            doc.Comments = detail.Comments;
+            doc.WordCount = detail.WordCount;
+
+            if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
+            doc.Remark = detail.Description;
+
+            doc.PublishTime = detail.PublishTime;
+            doc.FirstPublishTime = detail.FirstPublishTime;
+            doc.CreateTime = detail.CreateTime;
+            doc.UpdateTime = detail.UpdateTime;
+
+            if (detail.DeleteTime.Year > 2000) doc.Enable = false;
+        }
         #endregion
     }
 }
