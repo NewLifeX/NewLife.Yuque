@@ -10,14 +10,14 @@ using XCode.DataAccessLayer;
 
 namespace NewLife.YuqueWeb.Entity
 {
-    /// <summary>知识库。管理知识库</summary>
+    /// <summary>知识组。管理用户或团队的令牌等</summary>
     [Serializable]
     [DataObject]
-    [Description("知识库。管理知识库")]
-    [BindIndex("IU_Book_Code", true, "Code")]
-    [BindIndex("IX_Book_Name", false, "Name")]
-    [BindTable("Book", Description = "知识库。管理知识库", ConnName = "Yuque", DbType = DatabaseType.None)]
-    public partial class Book
+    [Description("知识组。管理用户或团队的令牌等")]
+    [BindIndex("IU_Group_Code", true, "Code")]
+    [BindIndex("IX_Group_Name", false, "Name")]
+    [BindTable("Group", Description = "知识组。管理用户或团队的令牌等", ConnName = "Yuque", DbType = DatabaseType.None)]
+    public partial class Group
     {
         #region 属性
         private Int32 _Id;
@@ -27,14 +27,6 @@ namespace NewLife.YuqueWeb.Entity
         [DataObjectField(true, false, false, 0)]
         [BindColumn("Id", "编号", "")]
         public Int32 Id { get => _Id; set { if (OnPropertyChanging("Id", value)) { _Id = value; OnPropertyChanged("Id"); } } }
-
-        private Int32 _GroupId;
-        /// <summary>知识组</summary>
-        [DisplayName("知识组")]
-        [Description("知识组")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("GroupId", "知识组", "")]
-        public Int32 GroupId { get => _GroupId; set { if (OnPropertyChanging("GroupId", value)) { _GroupId = value; OnPropertyChanged("GroupId"); } } }
 
         private String _Code;
         /// <summary>编码。路径唯一标识，默认取Slug</summary>
@@ -68,45 +60,29 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get => _Enable; set { if (OnPropertyChanging("Enable", value)) { _Enable = value; OnPropertyChanged("Enable"); } } }
 
-        private Int32 _Sort;
-        /// <summary>排序。降序，数字越大越靠前</summary>
-        [DisplayName("排序")]
-        [Description("排序。降序，数字越大越靠前")]
+        private Int32 _Books;
+        /// <summary>知识库数</summary>
+        [DisplayName("知识库数")]
+        [Description("知识库数")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Sort", "排序。降序，数字越大越靠前", "")]
-        public Int32 Sort { get => _Sort; set { if (OnPropertyChanging("Sort", value)) { _Sort = value; OnPropertyChanged("Sort"); } } }
+        [BindColumn("Books", "知识库数", "")]
+        public Int32 Books { get => _Books; set { if (OnPropertyChanging("Books", value)) { _Books = value; OnPropertyChanged("Books"); } } }
 
-        private String _UserName;
-        /// <summary>用户</summary>
-        [DisplayName("用户")]
-        [Description("用户")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("UserName", "用户", "")]
-        public String UserName { get => _UserName; set { if (OnPropertyChanging("UserName", value)) { _UserName = value; OnPropertyChanged("UserName"); } } }
-
-        private Int32 _Docs;
-        /// <summary>文章数</summary>
-        [DisplayName("文章数")]
-        [Description("文章数")]
+        private Int32 _Topics;
+        /// <summary>主题数</summary>
+        [DisplayName("主题数")]
+        [Description("主题数")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Docs", "文章数", "")]
-        public Int32 Docs { get => _Docs; set { if (OnPropertyChanging("Docs", value)) { _Docs = value; OnPropertyChanged("Docs"); } } }
+        [BindColumn("Topics", "主题数", "")]
+        public Int32 Topics { get => _Topics; set { if (OnPropertyChanging("Topics", value)) { _Topics = value; OnPropertyChanged("Topics"); } } }
 
-        private Int32 _Likes;
-        /// <summary>点赞数</summary>
-        [DisplayName("点赞数")]
-        [Description("点赞数")]
+        private Int32 _Members;
+        /// <summary>成员数</summary>
+        [DisplayName("成员数")]
+        [Description("成员数")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Likes", "点赞数", "")]
-        public Int32 Likes { get => _Likes; set { if (OnPropertyChanging("Likes", value)) { _Likes = value; OnPropertyChanged("Likes"); } } }
-
-        private Int32 _Watches;
-        /// <summary>关注</summary>
-        [DisplayName("关注")]
-        [Description("关注")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Watches", "关注", "")]
-        public Int32 Watches { get => _Watches; set { if (OnPropertyChanging("Watches", value)) { _Watches = value; OnPropertyChanged("Watches"); } } }
+        [BindColumn("Members", "成员数", "")]
+        public Int32 Members { get => _Members; set { if (OnPropertyChanging("Members", value)) { _Members = value; OnPropertyChanged("Members"); } } }
 
         private Boolean _Public;
         /// <summary>公开。公开或私密</summary>
@@ -116,53 +92,13 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("Public", "公开。公开或私密", "")]
         public Boolean Public { get => _Public; set { if (OnPropertyChanging("Public", value)) { _Public = value; OnPropertyChanged("Public"); } } }
 
-        private Boolean _Sync;
-        /// <summary>同步。是否自动同步远程内容</summary>
-        [DisplayName("同步")]
-        [Description("同步。是否自动同步远程内容")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Sync", "同步。是否自动同步远程内容", "")]
-        public Boolean Sync { get => _Sync; set { if (OnPropertyChanging("Sync", value)) { _Sync = value; OnPropertyChanged("Sync"); } } }
-
-        private String _Slug;
-        /// <summary>路径</summary>
-        [DisplayName("路径")]
-        [Description("路径")]
+        private String _Token;
+        /// <summary>令牌</summary>
+        [DisplayName("令牌")]
+        [Description("令牌")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Slug", "路径", "")]
-        public String Slug { get => _Slug; set { if (OnPropertyChanging("Slug", value)) { _Slug = value; OnPropertyChanged("Slug"); } } }
-
-        private String _Namespace;
-        /// <summary>全路径</summary>
-        [DisplayName("全路径")]
-        [Description("全路径")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Namespace", "全路径", "")]
-        public String Namespace { get => _Namespace; set { if (OnPropertyChanging("Namespace", value)) { _Namespace = value; OnPropertyChanged("Namespace"); } } }
-
-        private DateTime _ContentUpdateTime;
-        /// <summary>内容更新时间</summary>
-        [DisplayName("内容更新时间")]
-        [Description("内容更新时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("ContentUpdateTime", "内容更新时间", "")]
-        public DateTime ContentUpdateTime { get => _ContentUpdateTime; set { if (OnPropertyChanging("ContentUpdateTime", value)) { _ContentUpdateTime = value; OnPropertyChanged("ContentUpdateTime"); } } }
-
-        private String _ToC;
-        /// <summary>目录</summary>
-        [DisplayName("目录")]
-        [Description("目录")]
-        [DataObjectField(false, false, true, 5000)]
-        [BindColumn("ToC", "目录", "")]
-        public String ToC { get => _ToC; set { if (OnPropertyChanging("ToC", value)) { _ToC = value; OnPropertyChanged("ToC"); } } }
-
-        private DateTime _SyncTime;
-        /// <summary>同步时间。最后一次同步数据的时间</summary>
-        [DisplayName("同步时间")]
-        [Description("同步时间。最后一次同步数据的时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("SyncTime", "同步时间。最后一次同步数据的时间", "")]
-        public DateTime SyncTime { get => _SyncTime; set { if (OnPropertyChanging("SyncTime", value)) { _SyncTime = value; OnPropertyChanged("SyncTime"); } } }
+        [BindColumn("Token", "令牌", "")]
+        public String Token { get => _Token; set { if (OnPropertyChanging("Token", value)) { _Token = value; OnPropertyChanged("Token"); } } }
 
         private String _CreateUser;
         /// <summary>创建者</summary>
@@ -248,23 +184,15 @@ namespace NewLife.YuqueWeb.Entity
                 switch (name)
                 {
                     case "Id": return _Id;
-                    case "GroupId": return _GroupId;
                     case "Code": return _Code;
                     case "Name": return _Name;
                     case "Type": return _Type;
                     case "Enable": return _Enable;
-                    case "Sort": return _Sort;
-                    case "UserName": return _UserName;
-                    case "Docs": return _Docs;
-                    case "Likes": return _Likes;
-                    case "Watches": return _Watches;
+                    case "Books": return _Books;
+                    case "Topics": return _Topics;
+                    case "Members": return _Members;
                     case "Public": return _Public;
-                    case "Sync": return _Sync;
-                    case "Slug": return _Slug;
-                    case "Namespace": return _Namespace;
-                    case "ContentUpdateTime": return _ContentUpdateTime;
-                    case "ToC": return _ToC;
-                    case "SyncTime": return _SyncTime;
+                    case "Token": return _Token;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
                     case "CreateIP": return _CreateIP;
@@ -282,23 +210,15 @@ namespace NewLife.YuqueWeb.Entity
                 switch (name)
                 {
                     case "Id": _Id = value.ToInt(); break;
-                    case "GroupId": _GroupId = value.ToInt(); break;
                     case "Code": _Code = Convert.ToString(value); break;
                     case "Name": _Name = Convert.ToString(value); break;
                     case "Type": _Type = Convert.ToString(value); break;
                     case "Enable": _Enable = value.ToBoolean(); break;
-                    case "Sort": _Sort = value.ToInt(); break;
-                    case "UserName": _UserName = Convert.ToString(value); break;
-                    case "Docs": _Docs = value.ToInt(); break;
-                    case "Likes": _Likes = value.ToInt(); break;
-                    case "Watches": _Watches = value.ToInt(); break;
+                    case "Books": _Books = value.ToInt(); break;
+                    case "Topics": _Topics = value.ToInt(); break;
+                    case "Members": _Members = value.ToInt(); break;
                     case "Public": _Public = value.ToBoolean(); break;
-                    case "Sync": _Sync = value.ToBoolean(); break;
-                    case "Slug": _Slug = Convert.ToString(value); break;
-                    case "Namespace": _Namespace = Convert.ToString(value); break;
-                    case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
-                    case "ToC": _ToC = Convert.ToString(value); break;
-                    case "SyncTime": _SyncTime = value.ToDateTime(); break;
+                    case "Token": _Token = Convert.ToString(value); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
                     case "CreateIP": _CreateIP = Convert.ToString(value); break;
@@ -315,14 +235,11 @@ namespace NewLife.YuqueWeb.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得知识库字段信息的快捷方式</summary>
+        /// <summary>取得知识组字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
             public static readonly Field Id = FindByName("Id");
-
-            /// <summary>知识组</summary>
-            public static readonly Field GroupId = FindByName("GroupId");
 
             /// <summary>编码。路径唯一标识，默认取Slug</summary>
             public static readonly Field Code = FindByName("Code");
@@ -336,41 +253,20 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName("Enable");
 
-            /// <summary>排序。降序，数字越大越靠前</summary>
-            public static readonly Field Sort = FindByName("Sort");
+            /// <summary>知识库数</summary>
+            public static readonly Field Books = FindByName("Books");
 
-            /// <summary>用户</summary>
-            public static readonly Field UserName = FindByName("UserName");
+            /// <summary>主题数</summary>
+            public static readonly Field Topics = FindByName("Topics");
 
-            /// <summary>文章数</summary>
-            public static readonly Field Docs = FindByName("Docs");
-
-            /// <summary>点赞数</summary>
-            public static readonly Field Likes = FindByName("Likes");
-
-            /// <summary>关注</summary>
-            public static readonly Field Watches = FindByName("Watches");
+            /// <summary>成员数</summary>
+            public static readonly Field Members = FindByName("Members");
 
             /// <summary>公开。公开或私密</summary>
             public static readonly Field Public = FindByName("Public");
 
-            /// <summary>同步。是否自动同步远程内容</summary>
-            public static readonly Field Sync = FindByName("Sync");
-
-            /// <summary>路径</summary>
-            public static readonly Field Slug = FindByName("Slug");
-
-            /// <summary>全路径</summary>
-            public static readonly Field Namespace = FindByName("Namespace");
-
-            /// <summary>内容更新时间</summary>
-            public static readonly Field ContentUpdateTime = FindByName("ContentUpdateTime");
-
-            /// <summary>目录</summary>
-            public static readonly Field ToC = FindByName("ToC");
-
-            /// <summary>同步时间。最后一次同步数据的时间</summary>
-            public static readonly Field SyncTime = FindByName("SyncTime");
+            /// <summary>令牌</summary>
+            public static readonly Field Token = FindByName("Token");
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUser = FindByName("CreateUser");
@@ -402,14 +298,11 @@ namespace NewLife.YuqueWeb.Entity
             static Field FindByName(String name) => Meta.Table.FindByName(name);
         }
 
-        /// <summary>取得知识库字段名称的快捷方式</summary>
+        /// <summary>取得知识组字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
             public const String Id = "Id";
-
-            /// <summary>知识组</summary>
-            public const String GroupId = "GroupId";
 
             /// <summary>编码。路径唯一标识，默认取Slug</summary>
             public const String Code = "Code";
@@ -423,41 +316,20 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>排序。降序，数字越大越靠前</summary>
-            public const String Sort = "Sort";
+            /// <summary>知识库数</summary>
+            public const String Books = "Books";
 
-            /// <summary>用户</summary>
-            public const String UserName = "UserName";
+            /// <summary>主题数</summary>
+            public const String Topics = "Topics";
 
-            /// <summary>文章数</summary>
-            public const String Docs = "Docs";
-
-            /// <summary>点赞数</summary>
-            public const String Likes = "Likes";
-
-            /// <summary>关注</summary>
-            public const String Watches = "Watches";
+            /// <summary>成员数</summary>
+            public const String Members = "Members";
 
             /// <summary>公开。公开或私密</summary>
             public const String Public = "Public";
 
-            /// <summary>同步。是否自动同步远程内容</summary>
-            public const String Sync = "Sync";
-
-            /// <summary>路径</summary>
-            public const String Slug = "Slug";
-
-            /// <summary>全路径</summary>
-            public const String Namespace = "Namespace";
-
-            /// <summary>内容更新时间</summary>
-            public const String ContentUpdateTime = "ContentUpdateTime";
-
-            /// <summary>目录</summary>
-            public const String ToC = "ToC";
-
-            /// <summary>同步时间。最后一次同步数据的时间</summary>
-            public const String SyncTime = "SyncTime";
+            /// <summary>令牌</summary>
+            public const String Token = "Token";
 
             /// <summary>创建者</summary>
             public const String CreateUser = "CreateUser";

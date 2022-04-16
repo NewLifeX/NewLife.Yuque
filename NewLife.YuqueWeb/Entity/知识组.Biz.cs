@@ -1,22 +1,44 @@
-﻿using NewLife.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Xml.Serialization;
+using NewLife;
+using NewLife.Data;
+using NewLife.Log;
+using NewLife.Model;
+using NewLife.Reflection;
+using NewLife.Threading;
+using NewLife.Web;
 using XCode;
+using XCode.Cache;
+using XCode.Configuration;
+using XCode.DataAccessLayer;
 using XCode.Membership;
+using XCode.Shards;
 
 namespace NewLife.YuqueWeb.Entity
 {
-    /// <summary>知识库。管理知识库</summary>
-    public partial class Book : Entity<Book>
+    /// <summary>知识组。管理用户或团队的令牌等</summary>
+    public partial class Group : Entity<Group>
     {
         #region 对象操作
-        static Book()
+        static Group()
         {
             // 累加字段，生成 Update xx Set Count=Count+1234 Where xxx
             //var df = Meta.Factory.AdditionalFields;
-            //df.Add(nameof(Docs));
+            //df.Add(nameof(Books));
 
             // 过滤器 UserModule、TimeModule、IPModule
             Meta.Modules.Add<UserModule>();
-            //Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<TimeModule>();
             Meta.Modules.Add<IPModule>();
         }
 
@@ -49,6 +71,34 @@ namespace NewLife.YuqueWeb.Entity
             // 检查唯一索引
             // CheckExist(isNew, nameof(Code));
         }
+
+        /// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void InitData()
+        {
+            // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
+            if (Meta.Session.Count > 0) return;
+
+            if (XTrace.Debug) XTrace.WriteLine("开始初始化Group[知识组]数据……");
+
+            var entity = new Group
+            {
+                Code = "smartstone",
+                Name = "大石头",
+                Enable = true
+            };
+            entity.Insert();
+
+            entity = new Group
+            {
+                Code = "newlifex",
+                Name = "新生命",
+                Enable = true
+            };
+            entity.Insert();
+
+            if (XTrace.Debug) XTrace.WriteLine("完成初始化Group[知识组]数据！");
+        }
         #endregion
 
         #region 扩展属性
@@ -58,7 +108,7 @@ namespace NewLife.YuqueWeb.Entity
         /// <summary>根据编号查找</summary>
         /// <param name="id">编号</param>
         /// <returns>实体对象</returns>
-        public static Book FindById(Int32 id)
+        public static Group FindById(Int32 id)
         {
             if (id <= 0) return null;
 
@@ -74,7 +124,7 @@ namespace NewLife.YuqueWeb.Entity
         /// <summary>根据编码查找</summary>
         /// <param name="code">编码</param>
         /// <returns>实体对象</returns>
-        public static Book FindByCode(String code)
+        public static Group FindByCode(String code)
         {
             // 实体缓存
             if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Code.EqualIgnoreCase(code));
@@ -85,46 +135,38 @@ namespace NewLife.YuqueWeb.Entity
         /// <summary>根据名称查找</summary>
         /// <param name="name">名称</param>
         /// <returns>实体列表</returns>
-        public static IList<Book> FindAllByName(String name)
+        public static IList<Group> FindAllByName(String name)
         {
             // 实体缓存
             if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.Name.EqualIgnoreCase(name));
 
             return FindAll(_.Name == name);
         }
-
-        /// <summary>
-        /// 获取可用知识库，并处理好排序
-        /// </summary>
-        /// <returns></returns>
-        public static IList<Book> GetValids() => FindAllWithCache().Where(e => e.Enable).OrderByDescending(e => e.Sort).ToList();
         #endregion
 
         #region 高级查询
         /// <summary>高级查询</summary>
-        /// <param name="groupId">知识组</param>
-        /// <param name="enable">启用</param>
+        /// <param name="code">编码。路径唯一标识，默认取Slug</param>
+        /// <param name="name">名称</param>
         /// <param name="start">更新时间开始</param>
         /// <param name="end">更新时间结束</param>
         /// <param name="key">关键字</param>
         /// <param name="page">分页参数信息。可携带统计和数据权限扩展查询等信息</param>
         /// <returns>实体列表</returns>
-        public static IList<Book> Search(Int32 groupId, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
+        public static IList<Group> Search(String code, String name, DateTime start, DateTime end, String key, PageParameter page)
         {
             var exp = new WhereExpression();
 
-            //if (!code.IsNullOrEmpty()) exp &= _.Code == code;
-            //if (!name.IsNullOrEmpty()) exp &= _.Name == name;
-            if (groupId >= 0) exp &= _.GroupId == groupId;
-            if (enable != null) exp &= _.Enable == enable;
+            if (!code.IsNullOrEmpty()) exp &= _.Code == code;
+            if (!name.IsNullOrEmpty()) exp &= _.Name == name;
             exp &= _.UpdateTime.Between(start, end);
-            if (!key.IsNullOrEmpty()) exp &= _.Code.Contains(key) | _.Name.Contains(key) | _.Type.Contains(key) | _.UserName.Contains(key) | _.Slug.Contains(key) | _.Namespace.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
+            if (!key.IsNullOrEmpty()) exp &= _.Code.Contains(key) | _.Name.Contains(key) | _.Type.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
 
             return FindAll(exp, page);
         }
 
-        // Select Count(Id) as Id,Category From Book Where CreateTime>'2020-01-24 00:00:00' Group By Category Order By Id Desc limit 20
-        //static readonly FieldCache<Book> _CategoryCache = new FieldCache<Book>(nameof(Category))
+        // Select Count(Id) as Id,Category From Group Where CreateTime>'2020-01-24 00:00:00' Group By Category Order By Id Desc limit 20
+        //static readonly FieldCache<Group> _CategoryCache = new FieldCache<Group>(nameof(Category))
         //{
         //Where = _.CreateTime > DateTime.Today.AddDays(-30) & Expression.Empty
         //};

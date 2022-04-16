@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://www.newlifex.com http://www.newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://www.yuque.com/smartstone/xcode/model" xmlns="http://www.newlifex.com/Model2022.xsd">
+<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://newlifex.com/xcode/model" xmlns="https://newlifex.com/Model2022.xsd">
+  <Table Name="Group" Description="知识组。管理用户或团队的令牌等">
+    <Columns>
+      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
+      <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="Books" DataType="Int32" Description="知识库数" />
+      <Column Name="Topics" DataType="Int32" Description="主题数" />
+      <Column Name="Members" DataType="Int32" Description="成员数" />
+      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
+      <Column Name="Token" DataType="String" Description="令牌" />
+      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" />
+      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" />
+      <Column Name="Remark" DataType="String" Length="500" Description="备注" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Code" Unique="True" />
+      <Index Columns="Name" />
+    </Indexes>
+  </Table>
   <Table Name="Book" Description="知识库。管理知识库">
     <Columns>
       <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
+      <Column Name="GroupId" DataType="Int32" Description="知识组" />
       <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
       <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
       <Column Name="Type" DataType="String" Description="类型" />

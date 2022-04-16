@@ -59,6 +59,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
                 if (entity != null) return new[] { entity };
             }
 
+            var groupId = p["groupId"].ToInt(-1);
             var enable = p["enable"]?.ToBoolean();
 
             var start = p["dtStart"].ToDateTime();
@@ -66,7 +67,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 
             p.RetrieveState = true;
 
-            return Book.Search(null, null, enable, start, end, p["Q"], p);
+            return Book.Search(groupId, enable, start, end, p["Q"], p);
         }
 
         /// <summary>同步知识库</summary>
