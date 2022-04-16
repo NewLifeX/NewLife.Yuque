@@ -21,9 +21,11 @@ jobs:
     - name: Restore
       run: |
         dotnet restore NewLife.Yuque/NewLife.Yuque.csproj
+        dotnet restore NewLife.YuqueWeb/NewLife.YuqueWeb.csproj
     - name: Build
       run: |
         dotnet pack --no-restore --version-suffix $(date "+%Y.%m%d-beta%H%M") -c Release -o out NewLife.Yuque/NewLife.Yuque.csproj
+        dotnet pack --no-restore --version-suffix $(date "+%Y.%m%d-beta%H%M") -c Release -o out NewLife.YuqueWeb/NewLife.YuqueWeb.csproj
     - name: Publish
       run: |
         # dotnet nuget push ./out/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/NewLifeX/index.json --api-key ${{ github.token }}
