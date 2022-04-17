@@ -149,7 +149,7 @@ namespace NewLife.YuqueWeb.Entity
         {
             var book = this;
 
-            book.Code = repo.Slug;
+            if (book.Code.IsNullOrEmpty()) book.Code = repo.Slug;
             if (book.Name.IsNullOrEmpty()) book.Name = repo.Name;
             book.Slug = repo.Slug;
             book.Public = repo.Public > 0;
