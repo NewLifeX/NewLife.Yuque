@@ -87,7 +87,7 @@ namespace NewLife.YuqueWeb.Controllers
                 RetrieveTotalCount = true,
             };
 
-            var list = Document.Search(null, null, book.Id, DateTime.MinValue, DateTime.MinValue, null, page);
+            var list = Document.Search(null, book.Id, true, true, true, DateTime.MinValue, DateTime.MinValue, null, page);
 
             var model = new BookIndexModel
             {
@@ -148,7 +148,7 @@ namespace NewLife.YuqueWeb.Controllers
             var book = Book.FindByCode(code);
 
             var pager = new Pager { PageIndex = pageIndex ?? 1, PageSize = PageSize };
-            var list = Document.Search(null, null, book.Id, DateTime.MinValue, DateTime.MinValue, key, pager);
+            var list = Document.Search(null, book.Id, true, true, true, DateTime.MinValue, DateTime.MinValue, key, pager);
 
             ViewData["Title"] = $"搜索[{key}]";
 

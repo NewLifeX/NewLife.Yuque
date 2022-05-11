@@ -54,13 +54,16 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
         protected override IEnumerable<Document> Search(Pager p)
         {
             var bookId = p["bookId"].ToInt(-1);
+            var enable = p["enable"]?.ToBoolean();
+            var pub = p["pub"]?.ToBoolean();
+            var status = p["status"]?.ToBoolean();
 
             var start = p["dtStart"].ToDateTime();
             var end = p["dtEnd"].ToDateTime();
 
             p.RetrieveState = true;
 
-            return Document.Search(null, null, bookId, start, end, p["Q"], p);
+            return Document.Search(null, bookId, enable, pub, status, start, end, p["Q"], p);
         }
 
         /// <summary>同步知识库</summary>

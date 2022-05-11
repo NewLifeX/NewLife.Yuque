@@ -130,20 +130,24 @@ namespace NewLife.YuqueWeb.Entity
         #region 高级查询
         /// <summary>高级查询</summary>
         /// <param name="code">编码。路径唯一标识，默认取Slug</param>
-        /// <param name="title">标题</param>
         /// <param name="bookId">知识库</param>
+        /// <param name="enable">是否启用</param>
+        /// <param name="pub">是否公开</param>
+        /// <param name="status">正式或草稿</param>
         /// <param name="start">更新时间开始</param>
         /// <param name="end">更新时间结束</param>
         /// <param name="key">关键字</param>
         /// <param name="page">分页参数信息。可携带统计和数据权限扩展查询等信息</param>
         /// <returns>实体列表</returns>
-        public static IList<Document> Search(String code, String title, Int32 bookId, DateTime start, DateTime end, String key, PageParameter page)
+        public static IList<Document> Search(String code, Int32 bookId, Boolean? enable, Boolean? pub, Boolean? status, DateTime start, DateTime end, String key, PageParameter page)
         {
             var exp = new WhereExpression();
 
             if (!code.IsNullOrEmpty()) exp &= _.Code == code;
-            if (!title.IsNullOrEmpty()) exp &= _.Title == title;
             if (bookId >= 0) exp &= _.BookId == bookId;
+            if (enable != null) exp &= _.Enable == enable;
+            if (pub != null) exp &= _.Public == pub;
+            if (status != null) exp &= _.Status == status;
             exp &= _.UpdateTime.Between(start, end);
             if (!key.IsNullOrEmpty()) exp &= _.Code == key | _.Title.Contains(key) | _.UserName.Contains(key) | _.Format == key | _.Html.Contains(key) | _.Cover.Contains(key) | _.CreateUser.Contains(key) | _.CreateIP.Contains(key) | _.UpdateUser.Contains(key) | _.UpdateIP.Contains(key) | _.Remark.Contains(key);
 
@@ -178,8 +182,8 @@ namespace NewLife.YuqueWeb.Entity
             if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
 
             // 未正式公开时，允许修改Code
-            if (detail.Public == 0) doc.Code = detail.Slug;
-            
+            if (detail.Status == 0) doc.Code = detail.Slug;
+
             doc.Title = detail.Title;
             doc.Slug = detail.Slug;
             doc.BookId = detail.BookId;
@@ -213,8 +217,8 @@ namespace NewLife.YuqueWeb.Entity
             if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
 
             // 未正式公开时，允许修改Code
-            if (detail.Public == 0) doc.Code = detail.Slug;
-            
+            if (detail.Status == 0) doc.Code = detail.Slug;
+
             doc.Title = detail.Title;
             doc.Slug = detail.Slug;
             doc.BookId = detail.BookId;
