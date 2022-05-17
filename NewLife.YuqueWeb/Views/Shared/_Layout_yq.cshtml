@@ -6,7 +6,7 @@
     var sys = SysConfig.Current;
 
     var title = ViewBag.Title + "";
-    if (title != "" && !title.Contains(" - ")) title += " - " + sys.DisplayName;
+    if (set.TitlePrefix && title != sys.DisplayName && title != "" && !title.Contains(" - ")) title += " - " + sys.DisplayName;
 }
 <!DOCTYPE html>
 <html lang="zh-CN">
