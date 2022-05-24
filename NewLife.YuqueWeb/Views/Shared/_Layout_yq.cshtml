@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="/Content/bootstrap/css/bootstrap-responsive.min.css">
 
     <link rel="stylesheet" href="/yuque/lake-content-v1.css">
+    <link rel="stylesheet" href="/yuque/highlight.default.css">
+    <link rel="stylesheet" href="/yuque/highlight.vs.css">
 
     <!-- JQuery作为一等公民，页面内部随时可能使用 -->
     <script src="/Content/js/jquery-3.6.0.min.js"></script>
@@ -45,6 +47,15 @@
 
     <!-- 最早引入基本脚本 -->
     <script src="/Content/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/yuque/highlight.min.js"></script>
+    <script>
+        //hljs.highlightAll();
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+    </script>
 
     @RenderSection("scripts", required: false)
 </body>
