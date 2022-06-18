@@ -1,0 +1,198 @@
+ne-card[data-card-name="image"] img {
+    vertical-align: baseline;
+}
+
+.ne-paragraph-spacing-relax.ne-typography-classic ne-card[data-card-name="image"] img {
+    vertical-align: text-bottom;
+}
+
+.ne-image-wrap {
+    position: relative;
+    line-height: 0;
+}
+
+    .ne-image-wrap.ne-image-style-stroke:before {
+        border: 1px solid #E8E9E8;
+        border-radius: 4px;
+    }
+
+    .ne-image-wrap.ne-image-style-shadow:before {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .ne-image-wrap.ne-image-loaded .ne-image {
+        opacity: 1;
+        border-radius: 4px;
+    }
+
+    .ne-image-wrap:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        pointer-events: none;
+    }
+
+    .ne-image-wrap .ne-image-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+    .ne-image-wrap .ne-image {
+        transition: opacity ease-in 0.1s;
+        opacity: 0;
+    }
+
+        .ne-image-wrap .ne-image.ne-image-preview {
+            cursor: zoom-in;
+        }
+
+        .ne-image-wrap .ne-image.ne-image-absolute {
+            position: absolute;
+            z-index: 2;
+        }
+
+    .ne-image-wrap .ne-image,
+    .ne-image-wrap .ne-bg-img {
+        max-width: 100%;
+    }
+
+    .ne-image-wrap:hover .ne-ui-image-inner-button-wrap {
+        display: flex;
+    }
+
+    .ne-image-wrap .ne-ui-image-inner-button-wrap {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        padding: 0 4px;
+        background: rgba(38, 38, 38, 0.6);
+        border-radius: 4px;
+        z-index: 4;
+    }
+
+    .ne-image-wrap .ne-ui-image-inner-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        color: #FFFFFF;
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .ne-image-wrap .ne-ui-image-inner-divider {
+        display: block;
+        width: 1px;
+        height: 14px;
+        margin: 0 4px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+        .ne-image-wrap .ne-ui-image-inner-divider:last-child {
+            display: none;
+        }
+
+.ne-image {
+    max-width: 100%;
+}
+
+.lake-content .ne-p,
+.lake-content .ne-summary,
+.lake-content .ne-hole.ne-spacing-all,
+.lake-content .ne-hole,
+.lake-content .ne-table-hole.ne-spacing-all,
+.lake-content .ne-table-hole,
+.lake-content .ne-container-hole.ne-spacing-all,
+.lake-content .ne-container-hole,
+.lake-content .ne-alert-hole,
+.lake-content .ne-alert-hole.ne-spacing-all {
+    margin-bottom: 7.83px;
+}
+
+.ne-viewer ne-h1,
+.ne-engine ne-h1,
+.ne-viewer ne-h2,
+.ne-engine ne-h2,
+.ne-viewer ne-h3,
+.ne-engine ne-h3,
+.ne-viewer ne-h4,
+.ne-engine ne-h4,
+.ne-viewer ne-h5,
+.ne-engine ne-h5,
+.ne-viewer ne-h6,
+.ne-engine ne-h6 {
+    position: relative;
+    display: block;
+}
+
+    .ne-viewer ne-h1 ne-text,
+    .ne-engine ne-h1 ne-text,
+    .ne-viewer ne-h2 ne-text,
+    .ne-engine ne-h2 ne-text,
+    .ne-viewer ne-h3 ne-text,
+    .ne-engine ne-h3 ne-text,
+    .ne-viewer ne-h4 ne-text,
+    .ne-engine ne-h4 ne-text,
+    .ne-viewer ne-h5 ne-text,
+    .ne-engine ne-h5 ne-text,
+    .ne-viewer ne-h6 ne-text,
+    .ne-engine ne-h6 ne-text {
+        font-weight: bold;
+    }
+
+    .ne-viewer ne-h6 ne-text,
+    .ne-engine ne-h6 ne-text {
+        font-weight: normal;
+    }
+
+.ne-viewer ne-heading-ext,
+.ne-engine ne-heading-ext {
+    position: absolute;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    left: 0;
+    transform: translateX(-100%);
+    text-indent: 0;
+}
+
+.ne-viewer ne-heading-content,
+.ne-engine ne-heading-content {
+    display: block;
+}
+
+.lake-content h1,
+.lake-content h2,
+.lake-content h3,
+.lake-content h4,
+.lake-content h5,
+.lake-content h6 {
+    position: relative;
+    display: block;
+    font-weight: bold;
+}
+
+.page-header h2{
+    font-family: Chinese Quote,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji;
+    font-size: 36px;
+    line-height: 1.389;
+    font-weight: 700;
+    color: #262626;
+    display: inline;
+    margin-right: 20px;
+    -webkit-font-variant-ligatures: none;
+    font-variant-ligatures: none;
+}

@@ -41,9 +41,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NewLife.Core" Version="9.2.2022.601" />
-    <PackageReference Include="NewLife.Cube.Core" Version="5.2.2022.601" />
-    <PackageReference Include="NewLife.XCode" Version="11.2.2022.601" />
+    <PackageReference Include="NewLife.Core" Version="9.2.2022.611-beta0715" />
+    <PackageReference Include="NewLife.Cube.Core" Version="5.2.2022.618-beta0119" />
+    <PackageReference Include="NewLife.XCode" Version="11.2.2022.616-beta1140" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +56,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\yuque\content-v1.css" />
   </ItemGroup>
 
 </Project>
