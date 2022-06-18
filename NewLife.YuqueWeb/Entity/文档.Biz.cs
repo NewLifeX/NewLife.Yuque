@@ -182,7 +182,7 @@ namespace NewLife.YuqueWeb.Entity
             if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
 
             // 未正式公开时，允许修改Code
-            if (detail.Status == 0) doc.Code = detail.Slug;
+            if (!doc.Status) doc.Code = detail.Slug;
 
             doc.Title = detail.Title;
             doc.Slug = detail.Slug;
@@ -217,7 +217,7 @@ namespace NewLife.YuqueWeb.Entity
             if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
 
             // 未正式公开时，允许修改Code
-            if (detail.Status == 0) doc.Code = detail.Slug;
+            if (!doc.Status) doc.Code = detail.Slug;
 
             doc.Title = detail.Title;
             doc.Slug = detail.Slug;
