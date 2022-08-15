@@ -129,7 +129,9 @@ namespace NewLife.Yuque
                 var sb = new StringBuilder();
                 foreach (var item in args.ToDictionary())
                 {
-                    sb.AppendJoin('&', item.Key, "=", item.Value);
+                    //sb.AppendJoin('&', item.Key, "=", item.Value);
+                    if (sb.Length > 0) sb.Append('&');
+                    sb.AppendFormat("{0}={1}", item.Key, item.Value);
                 }
                 if (sb.Length > 0) url += "?" + sb;
             }
