@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.0.2022.0405" Document="https://newlifex.com/xcode/model" xmlns="https://newlifex.com/Model2022.xsd">
+<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.2.2022.0714" Document="https://newlifex.com/xcode/model" xmlns="https://newlifex.com/Model2022.xsd">
   <Table Name="Group" Description="知识组。管理用户或团队的令牌等">
     <Columns>
       <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
@@ -12,15 +12,15 @@
       <Column Name="Members" DataType="Int32" Description="成员数" />
       <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
       <Column Name="Token" DataType="String" Description="令牌" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" />
+      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
     </Columns>
     <Indexes>
       <Index Columns="Code" Unique="True" />
@@ -47,15 +47,15 @@
       <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
       <Column Name="ToC" DataType="String" Length="5000" Description="目录" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" />
+      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
     </Columns>
     <Indexes>
       <Index Columns="Code" Unique="True" />
@@ -91,15 +91,15 @@
       <Column Name="DraftVersion" DataType="Int32" Description="版本。草案版本" />
       <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" />
+      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
     </Columns>
     <Indexes>
       <Index Columns="BookId,Code" Unique="True" />
@@ -119,15 +119,15 @@
       <Column Name="NewWindow" DataType="Boolean" Description="新窗口打开" />
       <Column Name="Sort" DataType="Int32" Description="排序" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="CreateUser" DataType="String" Description="创建人" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUser" DataType="String" Description="更新人" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-      <Column Name="Remark" DataType="String" Length="200" Description="备注" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
+      <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
     </Columns>
     <Indexes>
       <Index Columns="ParentId,Name" Unique="True" />
@@ -142,15 +142,15 @@
       <Column Name="Target" DataType="String" Description="目标" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="Priority" DataType="Int32" Description="优先级。较大优先" />
-      <Column Name="CreateUser" DataType="String" Description="创建人" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="UpdateUser" DataType="String" Description="更新人" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-      <Column Name="Remark" DataType="String" Length="200" Description="备注" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
+      <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
     </Columns>
     <Indexes>
       <Index Columns="Kind" />
