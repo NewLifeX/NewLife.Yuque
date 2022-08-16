@@ -125,7 +125,7 @@ public class BookService
 
     public async Task<Int32> Sync(Document doc)
     {
-        var book = doc.Book;
+        var book = doc?.Book;
         if (doc == null || !doc.Sync || book == null || !book.Sync) return 0;
 
         var token = GetToken(book);
@@ -140,7 +140,7 @@ public class BookService
         //if (ProcessHtml(doc) > 0) _ = Task.Run(() => FetchAttachment(doc));
         ProcessHtml(doc);
 
-        if (!(doc as IEntity).HasDirty) return 0;
+        //if (!(doc as IEntity).HasDirty) return 0;
 
         doc.SyncTime = DateTime.Now;
 
@@ -204,7 +204,7 @@ public class BookService
 
                 // 生成附件
                 var att = list.FirstOrDefault(e => e.Source == url);
-                if (att == null) att = new Attachment { Enable = true };
+                att ??= new Attachment { Enable = true };
 
                 att.Category = "Yuque";
                 att.Key = doc.Id + "";
