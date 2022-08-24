@@ -80,7 +80,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
                 if (doc != null)
                 {
                     total++;
-                    success += await _bookService.Sync(doc);
+                    success += await _bookService.Sync(doc, true);
                 }
             }
 

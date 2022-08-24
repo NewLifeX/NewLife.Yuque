@@ -123,7 +123,7 @@ public class BookService
         return count;
     }
 
-    public async Task<Int32> Sync(Document doc)
+    public async Task<Int32> Sync(Document doc, Boolean noPublic)
     {
         var book = doc?.Book;
         if (doc == null || !doc.Sync || book == null || !book.Sync) return 0;
@@ -133,6 +133,9 @@ public class BookService
 
         var detail = await client.GetDocument(book.Namespace, doc.Slug);
         if (detail == null) return 0;
+
+        // 如果目标文档处于草稿状态，则不要同步，否则将会导致文档在前台消失不可见
+        if (!noPublic && detail.Status == 0) return 0;
 
         doc.Fill(detail);
 

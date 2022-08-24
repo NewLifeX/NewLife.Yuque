@@ -70,7 +70,7 @@ namespace NewLife.YuqueWeb.Services
 
                     foreach (var item in list)
                     {
-                        await _bookService.Sync(item);
+                        await _bookService.Sync(item, false);
                     }
 
                     page.PageIndex++;
@@ -86,7 +86,7 @@ namespace NewLife.YuqueWeb.Services
 
                     foreach (var item in list)
                     {
-                        await _bookService.Sync(item);
+                        await _bookService.Sync(item, false);
                     }
 
                     page.PageIndex++;

@@ -132,7 +132,7 @@ public class YuqueController : Controller
         // 正文不存在时，去同步一份
         if (inf.Html.IsNullOrEmpty())
         {
-            await _bookService.Sync(inf);
+            await _bookService.Sync(inf, false);
         }
 
         // 增加浏览数
