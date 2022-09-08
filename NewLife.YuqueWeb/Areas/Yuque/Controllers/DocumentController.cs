@@ -34,7 +34,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
 
             var list = ListFields;
             list.Clear();
-            var allows = new[] { "BookName", "Title", "Code", "Enable", "UserName", "Hits", "TotalHits", "Likes", "Reads", "Comments", "Public", "Status", "PublishTime", "WordCount", "Sync", "SyncTime" };
+            var allows = new[] { "BookName", "Title", "Code", "Enable", "UserName", "Sort", "Hits", "TotalHits", "Likes", "Reads", "Comments", "Public", "Status", "PublishTime", "WordCount", "Sync", "SyncTime" };
             foreach (var item in allows)
             {
                 list.AddListField(item);

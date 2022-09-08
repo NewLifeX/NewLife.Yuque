@@ -69,6 +69,7 @@
       <Column Name="Title" DataType="String" Master="True" Length="200" Nullable="False" Description="标题" />
       <Column Name="BookId" DataType="Int32" Description="知识库" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
       <Column Name="UserName" DataType="String" Description="用户" />
       <Column Name="Format" DataType="String" Description="格式" />
       <Column Name="Hits" DataType="Int32" Description="点击量" />
@@ -104,6 +105,7 @@
     <Indexes>
       <Index Columns="BookId,Code" Unique="True" />
       <Index Columns="BookId,Slug" />
+      <Index Columns="BookId,Sort" />
       <Index Columns="Title" />
       <Index Columns="UpdateTime" />
       <Index Columns="SyncTime" />

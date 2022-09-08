@@ -96,6 +96,7 @@ public class YuqueController : Controller
         {
             PageIndex = pageIndex ?? 1,
             PageSize = PageSize,
+            OrderBy = "Sort desc, Id desc",
             RetrieveTotalCount = true,
         };
 

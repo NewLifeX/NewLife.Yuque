@@ -16,6 +16,7 @@ namespace NewLife.YuqueWeb.Entity
     [Description("文档。文档内容")]
     [BindIndex("IU_Document_BookId_Code", true, "BookId,Code")]
     [BindIndex("IX_Document_BookId_Slug", false, "BookId,Slug")]
+    [BindIndex("IX_Document_BookId_Sort", false, "BookId,Sort")]
     [BindIndex("IX_Document_Title", false, "Title")]
     [BindIndex("IX_Document_UpdateTime", false, "UpdateTime")]
     [BindIndex("IX_Document_SyncTime", false, "SyncTime")]
@@ -62,6 +63,14 @@ namespace NewLife.YuqueWeb.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get => _Enable; set { if (OnPropertyChanging("Enable", value)) { _Enable = value; OnPropertyChanged("Enable"); } } }
+
+        private Int32 _Sort;
+        /// <summary>排序。降序，数字越大越靠前</summary>
+        [DisplayName("排序")]
+        [Description("排序。降序，数字越大越靠前")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Sort", "排序。降序，数字越大越靠前", "")]
+        public Int32 Sort { get => _Sort; set { if (OnPropertyChanging("Sort", value)) { _Sort = value; OnPropertyChanged("Sort"); } } }
 
         private String _UserName;
         /// <summary>用户</summary>
@@ -336,6 +345,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Title": return _Title;
                     case "BookId": return _BookId;
                     case "Enable": return _Enable;
+                    case "Sort": return _Sort;
                     case "UserName": return _UserName;
                     case "Format": return _Format;
                     case "Hits": return _Hits;
@@ -379,6 +389,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Title": _Title = Convert.ToString(value); break;
                     case "BookId": _BookId = value.ToInt(); break;
                     case "Enable": _Enable = value.ToBoolean(); break;
+                    case "Sort": _Sort = value.ToInt(); break;
                     case "UserName": _UserName = Convert.ToString(value); break;
                     case "Format": _Format = Convert.ToString(value); break;
                     case "Hits": _Hits = value.ToInt(); break;
@@ -434,6 +445,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName("Enable");
+
+            /// <summary>排序。降序，数字越大越靠前</summary>
+            public static readonly Field Sort = FindByName("Sort");
 
             /// <summary>用户</summary>
             public static readonly Field UserName = FindByName("UserName");
@@ -548,6 +562,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
+
+            /// <summary>排序。降序，数字越大越靠前</summary>
+            public const String Sort = "Sort";
 
             /// <summary>用户</summary>
             public const String UserName = "UserName";
