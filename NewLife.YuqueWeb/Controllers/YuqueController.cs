@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewLife.Caching;
 using NewLife.Common;
 using NewLife.Cube.Entity;
+using NewLife.Log;
+using NewLife.Serialization;
 using NewLife.Web;
 using NewLife.YuqueWeb.Entity;
 using NewLife.YuqueWeb.Models;
@@ -21,8 +24,13 @@ public class YuqueController : Controller
     public static Int32 PageSize => 20;
 
     private readonly BookService _bookService;
+    private readonly ITracer _tracer;
 
-    public YuqueController(BookService bookService) => _bookService = bookService;
+    public YuqueController(BookService bookService, ITracer tracer)
+    {
+        _bookService = bookService;
+        _tracer = tracer;
+    }
 
     private static Boolean ViewExists(String vpath) => System.IO.File.Exists(vpath.GetFullPath());
 
@@ -210,6 +218,41 @@ public class YuqueController : Controller
         }
 
         return NotFound();
+    }
+    #endregion
+
+    #region WebHook
+    public ActionResult Notify([FromBody] Object body)
+    {
+        var json = body.ToString();
+
+        var dic = JsonParser.Decode(json);
+        if (dic != null && dic.TryGetValue("data", out var data))
+        {
+            var detail = JsonHelper.Convert<WebHookModel>(data);
+            if (detail != null)
+            {
+                using var span = _tracer.NewSpan(nameof(Notify), new { detail.Id, detail.Title });
+
+                //var doc = Document.FindById(detail.Id);
+                //doc ??= new Document { Id = detail.Id };
+                var doc = Document.GetOrAdd(detail.Id, k => Document.FindById(k), k => new Document { Id = detail.Id });
+
+                doc.Fill(detail);
+
+                _bookService.ProcessHtml(doc);
+
+                doc.SyncTime = DateTime.Now;
+
+                doc.Save();
+            }
+        }
+        else
+        {
+            XTrace.WriteLine(json);
+        }
+
+        return new EmptyResult();
     }
     #endregion
 }
