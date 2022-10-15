@@ -26,7 +26,7 @@
     <PackageIcon>leaf.png</PackageIcon>
     <RepositoryUrl>https://github.com/NewLifeX/NewLife.Yuque</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>物联网;IoT;边缘计算;Edge;新生命团队;NewLife;$(AssemblyName)</PackageTags>
+    <PackageTags>语雀;新生命团队;NewLife;$(AssemblyName)</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -49,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Core" Version="10.0.2022.901" />
+    <PackageReference Include="NewLife.Core" Version="10.0.2022.1001" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,7 +33,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
                 var df = ListFields.AddListField("documents2", null, "Enable");
                 df.DisplayName = "前台列表";
                 df.Url = "/{Code}";
-                df.DataVisible = (e, f) => (e as Book).Enable;
+                df.DataVisible = e => (e as Book).Enable;
             }
         }
 
