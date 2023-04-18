@@ -3,7 +3,7 @@
 @using NewLife.Cube.WebMiddleware;
 @using NewLife.YuqueWeb.Entity
 @{
-    var set = NewLife.Cube.Setting.Current;
+    var set = CubeSetting.Current;
     var footer = Nav.Root.FindByPath("尾部") ?? Nav.Root;
 }
 <div class="container">
