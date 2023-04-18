@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using NewLife.Cube.Entity;
+using NewLife.Http;
 using NewLife.Log;
+using NewLife.Reflection;
 using NewLife.Yuque;
 using NewLife.YuqueWeb.Entity;
 using XCode;
@@ -11,7 +13,7 @@ namespace NewLife.YuqueWeb.Services;
 /// <summary>
 /// 知识库服务
 /// </summary>
-public class BookService
+public partial class BookService
 {
     private readonly ITracer _tracer;
 
@@ -157,7 +159,6 @@ public class BookService
 
         var rules = HtmlRule.GetValids();
         foreach (var rule in rules)
-        {
             switch (rule.Kind)
             {
                 case RuleKinds.图片:
@@ -170,14 +171,16 @@ public class BookService
                     html = ProcessText(doc, rule, html);
                     break;
             }
-        }
 
         doc.Html = html;
 
         return 1;
     }
 
-    private static readonly Regex _regexImage = new("<img.*?src=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Multiline);
+    [GeneratedRegex("<img.*?src=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline, "zh-CN")]
+    private static partial Regex MyImageRegex();
+
+    private static readonly Regex _regexImage = MyImageRegex();
     public String ProcessImage(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexImage.Matches(html);
@@ -232,7 +235,13 @@ public class BookService
 
                 // 异步抓取
                 var filePath = att.GetFilePath().GetBasePath();
-                if (!File.Exists(filePath)) _ = Task.Run(() => FetchAttachment(att));
+                if (!File.Exists(filePath))
+                    _ = Task.Run(() => FetchAttachment(att));
+                else if (!filePath.IsNullOrEmpty())
+                {
+                    var fi = filePath.AsFile();
+                    if (!fi.Exists || fi.Length < 1024) _ = Task.Run(() => FetchAttachment(att));
+                }
 
                 var ext = Path.GetExtension(url);
                 var url2 = $"/images/{att.Id}{ext}";
@@ -249,7 +258,10 @@ public class BookService
         return rs;
     }
 
-    private static readonly Regex _regexLink = new("<a.*?href=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Multiline);
+    [GeneratedRegex("<a.*?href=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline, "zh-CN")]
+    private static partial Regex MyLinkRegex();
+
+    private static readonly Regex _regexLink = MyLinkRegex();
     public String ProcessLink(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexLink.Matches(html);
@@ -311,6 +323,15 @@ public class BookService
     {
         var url = att.Source;
         if (url.IsNullOrEmpty()) return 0;
+
+        //!! 强行设置HttpClient，设置UserAgent，避免被列入黑名单而无法抓取图片
+        var client = att.GetType().GetValue("_client") as HttpClient;
+        if (client == null)
+        {
+            client = new HttpClient();
+            client.SetUserAgent();
+            att.GetType().SetValue("_client", client);
+        }
 
         using var span = _tracer.NewSpan(nameof(FetchAttachment), url);
         try
