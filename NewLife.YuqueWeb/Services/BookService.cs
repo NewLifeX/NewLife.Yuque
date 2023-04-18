@@ -48,8 +48,7 @@ public partial class BookService
                 foreach (var repo in repos)
                 {
                     var book = list.FirstOrDefault(e => e.Id == repo.Id || e.Slug == repo.Slug);
-                    if (book == null)
-                        book = new Book { Id = repo.Id, Enable = true, };
+                    book ??= new Book { Id = repo.Id, Enable = true, };
 
                     book.Fill(repo);
                     book.SyncTime = DateTime.Now;
@@ -85,7 +84,12 @@ public partial class BookService
         if (book == null || !book.Sync) return 0;
 
         var token = GetToken(book);
-        var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
+        var client = new YuqueClient
+        {
+            Token = token,
+            Log = XTrace.Log,
+            Tracer = _tracer
+        };
 
         // 同步知识库详细
         var repo = await client.GetRepo(bookId);
@@ -106,12 +110,15 @@ public partial class BookService
             var list = await client.GetDocuments(book.Id, offset);
             if (list.Length == 0) break;
 
+            DefaultSpan.Current?.AppendTag($"GetDocuments({book.Id}, {offset})=[{list.Length}]");
             foreach (var detail in list)
             {
+                // 跳过未发布未公开文档，等它写好了发布后再同步
+                if (detail.Status == 0 || detail.Public == 0) continue;
+
                 var doc = Document.FindById(detail.Id);
-                if (doc == null) doc = Document.FindByBookAndSlug(book.Id, detail.Slug);
-                if (doc == null)
-                    doc = new Document { Id = detail.Id, Enable = true, Sync = detail.Public > 0, };
+                doc ??= Document.FindByBookAndSlug(book.Id, detail.Slug);
+                doc ??= new Document { Id = detail.Id, Enable = true, Sync = detail.Public > 0, };
 
                 doc.Fill(detail);
 

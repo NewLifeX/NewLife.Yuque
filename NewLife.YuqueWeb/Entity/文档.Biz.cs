@@ -223,7 +223,8 @@ namespace NewLife.YuqueWeb.Entity
             doc.Slug = detail.Slug;
             doc.BookId = detail.BookId;
 
-            doc.UserName = detail.Creator?.Name;
+            if (detail.Creator != null)
+                doc.UserName = detail.Creator?.Name;
             doc.Format = detail.Format;
             doc.Public = detail.Public > 0;
             doc.Status = detail.Status > 0;

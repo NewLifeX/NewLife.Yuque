@@ -37,12 +37,15 @@ public class SyncService : IHostedService
         return Task.CompletedTask;
     }
 
+    /// <summary>同步知识库</summary>
+    /// <param name="state"></param>
     async void DoSyncBook(Object state)
     {
         using var span = _tracer.NewSpan(nameof(DoSyncBook));
         try
         {
             var list = Book.GetValids();
+            span?.AppendTag($"count={list.Count}");
             foreach (var item in list)
             {
                 if (item.Enable && item.Sync) await _bookService.Sync(item.Id);
@@ -55,6 +58,8 @@ public class SyncService : IHostedService
         }
     }
 
+    /// <summary>同步文档</summary>
+    /// <param name="state"></param>
     async void DoSyncDocument(Object state)
     {
         using var span = _tracer.NewSpan(nameof(DoSyncDocument));
@@ -76,21 +81,21 @@ public class SyncService : IHostedService
                 page.PageIndex++;
             }
 
-            // 太久没同步的文章，都刷新一次
-            var time = DateTime.Today.AddDays(2 - 1);
-            page = new PageParameter { PageSize = 100 };
-            while (true)
-            {
-                var list = Document.SearchBySyncTime(time, page);
-                if (list.Count == 0) break;
+            //// 太久没同步的文章，都刷新一次
+            //var time = DateTime.Today.AddDays(2 - 1);
+            //page = new PageParameter { PageSize = 100 };
+            //while (true)
+            //{
+            //    var list = Document.SearchBySyncTime(time, page);
+            //    if (list.Count == 0) break;
 
-                foreach (var item in list)
-                {
-                    await _bookService.Sync(item, false);
-                }
+            //    foreach (var item in list)
+            //    {
+            //        await _bookService.Sync(item, false);
+            //    }
 
-                page.PageIndex++;
-            }
+            //    page.PageIndex++;
+            //}
         }
         catch (Exception ex)
         {
