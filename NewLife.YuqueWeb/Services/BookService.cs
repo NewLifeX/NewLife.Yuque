@@ -5,7 +5,6 @@ using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Yuque;
 using NewLife.YuqueWeb.Entity;
-using XCode;
 using Group = NewLife.YuqueWeb.Entity.Group;
 
 namespace NewLife.YuqueWeb.Services;
@@ -84,12 +83,7 @@ public partial class BookService
         if (book == null || !book.Sync) return 0;
 
         var token = GetToken(book);
-        var client = new YuqueClient
-        {
-            Token = token,
-            Log = XTrace.Log,
-            Tracer = _tracer
-        };
+        var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
 
         // 同步知识库详细
         var repo = await client.GetRepo(bookId);
@@ -98,10 +92,12 @@ public partial class BookService
             book.Fill(repo);
 
             book.SyncTime = DateTime.Now;
+            book.TraceId = DefaultSpan.Current?.TraceId;
 
             book.Update();
         }
 
+        // 同步知识库之下的文档列表
         var count = 0;
         var offset = 0;
         while (true)
@@ -121,6 +117,7 @@ public partial class BookService
                 doc ??= new Document { Id = detail.Id, Enable = true, Sync = detail.Public > 0, };
 
                 doc.Fill(detail);
+                doc.TraceId = DefaultSpan.Current?.TraceId;
 
                 doc.Save();
             }
@@ -155,6 +152,7 @@ public partial class BookService
         //if (!(doc as IEntity).HasDirty) return 0;
 
         doc.SyncTime = DateTime.Now;
+        doc.TraceId = DefaultSpan.Current?.TraceId;
 
         return doc.Update();
     }
@@ -166,18 +164,15 @@ public partial class BookService
 
         var rules = HtmlRule.GetValids();
         foreach (var rule in rules)
-            switch (rule.Kind)
+        {
+            html = rule.Kind switch
             {
-                case RuleKinds.图片:
-                    html = ProcessImage(doc, rule, html);
-                    break;
-                case RuleKinds.超链接:
-                    html = ProcessLink(doc, rule, html);
-                    break;
-                case RuleKinds.文本:
-                    html = ProcessText(doc, rule, html);
-                    break;
-            }
+                RuleKinds.图片 => ProcessImage(doc, rule, html),
+                RuleKinds.超链接 => ProcessLink(doc, rule, html),
+                RuleKinds.文本 => ProcessText(doc, rule, html),
+                _ => html,
+            };
+        }
 
         doc.Html = html;
 

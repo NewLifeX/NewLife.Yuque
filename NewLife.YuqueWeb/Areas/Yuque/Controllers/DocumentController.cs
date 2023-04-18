@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewLife.Cube;
+using NewLife.Cube.Extensions;
 using NewLife.Cube.ViewModels;
 using NewLife.Web;
 using NewLife.YuqueWeb.Entity;
@@ -39,6 +40,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             {
                 list.AddListField(item);
             }
+            ListFields.TraceUrl();
 
             {
                 var df = list.GetField("Code") as ListField;

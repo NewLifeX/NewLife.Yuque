@@ -100,6 +100,15 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("Token", "令牌", "")]
         public String Token { get => _Token; set { if (OnPropertyChanging("Token", value)) { _Token = value; OnPropertyChanged("Token"); } } }
 
+        private String _TraceId;
+        /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+        [Category("扩展")]
+        [DisplayName("追踪")]
+        [Description("追踪。用于记录调用链追踪标识，在星尘APM查找调用链")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("TraceId", "追踪。用于记录调用链追踪标识，在星尘APM查找调用链", "")]
+        public String TraceId { get => _TraceId; set { if (OnPropertyChanging("TraceId", value)) { _TraceId = value; OnPropertyChanged("TraceId"); } } }
+
         private String _CreateUser;
         /// <summary>创建者</summary>
         [Category("扩展")]
@@ -202,6 +211,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Members": return _Members;
                     case "Public": return _Public;
                     case "Token": return _Token;
+                    case "TraceId": return _TraceId;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
                     case "CreateIP": return _CreateIP;
@@ -228,6 +238,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "Members": _Members = value.ToInt(); break;
                     case "Public": _Public = value.ToBoolean(); break;
                     case "Token": _Token = Convert.ToString(value); break;
+                    case "TraceId": _TraceId = Convert.ToString(value); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
                     case "CreateIP": _CreateIP = Convert.ToString(value); break;
@@ -276,6 +287,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>令牌</summary>
             public static readonly Field Token = FindByName("Token");
+
+            /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+            public static readonly Field TraceId = FindByName("TraceId");
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUser = FindByName("CreateUser");
@@ -339,6 +353,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>令牌</summary>
             public const String Token = "Token";
+
+            /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+            public const String TraceId = "TraceId";
 
             /// <summary>创建者</summary>
             public const String CreateUser = "CreateUser";

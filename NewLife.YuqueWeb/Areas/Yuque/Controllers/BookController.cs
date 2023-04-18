@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewLife.Cube;
+using NewLife.Cube.Extensions;
 using NewLife.Web;
 using NewLife.YuqueWeb.Entity;
 using NewLife.YuqueWeb.Services;
@@ -22,6 +23,7 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             ListFields.RemoveUpdateField();
 
             ListFields.RemoveField("Namespace");
+            ListFields.TraceUrl();
 
             {
                 var df = ListFields.AddListField("documents", null, "Enable");

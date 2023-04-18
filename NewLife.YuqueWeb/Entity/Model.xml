@@ -12,6 +12,7 @@
       <Column Name="Members" DataType="Int32" Description="成员数" />
       <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
       <Column Name="Token" DataType="String" Description="令牌" />
+      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
@@ -47,6 +48,7 @@
       <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
       <Column Name="ToC" DataType="String" Length="5000" Description="目录" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
+      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
@@ -92,6 +94,7 @@
       <Column Name="DraftVersion" DataType="Int32" Description="版本。草案版本" />
       <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
       <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
+      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
       <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />

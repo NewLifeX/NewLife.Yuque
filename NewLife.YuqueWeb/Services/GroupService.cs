@@ -1,10 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using NewLife.Cube.Entity;
-using NewLife.Log;
+﻿using NewLife.Log;
 using NewLife.Yuque;
 using NewLife.YuqueWeb.Entity;
-using XCode;
-using XCode.Membership;
 using Group = NewLife.YuqueWeb.Entity.Group;
 
 namespace NewLife.YuqueWeb.Services;
@@ -29,6 +25,8 @@ public class GroupService
     /// <returns></returns>
     public async Task<Int32> Sync(Int32 groupId)
     {
+        using var span = _tracer?.NewSpan("SyncGroup", groupId);
+
         var group = Group.FindById(groupId);
         if (group == null) return 0;
 
@@ -59,6 +57,7 @@ public class GroupService
                 group.Remark = gp.Description;
                 group.CreateTime = gp.CreateTime;
                 group.UpdateTime = gp.UpdateTime;
+                group.TraceId = span?.TraceId;
 
                 group.Update();
             }
@@ -87,6 +86,7 @@ public class GroupService
                 group.Remark = user.Description;
                 group.CreateTime = user.CreateTime;
                 group.UpdateTime = user.UpdateTime;
+                group.TraceId = span?.TraceId;
 
                 group.Update();
             }
@@ -105,12 +105,12 @@ public class GroupService
             foreach (var repo in list)
             {
                 var book = Book.FindById(repo.Id);
-                if (book == null)
-                    book = new Book { Id = repo.Id, Enable = group.Enable, Sync = repo.Public > 0 };
+                book ??= new Book { Id = repo.Id, Enable = group.Enable, Sync = repo.Public > 0 };
 
                 book.Fill(repo);
                 book.GroupId = group.Id;
                 book.SyncTime = DateTime.Now;
+                book.TraceId = span?.TraceId;
 
                 book.Save();
             }

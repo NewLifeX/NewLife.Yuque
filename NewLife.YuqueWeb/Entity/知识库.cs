@@ -164,6 +164,15 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("SyncTime", "同步时间。最后一次同步数据的时间", "")]
         public DateTime SyncTime { get => _SyncTime; set { if (OnPropertyChanging("SyncTime", value)) { _SyncTime = value; OnPropertyChanged("SyncTime"); } } }
 
+        private String _TraceId;
+        /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+        [Category("扩展")]
+        [DisplayName("追踪")]
+        [Description("追踪。用于记录调用链追踪标识，在星尘APM查找调用链")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("TraceId", "追踪。用于记录调用链追踪标识，在星尘APM查找调用链", "")]
+        public String TraceId { get => _TraceId; set { if (OnPropertyChanging("TraceId", value)) { _TraceId = value; OnPropertyChanged("TraceId"); } } }
+
         private String _CreateUser;
         /// <summary>创建者</summary>
         [Category("扩展")]
@@ -274,6 +283,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "ContentUpdateTime": return _ContentUpdateTime;
                     case "ToC": return _ToC;
                     case "SyncTime": return _SyncTime;
+                    case "TraceId": return _TraceId;
                     case "CreateUser": return _CreateUser;
                     case "CreateUserID": return _CreateUserID;
                     case "CreateIP": return _CreateIP;
@@ -308,6 +318,7 @@ namespace NewLife.YuqueWeb.Entity
                     case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
                     case "ToC": _ToC = Convert.ToString(value); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
+                    case "TraceId": _TraceId = Convert.ToString(value); break;
                     case "CreateUser": _CreateUser = Convert.ToString(value); break;
                     case "CreateUserID": _CreateUserID = value.ToInt(); break;
                     case "CreateIP": _CreateIP = Convert.ToString(value); break;
@@ -380,6 +391,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public static readonly Field SyncTime = FindByName("SyncTime");
+
+            /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+            public static readonly Field TraceId = FindByName("TraceId");
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUser = FindByName("CreateUser");
@@ -467,6 +481,9 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>同步时间。最后一次同步数据的时间</summary>
             public const String SyncTime = "SyncTime";
+
+            /// <summary>追踪。用于记录调用链追踪标识，在星尘APM查找调用链</summary>
+            public const String TraceId = "TraceId";
 
             /// <summary>创建者</summary>
             public const String CreateUser = "CreateUser";
