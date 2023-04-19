@@ -26,16 +26,20 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
             ListFields.TraceUrl();
 
             {
-                var df = ListFields.AddListField("documents", null, "Enable");
+                var df = ListFields.AddListField("documents", "Sort");
                 df.DisplayName = "文档列表";
                 df.Url = "document?bookId={Id}";
             }
-
             {
-                var df = ListFields.AddListField("documents2", null, "Enable");
+                var df = ListFields.AddListField("documents2", "Sort");
                 df.DisplayName = "前台列表";
                 df.Url = "/{Code}";
                 df.DataVisible = e => (e as Book).Enable;
+            }
+            {
+                var df = ListFields.AddListField("origin", "Sort");
+                df.DisplayName = "原文";
+                df.Url = "https://www.yuque.com/{Group.Code}/{Slug}";
             }
         }
 

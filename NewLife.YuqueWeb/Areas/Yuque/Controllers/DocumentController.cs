@@ -46,6 +46,11 @@ namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
                 var df = list.GetField("Code") as ListField;
                 df.Url = "/{BookCode}/{Code}";
             }
+            {
+                var df = list.AddListField("origin", null, "Code");
+                df.DisplayName = "原文";
+                df.Url = "https://www.yuque.com/{Book.Group.Code}/{Book.Slug}/{Slug}";
+            }
         }
 
         /// <summary>
