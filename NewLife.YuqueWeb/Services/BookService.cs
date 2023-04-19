@@ -92,7 +92,7 @@ public partial class BookService
             book.Fill(repo);
 
             book.SyncTime = DateTime.Now;
-            book.TraceId = DefaultSpan.Current?.TraceId;
+            //book.TraceId = DefaultSpan.Current?.TraceId;
 
             book.Update();
         }
@@ -117,7 +117,7 @@ public partial class BookService
                 doc ??= new Document { Id = detail.Id, Enable = true, Sync = detail.Public > 0, };
 
                 doc.Fill(detail);
-                doc.TraceId = DefaultSpan.Current?.TraceId;
+                //doc.TraceId = DefaultSpan.Current?.TraceId;
 
                 doc.Save();
             }
@@ -152,7 +152,7 @@ public partial class BookService
         //if (!(doc as IEntity).HasDirty) return 0;
 
         doc.SyncTime = DateTime.Now;
-        doc.TraceId = DefaultSpan.Current?.TraceId;
+        //doc.TraceId = DefaultSpan.Current?.TraceId;
 
         return doc.Update();
     }

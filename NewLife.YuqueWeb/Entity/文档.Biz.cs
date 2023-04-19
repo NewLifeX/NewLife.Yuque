@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using NewLife.Data;
+using NewLife.Log;
 using XCode;
 using XCode.Membership;
 
@@ -36,6 +37,9 @@ namespace NewLife.YuqueWeb.Entity
             base.Valid(isNew);
 
             TotalHits = Hits + LocalHits;
+
+            var span = DefaultSpan.Current;
+            if (span != null) TraceId = span.TraceId;
         }
         #endregion
 

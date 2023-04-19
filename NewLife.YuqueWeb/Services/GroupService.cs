@@ -57,7 +57,7 @@ public class GroupService
                 group.Remark = gp.Description;
                 group.CreateTime = gp.CreateTime;
                 group.UpdateTime = gp.UpdateTime;
-                group.TraceId = span?.TraceId;
+                //group.TraceId = span?.TraceId;
 
                 group.Update();
             }
@@ -86,7 +86,7 @@ public class GroupService
                 group.Remark = user.Description;
                 group.CreateTime = user.CreateTime;
                 group.UpdateTime = user.UpdateTime;
-                group.TraceId = span?.TraceId;
+                //group.TraceId = span?.TraceId;
 
                 group.Update();
             }
@@ -110,7 +110,7 @@ public class GroupService
                 book.Fill(repo);
                 book.GroupId = group.Id;
                 book.SyncTime = DateTime.Now;
-                book.TraceId = span?.TraceId;
+                //book.TraceId = span?.TraceId;
 
                 book.Save();
             }
