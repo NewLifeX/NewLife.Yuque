@@ -4,6 +4,9 @@ using NewLife.Log;
 using NewLife.Remoting;
 using NewLife.Serialization;
 using NewLife.Yuque.Models;
+#if NET461
+using System.Net.Http;
+#endif
 
 namespace NewLife.Yuque
 {
