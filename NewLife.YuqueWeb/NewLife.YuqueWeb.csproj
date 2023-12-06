@@ -39,13 +39,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NewLife.Core" Version="10.6.2023.1001" />
-    <PackageReference Include="NewLife.Cube.Core" Version="5.6.2023.1012" />
-    <PackageReference Include="NewLife.XCode" Version="11.10.2023.1012" />
+    <PackageReference Include="NewLife.Core" Version="10.6.2023.1201" />
+    <PackageReference Include="NewLife.Cube.Core" Version="5.6.2023.1204" />
+    <PackageReference Include="NewLife.XCode" Version="11.10.2023.1201" />
   </ItemGroup>
 
   <ItemGroup>
