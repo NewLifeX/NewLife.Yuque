@@ -163,6 +163,10 @@ public class YuqueClient
     #endregion
 
     #region 用户
+    /// <summary>问好</summary>
+    /// <returns></returns>
+    public virtual async Task<HelloModel> Hello() => await GetAsync<HelloModel>($"/hello");
+
     /// <summary>
     /// 根据用户名获取用户
     /// </summary>
