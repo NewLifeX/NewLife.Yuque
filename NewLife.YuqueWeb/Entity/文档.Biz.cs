@@ -210,8 +210,10 @@ public partial class Document : Entity<Document>
         doc.Title = detail.Title;
         doc.Slug = detail.Slug;
         doc.BookId = detail.BookId;
-        doc.Public = detail.Public > 0;
-        doc.Status = detail.Status > 0;
+
+        // 只能草稿向正式转变，不能反向
+        if (!doc.Public) doc.Public = detail.Public > 0;
+        if (!doc.Status) doc.Status = detail.Status > 0;
 
         doc.UserName = detail.LastEditor?.Name;
         doc.Format = detail.Format;
@@ -230,8 +232,6 @@ public partial class Document : Entity<Document>
         doc.FirstPublishTime = detail.FirstPublishTime;
         doc.CreateTime = detail.CreateTime;
         doc.UpdateTime = detail.UpdateTime;
-
-        doc.Sync = true;
     }
 
     public void Fill(NewLife.Yuque.Models.DocumentDetail detail)
@@ -254,8 +254,10 @@ public partial class Document : Entity<Document>
         if (detail.Creator != null)
             doc.UserName = detail.Creator?.Name;
         doc.Format = detail.Format;
-        doc.Public = detail.Public > 0;
-        doc.Status = detail.Status > 0;
+
+        // 只能草稿向正式转变，不能反向
+        if (!doc.Public) doc.Public = detail.Public > 0;
+        if (!doc.Status) doc.Status = detail.Status > 0;
 
         doc.Body = detail.Body;
         doc.BodyHtml = detail.BodyHtml;
@@ -276,8 +278,6 @@ public partial class Document : Entity<Document>
         doc.UpdateTime = detail.UpdateTime;
 
         if (detail.DeleteTime.Year > 2000) doc.Enable = false;
-
-        doc.Sync = true;
     }
 
     public static Document GetOrAdd(Int32 id)

@@ -165,6 +165,7 @@ public partial class BookService
 
         //if (!(doc as IEntity).HasDirty) return 0;
 
+        doc.Sync = true;
         doc.SyncTime = DateTime.Now;
         //doc.TraceId = DefaultSpan.Current?.TraceId;
 

@@ -242,6 +242,7 @@ public class YuqueController : Controller
 
                 _bookService.ProcessHtml(doc);
 
+                doc.Sync = true;
                 doc.SyncTime = DateTime.Now;
 
                 doc.Save();
