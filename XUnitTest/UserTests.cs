@@ -24,8 +24,8 @@ public class UserTests
 
         Assert.Equal(1144030, user.Id);
         Assert.Equal("User", user.Type);
-        Assert.Equal(0, user.SpaceId);
-        Assert.Equal(915593, user.AccountId);
+        //Assert.Equal(0, user.SpaceId);
+        //Assert.Equal(915593, user.AccountId);
         Assert.Equal("smartstone", user.Login);
         Assert.Equal("大石头", user.Name);
 
@@ -50,8 +50,8 @@ public class UserTests
 
         Assert.Equal(1144030, user.Id);
         Assert.Equal("User", user.Type);
-        Assert.Equal(0, user.SpaceId);
-        Assert.Equal(915593, user.AccountId);
+        //Assert.Equal(0, user.SpaceId);
+        //Assert.Equal(915593, user.AccountId);
         Assert.Equal("smartstone", user.Login);
         Assert.Equal("大石头", user.Name);
 
@@ -76,8 +76,8 @@ public class UserTests
 
         Assert.Equal(1144030, user.Id);
         Assert.Equal("User", user.Type);
-        Assert.Equal(0, user.SpaceId);
-        Assert.Equal(915593, user.AccountId);
+        //Assert.Equal(0, user.SpaceId);
+        //Assert.Equal(915593, user.AccountId);
         Assert.Equal("smartstone", user.Login);
         Assert.Equal("大石头", user.Name);
 

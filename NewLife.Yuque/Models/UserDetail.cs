@@ -11,13 +11,13 @@ public class UserDetail
     /// <summary>类型</summary>
     public String Type { get; set; }
 
-    /// <summary>空间</summary>
-    [DataMember(Name = "space_id")]
-    public Int32 SpaceId { get; set; }
+    ///// <summary>空间</summary>
+    //[DataMember(Name = "space_id")]
+    //public Int32 SpaceId { get; set; }
 
-    /// <summary>账号编号</summary>
-    [DataMember(Name = "account_id")]
-    public Int32 AccountId { get; set; }
+    ///// <summary>账号编号</summary>
+    //[DataMember(Name = "account_id")]
+    //public Int32 AccountId { get; set; }
 
     /// <summary>登录名</summary>
     public String Login { get; set; }
