@@ -23,8 +23,14 @@ public class SyncService : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _timer = new TimerX(DoSyncBook, null, 1_000, 3600_000) { Async = true };
-        _timer2 = new TimerX(DoSyncDocument, null, 10_000, 3600_000) { Async = true };
+        var set = YuqueSyncSetting.Current;
+
+        // 配置开关，控制是否同步，这里只是启动时执行一次，需要重启生效
+        if (set.SyncBookPeriod > 0)
+            _timer = new TimerX(DoSyncBook, null, 1_000, set.SyncBookPeriod * 1000) { Async = true };
+
+        if (set.SyncDocumentPeriod > 0)
+            _timer2 = new TimerX(DoSyncDocument, null, 10_000, set.SyncDocumentPeriod * 1000) { Async = true };
 
         return Task.CompletedTask;
     }
@@ -46,9 +52,11 @@ public class SyncService : IHostedService
         {
             var list = Book.GetValids();
             span?.AppendTag($"count={list.Count}");
+            if (span != null) span.Value = list.Count;
+
             foreach (var item in list)
             {
-                if (item.Enable && item.Sync) await _bookService.Sync(item.Id);
+                if (item.Enable && item.Sync) await _bookService.SyncBook(item.Id);
             }
         }
         catch (Exception ex)
@@ -56,9 +64,12 @@ public class SyncService : IHostedService
             span?.SetError(ex, null);
             XTrace.WriteException(ex);
         }
+
+        var set = YuqueSyncSetting.Current;
+        if (set.SyncBookPeriod > 0) _timer.Period = set.SyncBookPeriod * 1000;
     }
 
-    /// <summary>同步文档</summary>
+    /// <summary>同步文档。最近修改过的文章</summary>
     /// <param name="state"></param>
     async void DoSyncDocument(Object state)
     {
@@ -75,7 +86,7 @@ public class SyncService : IHostedService
 
                 foreach (var item in list)
                 {
-                    await _bookService.Sync(item, false);
+                    await _bookService.SyncDocument(item, false);
                 }
 
                 page.PageIndex++;
@@ -102,5 +113,8 @@ public class SyncService : IHostedService
             span?.SetError(ex, null);
             XTrace.WriteException(ex);
         }
+
+        var set = YuqueSyncSetting.Current;
+        if (set.SyncDocumentPeriod > 0) _timer.Period = set.SyncDocumentPeriod * 1000;
     }
 }
