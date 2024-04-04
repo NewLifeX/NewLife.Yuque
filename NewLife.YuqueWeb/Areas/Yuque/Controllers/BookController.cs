@@ -6,99 +6,98 @@ using NewLife.YuqueWeb.Entity;
 using NewLife.YuqueWeb.Services;
 using XCode.Membership;
 
-namespace NewLife.YuqueWeb.Areas.Yuque.Controllers
+namespace NewLife.YuqueWeb.Areas.Yuque.Controllers;
+
+/// <summary>
+/// 知识库管理
+/// </summary>
+[YuqueArea]
+[Menu(90, true, Icon = "fa-tachometer")]
+public class BookController : EntityController<Book>
 {
-    /// <summary>
-    /// 知识库管理
-    /// </summary>
-    [YuqueArea]
-    [Menu(90, true, Icon = "fa-tachometer")]
-    public class BookController : EntityController<Book>
+    static BookController()
     {
-        static BookController()
+        LogOnChange = true;
+
+        ListFields.RemoveCreateField();
+        ListFields.RemoveUpdateField();
+
+        ListFields.RemoveField("Namespace");
+        ListFields.TraceUrl();
+
         {
-            LogOnChange = true;
+            var df = ListFields.AddListField("documents", "Sort");
+            df.DisplayName = "文档列表";
+            df.Url = "document?bookId={Id}";
+        }
+        {
+            var df = ListFields.AddListField("documents2", "Sort");
+            df.DisplayName = "前台列表";
+            df.Url = "/{Code}";
+            df.DataVisible = e => (e as Book).Enable;
+        }
+        {
+            var df = ListFields.AddListField("origin", "Sort");
+            df.DisplayName = "原文";
+            df.Url = "https://www.yuque.com/{Group.Code}/{Slug}";
+        }
+    }
 
-            ListFields.RemoveCreateField();
-            ListFields.RemoveUpdateField();
+    private readonly BookService _bookService;
 
-            ListFields.RemoveField("Namespace");
-            ListFields.TraceUrl();
+    /// <summary>
+    /// 实例化知识库管理
+    /// </summary>
+    /// <param name="bookService"></param>
+    public BookController(BookService bookService) => _bookService = bookService;
 
-            {
-                var df = ListFields.AddListField("documents", "Sort");
-                df.DisplayName = "文档列表";
-                df.Url = "document?bookId={Id}";
-            }
-            {
-                var df = ListFields.AddListField("documents2", "Sort");
-                df.DisplayName = "前台列表";
-                df.Url = "/{Code}";
-                df.DataVisible = e => (e as Book).Enable;
-            }
-            {
-                var df = ListFields.AddListField("origin", "Sort");
-                df.DisplayName = "原文";
-                df.Url = "https://www.yuque.com/{Group.Code}/{Slug}";
-            }
+    /// <summary>
+    /// 搜索
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    protected override IEnumerable<Book> Search(Pager p)
+    {
+        var id = p["id"].ToInt(-1);
+        if (id > 0)
+        {
+            var entity = Book.FindById(id);
+            if (entity != null) return [entity];
         }
 
-        private readonly BookService _bookService;
+        var groupId = p["groupId"].ToInt(-1);
+        var enable = p["enable"]?.ToBoolean();
 
-        /// <summary>
-        /// 实例化知识库管理
-        /// </summary>
-        /// <param name="bookService"></param>
-        public BookController(BookService bookService) => _bookService = bookService;
+        var start = p["dtStart"].ToDateTime();
+        var end = p["dtEnd"].ToDateTime();
 
-        /// <summary>
-        /// 搜索
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        protected override IEnumerable<Book> Search(Pager p)
+        p.RetrieveState = true;
+
+        return Book.Search(groupId, enable, start, end, p["Q"], p);
+    }
+
+    /// <summary>同步知识库</summary>
+    /// <returns></returns>
+    [EntityAuthorize(PermissionFlags.Update)]
+    public async Task<ActionResult> SyncRepo()
+    {
+        var count = 0;
+        var ids = GetRequest("keys").SplitAsInt();
+        foreach (var id in ids.OrderBy(e => e))
         {
-            var id = p["id"].ToInt(-1);
-            if (id > 0)
-            {
-                var entity = Book.FindById(id);
-                if (entity != null) return new[] { entity };
-            }
-
-            var groupId = p["groupId"].ToInt(-1);
-            var enable = p["enable"]?.ToBoolean();
-
-            var start = p["dtStart"].ToDateTime();
-            var end = p["dtEnd"].ToDateTime();
-
-            p.RetrieveState = true;
-
-            return Book.Search(groupId, enable, start, end, p["Q"], p);
+            count += await _bookService.SyncBook(id);
         }
 
-        /// <summary>同步知识库</summary>
-        /// <returns></returns>
-        [EntityAuthorize(PermissionFlags.Update)]
-        public async Task<ActionResult> SyncRepo()
-        {
-            var count = 0;
-            var ids = GetRequest("keys").SplitAsInt();
-            foreach (var id in ids.OrderBy(e => e))
-            {
-                count += await _bookService.Sync(id);
-            }
+        return JsonRefresh($"共刷新[{count}]篇文章");
+    }
 
-            return JsonRefresh($"共刷新[{count}]篇文章");
-        }
+    /// <summary>扫描全部知识库</summary>
+    /// <returns></returns>
+    [EntityAuthorize(PermissionFlags.Insert)]
+    public async Task<ActionResult> ScanAll()
+    {
+        var count = await _bookService.ScanAll();
 
-        /// <summary>扫描全部知识库</summary>
-        /// <returns></returns>
-        [EntityAuthorize(PermissionFlags.Insert)]
-        public async Task<ActionResult> ScanAll()
-        {
-            var count = await _bookService.ScanAll();
-
-            return JsonRefresh($"共扫描[{count}]个知识库");
-        }
+        return JsonRefresh($"共扫描[{count}]个知识库");
     }
 }

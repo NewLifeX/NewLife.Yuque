@@ -28,6 +28,8 @@ public partial class BookService
     /// <returns></returns>
     public async Task<Int32> ScanAll()
     {
+        using var span = _tracer?.NewSpan(nameof(ScanAll));
+
         var count = 0;
 
         var list = Book.FindAll();
@@ -35,9 +37,12 @@ public partial class BookService
         {
             if (!item.Enable && item.Token.IsNullOrEmpty()) continue;
 
+            using var span2 = _tracer?.NewSpan($"Scan-{item.Name}", item);
+
             var client = new YuqueClient { Token = item.Token, Log = XTrace.Log, Tracer = _tracer };
             var user = await client.GetUser();
 
+            // 遍历用户的所有知识库
             var offset = 0;
             while (true)
             {
@@ -57,6 +62,8 @@ public partial class BookService
 
                 count += repos.Length;
                 offset += repos.Length;
+
+                if (span2 != null) span2.Value += repos.Length;
             }
         }
 
@@ -67,18 +74,20 @@ public partial class BookService
     {
         var token = book?.Group?.Token;
 
-        if (token.IsNullOrEmpty()) throw new Exception("未设置令牌！[系统管理/字典参数/Yuque/Token]");
+        if (token.IsNullOrEmpty()) throw new Exception("未设置令牌！");
 
         return token;
     }
 
     /// <summary>
-    /// 同步指定知识库之下的文章列表
+    /// 同步指定知识库之下的文章列表，不含文章内容
     /// </summary>
     /// <param name="bookId"></param>
     /// <returns></returns>
-    public async Task<Int32> Sync(Int32 bookId)
+    public async Task<Int32> SyncBook(Int32 bookId)
     {
+        using var span = _tracer?.NewSpan(nameof(SyncBook), bookId + "");
+
         var book = Book.FindById(bookId);
         if (book == null || !book.Sync) return 0;
 
@@ -124,12 +133,17 @@ public partial class BookService
 
             count += list.Length;
             offset += list.Length;
+            if (span != null) span.Value += list.Length;
         }
 
         return count;
     }
 
-    public async Task<Int32> Sync(Document doc, Boolean noPublic)
+    /// <summary>同步文章，核心内容处理。跳过没有同步标记的文档</summary>
+    /// <param name="doc"></param>
+    /// <param name="noPublic"></param>
+    /// <returns></returns>
+    public async Task<Int32> SyncDocument(Document doc, Boolean noPublic)
     {
         var book = doc?.Book;
         if (doc == null || !doc.Sync || book == null || !book.Sync) return 0;
@@ -157,6 +171,9 @@ public partial class BookService
         return doc.Update();
     }
 
+    /// <summary>处理文档HTML内存，主要是抓取图片附件、替换超链接和文本</summary>
+    /// <param name="doc"></param>
+    /// <returns></returns>
     public Int32 ProcessHtml(Document doc)
     {
         var html = doc?.BodyHtml;
@@ -183,6 +200,11 @@ public partial class BookService
     private static partial Regex MyImageRegex();
 
     private static readonly Regex _regexImage = MyImageRegex();
+    /// <summary>抓取图片附件到本地</summary>
+    /// <param name="doc"></param>
+    /// <param name="rule"></param>
+    /// <param name="html"></param>
+    /// <returns></returns>
     public String ProcessImage(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexImage.Matches(html);
@@ -264,6 +286,11 @@ public partial class BookService
     private static partial Regex MyLinkRegex();
 
     private static readonly Regex _regexLink = MyLinkRegex();
+    /// <summary>按规则替换超链接地址</summary>
+    /// <param name="doc"></param>
+    /// <param name="rule"></param>
+    /// <param name="html"></param>
+    /// <returns></returns>
     public String ProcessLink(Document doc, HtmlRule rule, String html)
     {
         var ms = _regexLink.Matches(html);
@@ -309,6 +336,11 @@ public partial class BookService
         return rs;
     }
 
+    /// <summary>按规则替换文本内容</summary>
+    /// <param name="doc"></param>
+    /// <param name="rule"></param>
+    /// <param name="html"></param>
+    /// <returns></returns>
     public String ProcessText(Document doc, HtmlRule rule, String html)
     {
         if (rule.Rule.IsNullOrEmpty()) return html;
@@ -316,9 +348,7 @@ public partial class BookService
         return html.Replace(rule.Rule, rule.Target);
     }
 
-    /// <summary>
-    /// 处理附件
-    /// </summary>
+    /// <summary>抓取远程附件</summary>
     /// <param name="att"></param>
     /// <returns></returns>
     public async Task<Int32> FetchAttachment(Attachment att)

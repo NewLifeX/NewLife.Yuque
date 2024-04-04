@@ -141,7 +141,7 @@ public class YuqueController : Controller
         // 正文不存在时，去同步一份
         if (inf.Html.IsNullOrEmpty())
         {
-            await _bookService.Sync(inf, false);
+            await _bookService.SyncDocument(inf, false);
         }
 
         // 增加浏览数
@@ -222,9 +222,13 @@ public class YuqueController : Controller
     #endregion
 
     #region WebHook
+    /// <summary>语雀WebHook接口。语雀文章新增或更新时调用</summary>
+    /// <param name="body"></param>
+    /// <returns></returns>
     public ActionResult Notify([FromBody] Object body)
     {
         var json = body.ToString();
+        using var span = _tracer.NewSpan(nameof(Notify), json);
 
         var dic = JsonParser.Decode(json);
         if (dic != null && dic.TryGetValue("data", out var data))
@@ -232,11 +236,7 @@ public class YuqueController : Controller
             var detail = JsonHelper.Convert<WebHookModel>(data);
             if (detail != null)
             {
-                using var span = _tracer.NewSpan(nameof(Notify), new { detail.Id, detail.Title });
-
-                //var doc = Document.FindById(detail.Id);
-                //doc ??= new Document { Id = detail.Id };
-                var doc = Document.GetOrAdd(detail.Id, k => Document.FindById(k), k => new Document { Id = detail.Id });
+                var doc = Document.GetOrAdd(detail.Id);
 
                 doc.Fill(detail);
 
