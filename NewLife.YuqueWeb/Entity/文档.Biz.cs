@@ -222,8 +222,8 @@ public partial class Document : Entity<Document>
         doc.Reads = detail.Reads;
         doc.Comments = detail.Comments;
         doc.WordCount = detail.WordCount;
-        if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
-        doc.Remark = detail.Description;
+        //if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
+        if (!detail.Description.IsNullOrEmpty()) doc.Summary = detail.Description;
 
         doc.DraftVersion = detail.DraftVersion;
         doc.ContentUpdateTime = detail.ContentUpdateTime;
@@ -269,8 +269,8 @@ public partial class Document : Entity<Document>
         doc.Comments = detail.Comments;
         doc.WordCount = detail.WordCount;
 
-        if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
-        doc.Remark = detail.Description;
+        //if (!detail.Cover.IsNullOrEmpty()) doc.Cover = detail.Cover;
+        if (!detail.Description.IsNullOrEmpty()) doc.Summary = detail.Description;
 
         doc.PublishTime = detail.PublishTime;
         doc.FirstPublishTime = detail.FirstPublishTime;

@@ -242,6 +242,12 @@ public class YuqueController : Controller
 
                 _bookService.ProcessHtml(doc);
 
+                // 处理封面
+                if (!detail.Cover.IsNullOrEmpty() && detail.Cover.StartsWithIgnoreCase("http://", "https://"))
+                {
+                    doc.Cover = _bookService.SaveImage(doc, detail.Cover, null);
+                }
+
                 doc.Sync = true;
                 doc.SyncTime = DateTime.Now;
 

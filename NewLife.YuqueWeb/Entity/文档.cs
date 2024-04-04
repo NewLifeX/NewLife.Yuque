@@ -80,6 +80,14 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("UserName", "用户", "")]
         public String UserName { get => _UserName; set { if (OnPropertyChanging("UserName", value)) { _UserName = value; OnPropertyChanged("UserName"); } } }
 
+        private String _Slug;
+        /// <summary>路径</summary>
+        [DisplayName("路径")]
+        [Description("路径")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Slug", "路径", "")]
+        public String Slug { get => _Slug; set { if (OnPropertyChanging("Slug", value)) { _Slug = value; OnPropertyChanged("Slug"); } } }
+
         private String _Format;
         /// <summary>格式</summary>
         [DisplayName("格式")]
@@ -87,6 +95,30 @@ namespace NewLife.YuqueWeb.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Format", "格式", "")]
         public String Format { get => _Format; set { if (OnPropertyChanging("Format", value)) { _Format = value; OnPropertyChanged("Format"); } } }
+
+        private Boolean _Public;
+        /// <summary>公开。公开或私密</summary>
+        [DisplayName("公开")]
+        [Description("公开。公开或私密")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Public", "公开。公开或私密", "")]
+        public Boolean Public { get => _Public; set { if (OnPropertyChanging("Public", value)) { _Public = value; OnPropertyChanged("Public"); } } }
+
+        private Boolean _Status;
+        /// <summary>正式。正式或草稿</summary>
+        [DisplayName("正式")]
+        [Description("正式。正式或草稿")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Status", "正式。正式或草稿", "")]
+        public Boolean Status { get => _Status; set { if (OnPropertyChanging("Status", value)) { _Status = value; OnPropertyChanged("Status"); } } }
+
+        private Int32 _DraftVersion;
+        /// <summary>版本。草案版本</summary>
+        [DisplayName("版本")]
+        [Description("版本。草案版本")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("DraftVersion", "版本。草案版本", "")]
+        public Int32 DraftVersion { get => _DraftVersion; set { if (OnPropertyChanging("DraftVersion", value)) { _DraftVersion = value; OnPropertyChanged("DraftVersion"); } } }
 
         private Int32 _Hits;
         /// <summary>点击量</summary>
@@ -136,6 +168,30 @@ namespace NewLife.YuqueWeb.Entity
         [BindColumn("TotalHits", "总点击", "")]
         public Int32 TotalHits { get => _TotalHits; set { if (OnPropertyChanging("TotalHits", value)) { _TotalHits = value; OnPropertyChanged("TotalHits"); } } }
 
+        private Int32 _WordCount;
+        /// <summary>单词数</summary>
+        [DisplayName("单词数")]
+        [Description("单词数")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("WordCount", "单词数", "")]
+        public Int32 WordCount { get => _WordCount; set { if (OnPropertyChanging("WordCount", value)) { _WordCount = value; OnPropertyChanged("WordCount"); } } }
+
+        private String _Cover;
+        /// <summary>封面</summary>
+        [DisplayName("封面")]
+        [Description("封面")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Cover", "封面", "")]
+        public String Cover { get => _Cover; set { if (OnPropertyChanging("Cover", value)) { _Cover = value; OnPropertyChanged("Cover"); } } }
+
+        private String _Summary;
+        /// <summary>摘要</summary>
+        [DisplayName("摘要")]
+        [Description("摘要")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Summary", "摘要", "")]
+        public String Summary { get => _Summary; set { if (OnPropertyChanging("Summary", value)) { _Summary = value; OnPropertyChanged("Summary"); } } }
+
         private String _Body;
         /// <summary>正文。Markdown格式</summary>
         [DisplayName("正文")]
@@ -183,54 +239,6 @@ namespace NewLife.YuqueWeb.Entity
         [DataObjectField(false, false, true, 0)]
         [BindColumn("FirstPublishTime", "首次发布", "")]
         public DateTime FirstPublishTime { get => _FirstPublishTime; set { if (OnPropertyChanging("FirstPublishTime", value)) { _FirstPublishTime = value; OnPropertyChanged("FirstPublishTime"); } } }
-
-        private Int32 _WordCount;
-        /// <summary>单词数</summary>
-        [DisplayName("单词数")]
-        [Description("单词数")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("WordCount", "单词数", "")]
-        public Int32 WordCount { get => _WordCount; set { if (OnPropertyChanging("WordCount", value)) { _WordCount = value; OnPropertyChanged("WordCount"); } } }
-
-        private String _Cover;
-        /// <summary>封面</summary>
-        [DisplayName("封面")]
-        [Description("封面")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Cover", "封面", "")]
-        public String Cover { get => _Cover; set { if (OnPropertyChanging("Cover", value)) { _Cover = value; OnPropertyChanged("Cover"); } } }
-
-        private String _Slug;
-        /// <summary>路径</summary>
-        [DisplayName("路径")]
-        [Description("路径")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Slug", "路径", "")]
-        public String Slug { get => _Slug; set { if (OnPropertyChanging("Slug", value)) { _Slug = value; OnPropertyChanged("Slug"); } } }
-
-        private Boolean _Public;
-        /// <summary>公开。公开或私密</summary>
-        [DisplayName("公开")]
-        [Description("公开。公开或私密")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Public", "公开。公开或私密", "")]
-        public Boolean Public { get => _Public; set { if (OnPropertyChanging("Public", value)) { _Public = value; OnPropertyChanged("Public"); } } }
-
-        private Boolean _Status;
-        /// <summary>正式。正式或草稿</summary>
-        [DisplayName("正式")]
-        [Description("正式。正式或草稿")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Status", "正式。正式或草稿", "")]
-        public Boolean Status { get => _Status; set { if (OnPropertyChanging("Status", value)) { _Status = value; OnPropertyChanged("Status"); } } }
-
-        private Int32 _DraftVersion;
-        /// <summary>版本。草案版本</summary>
-        [DisplayName("版本")]
-        [Description("版本。草案版本")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("DraftVersion", "版本。草案版本", "")]
-        public Int32 DraftVersion { get => _DraftVersion; set { if (OnPropertyChanging("DraftVersion", value)) { _DraftVersion = value; OnPropertyChanged("DraftVersion"); } } }
 
         private Boolean _Sync;
         /// <summary>同步。是否自动同步远程内容</summary>
@@ -356,25 +364,26 @@ namespace NewLife.YuqueWeb.Entity
                     case "Enable": return _Enable;
                     case "Sort": return _Sort;
                     case "UserName": return _UserName;
+                    case "Slug": return _Slug;
                     case "Format": return _Format;
+                    case "Public": return _Public;
+                    case "Status": return _Status;
+                    case "DraftVersion": return _DraftVersion;
                     case "Hits": return _Hits;
                     case "Likes": return _Likes;
                     case "Reads": return _Reads;
                     case "Comments": return _Comments;
                     case "LocalHits": return _LocalHits;
                     case "TotalHits": return _TotalHits;
+                    case "WordCount": return _WordCount;
+                    case "Cover": return _Cover;
+                    case "Summary": return _Summary;
                     case "Body": return _Body;
                     case "BodyHtml": return _BodyHtml;
                     case "Html": return _Html;
                     case "ContentUpdateTime": return _ContentUpdateTime;
                     case "PublishTime": return _PublishTime;
                     case "FirstPublishTime": return _FirstPublishTime;
-                    case "WordCount": return _WordCount;
-                    case "Cover": return _Cover;
-                    case "Slug": return _Slug;
-                    case "Public": return _Public;
-                    case "Status": return _Status;
-                    case "DraftVersion": return _DraftVersion;
                     case "Sync": return _Sync;
                     case "SyncTime": return _SyncTime;
                     case "TraceId": return _TraceId;
@@ -401,25 +410,26 @@ namespace NewLife.YuqueWeb.Entity
                     case "Enable": _Enable = value.ToBoolean(); break;
                     case "Sort": _Sort = value.ToInt(); break;
                     case "UserName": _UserName = Convert.ToString(value); break;
+                    case "Slug": _Slug = Convert.ToString(value); break;
                     case "Format": _Format = Convert.ToString(value); break;
+                    case "Public": _Public = value.ToBoolean(); break;
+                    case "Status": _Status = value.ToBoolean(); break;
+                    case "DraftVersion": _DraftVersion = value.ToInt(); break;
                     case "Hits": _Hits = value.ToInt(); break;
                     case "Likes": _Likes = value.ToInt(); break;
                     case "Reads": _Reads = value.ToInt(); break;
                     case "Comments": _Comments = value.ToInt(); break;
                     case "LocalHits": _LocalHits = value.ToInt(); break;
                     case "TotalHits": _TotalHits = value.ToInt(); break;
+                    case "WordCount": _WordCount = value.ToInt(); break;
+                    case "Cover": _Cover = Convert.ToString(value); break;
+                    case "Summary": _Summary = Convert.ToString(value); break;
                     case "Body": _Body = Convert.ToString(value); break;
                     case "BodyHtml": _BodyHtml = Convert.ToString(value); break;
                     case "Html": _Html = Convert.ToString(value); break;
                     case "ContentUpdateTime": _ContentUpdateTime = value.ToDateTime(); break;
                     case "PublishTime": _PublishTime = value.ToDateTime(); break;
                     case "FirstPublishTime": _FirstPublishTime = value.ToDateTime(); break;
-                    case "WordCount": _WordCount = value.ToInt(); break;
-                    case "Cover": _Cover = Convert.ToString(value); break;
-                    case "Slug": _Slug = Convert.ToString(value); break;
-                    case "Public": _Public = value.ToBoolean(); break;
-                    case "Status": _Status = value.ToBoolean(); break;
-                    case "DraftVersion": _DraftVersion = value.ToInt(); break;
                     case "Sync": _Sync = value.ToBoolean(); break;
                     case "SyncTime": _SyncTime = value.ToDateTime(); break;
                     case "TraceId": _TraceId = Convert.ToString(value); break;
@@ -463,8 +473,20 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>用户</summary>
             public static readonly Field UserName = FindByName("UserName");
 
+            /// <summary>路径</summary>
+            public static readonly Field Slug = FindByName("Slug");
+
             /// <summary>格式</summary>
             public static readonly Field Format = FindByName("Format");
+
+            /// <summary>公开。公开或私密</summary>
+            public static readonly Field Public = FindByName("Public");
+
+            /// <summary>正式。正式或草稿</summary>
+            public static readonly Field Status = FindByName("Status");
+
+            /// <summary>版本。草案版本</summary>
+            public static readonly Field DraftVersion = FindByName("DraftVersion");
 
             /// <summary>点击量</summary>
             public static readonly Field Hits = FindByName("Hits");
@@ -484,6 +506,15 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>总点击</summary>
             public static readonly Field TotalHits = FindByName("TotalHits");
 
+            /// <summary>单词数</summary>
+            public static readonly Field WordCount = FindByName("WordCount");
+
+            /// <summary>封面</summary>
+            public static readonly Field Cover = FindByName("Cover");
+
+            /// <summary>摘要</summary>
+            public static readonly Field Summary = FindByName("Summary");
+
             /// <summary>正文。Markdown格式</summary>
             public static readonly Field Body = FindByName("Body");
 
@@ -501,24 +532,6 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>首次发布</summary>
             public static readonly Field FirstPublishTime = FindByName("FirstPublishTime");
-
-            /// <summary>单词数</summary>
-            public static readonly Field WordCount = FindByName("WordCount");
-
-            /// <summary>封面</summary>
-            public static readonly Field Cover = FindByName("Cover");
-
-            /// <summary>路径</summary>
-            public static readonly Field Slug = FindByName("Slug");
-
-            /// <summary>公开。公开或私密</summary>
-            public static readonly Field Public = FindByName("Public");
-
-            /// <summary>正式。正式或草稿</summary>
-            public static readonly Field Status = FindByName("Status");
-
-            /// <summary>版本。草案版本</summary>
-            public static readonly Field DraftVersion = FindByName("DraftVersion");
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public static readonly Field Sync = FindByName("Sync");
@@ -583,8 +596,20 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>用户</summary>
             public const String UserName = "UserName";
 
+            /// <summary>路径</summary>
+            public const String Slug = "Slug";
+
             /// <summary>格式</summary>
             public const String Format = "Format";
+
+            /// <summary>公开。公开或私密</summary>
+            public const String Public = "Public";
+
+            /// <summary>正式。正式或草稿</summary>
+            public const String Status = "Status";
+
+            /// <summary>版本。草案版本</summary>
+            public const String DraftVersion = "DraftVersion";
 
             /// <summary>点击量</summary>
             public const String Hits = "Hits";
@@ -604,6 +629,15 @@ namespace NewLife.YuqueWeb.Entity
             /// <summary>总点击</summary>
             public const String TotalHits = "TotalHits";
 
+            /// <summary>单词数</summary>
+            public const String WordCount = "WordCount";
+
+            /// <summary>封面</summary>
+            public const String Cover = "Cover";
+
+            /// <summary>摘要</summary>
+            public const String Summary = "Summary";
+
             /// <summary>正文。Markdown格式</summary>
             public const String Body = "Body";
 
@@ -621,24 +655,6 @@ namespace NewLife.YuqueWeb.Entity
 
             /// <summary>首次发布</summary>
             public const String FirstPublishTime = "FirstPublishTime";
-
-            /// <summary>单词数</summary>
-            public const String WordCount = "WordCount";
-
-            /// <summary>封面</summary>
-            public const String Cover = "Cover";
-
-            /// <summary>路径</summary>
-            public const String Slug = "Slug";
-
-            /// <summary>公开。公开或私密</summary>
-            public const String Public = "Public";
-
-            /// <summary>正式。正式或草稿</summary>
-            public const String Status = "Status";
-
-            /// <summary>版本。草案版本</summary>
-            public const String DraftVersion = "DraftVersion";
 
             /// <summary>同步。是否自动同步远程内容</summary>
             public const String Sync = "Sync";
