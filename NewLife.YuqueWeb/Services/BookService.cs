@@ -119,7 +119,7 @@ public partial class BookService
             foreach (var detail in list)
             {
                 // 跳过未发布未公开文档，等它写好了发布后再同步
-                if (detail.Status == 0 || detail.Public == 0) continue;
+                if (detail.Status == 0 || detail.Public == 0 || detail.Slug.IsNullOrEmpty()) continue;
 
                 var doc = Document.FindById(detail.Id);
                 doc ??= Document.FindByBookAndSlug(book.Id, detail.Slug);
@@ -152,7 +152,7 @@ public partial class BookService
         var client = new YuqueClient { Token = token, Log = XTrace.Log, Tracer = _tracer };
 
         var detail = await client.GetDocument(book.Namespace, doc.Slug);
-        if (detail == null) return 0;
+        if (detail == null || detail.Slug.IsNullOrEmpty()) return 0;
 
         // 如果目标文档处于草稿状态，则不要同步，否则将会导致文档在前台消失不可见
         if (!noPublic && detail.Status == 0) return 0;

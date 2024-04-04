@@ -234,7 +234,7 @@ public class YuqueController : Controller
         if (dic != null && dic.TryGetValue("data", out var data))
         {
             var detail = JsonHelper.Convert<WebHookModel>(data);
-            if (detail != null)
+            if (detail != null && !detail.Slug.IsNullOrEmpty())
             {
                 var doc = Document.GetOrAdd(detail.Id);
 
