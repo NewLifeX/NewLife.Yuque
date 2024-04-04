@@ -227,115 +227,115 @@ public class YuqueClient
         return await GetAsync<Group[]>($"/users/{userId}/groups");
     }
 
-    /// <summary>
-    /// 获取公开的组织
-    /// </summary>
-    /// <returns></returns>
-    public virtual async Task<Group[]> GetGroups() => await GetAsync<Group[]>($"/groups");
+    ///// <summary>
+    ///// 获取公开的组织
+    ///// </summary>
+    ///// <returns></returns>
+    //public virtual async Task<Group[]> GetGroups() => await GetAsync<Group[]>($"/groups");
 
-    /// <summary>
-    /// 创建组织
-    /// </summary>
-    /// <param name="nickName">昵称</param>
-    /// <param name="name">登录名</param>
-    /// <param name="description">说明</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> CreateGroup(String nickName, String name, String description)
-    {
-        if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
-        if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+    ///// <summary>
+    ///// 创建组织
+    ///// </summary>
+    ///// <param name="nickName">昵称</param>
+    ///// <param name="name">登录名</param>
+    ///// <param name="description">说明</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> CreateGroup(String nickName, String name, String description)
+    //{
+    //    if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
+    //    if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
 
-        return await PostAsync<GroupDetail>($"/groups", new { name = nickName, login = name, description });
-    }
+    //    return await PostAsync<GroupDetail>($"/groups", new { name = nickName, login = name, description });
+    //}
 
-    /// <summary>
-    /// 根据名称获取组织信息
-    /// </summary>
-    /// <param name="groupName">组织名</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> GetGroup(String groupName)
-    {
-        if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
+    ///// <summary>
+    ///// 根据名称获取组织信息
+    ///// </summary>
+    ///// <param name="groupName">组织名</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> GetGroup(String groupName)
+    //{
+    //    if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
 
-        return await GetAsync<GroupDetail>($"/groups/{groupName}");
-    }
+    //    return await GetAsync<GroupDetail>($"/groups/{groupName}");
+    //}
 
-    /// <summary>
-    /// 根据Id获取组织信息
-    /// </summary>
-    /// <param name="groupId">组织编号</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> GetGroup(Int32 groupId)
-    {
-        if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
+    ///// <summary>
+    ///// 根据Id获取组织信息
+    ///// </summary>
+    ///// <param name="groupId">组织编号</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> GetGroup(Int32 groupId)
+    //{
+    //    if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
 
-        return await GetAsync<GroupDetail>($"/groups/{groupId}");
-    }
+    //    return await GetAsync<GroupDetail>($"/groups/{groupId}");
+    //}
 
-    /// <summary>
-    /// 更新组织
-    /// </summary>
-    /// <param name="groupName">组织名</param>
-    /// <param name="nickName">昵称</param>
-    /// <param name="name">新组织名</param>
-    /// <param name="description">说明</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> UpdateGroup(String groupName, String nickName, String name, String description)
-    {
-        if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
-        if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
-        if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+    ///// <summary>
+    ///// 更新组织
+    ///// </summary>
+    ///// <param name="groupName">组织名</param>
+    ///// <param name="nickName">昵称</param>
+    ///// <param name="name">新组织名</param>
+    ///// <param name="description">说明</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> UpdateGroup(String groupName, String nickName, String name, String description)
+    //{
+    //    if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
+    //    if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
+    //    if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
 
-        return await PutAsync<GroupDetail>($"/groups/{groupName}", new { name = nickName, login = name, description });
-    }
+    //    return await PutAsync<GroupDetail>($"/groups/{groupName}", new { name = nickName, login = name, description });
+    //}
 
-    /// <summary>
-    /// 更新组织
-    /// </summary>
-    /// <param name="groupId">组织编号</param>
-    /// <param name="nickName">昵称</param>
-    /// <param name="name">新组织名</param>
-    /// <param name="description">说明</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> UpdateGroup(Int32 groupId, String nickName, String name, String description)
-    {
-        if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
-        if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
-        if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
+    ///// <summary>
+    ///// 更新组织
+    ///// </summary>
+    ///// <param name="groupId">组织编号</param>
+    ///// <param name="nickName">昵称</param>
+    ///// <param name="name">新组织名</param>
+    ///// <param name="description">说明</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> UpdateGroup(Int32 groupId, String nickName, String name, String description)
+    //{
+    //    if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
+    //    if (nickName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(nickName));
+    //    if (name.IsNullOrEmpty()) throw new ArgumentNullException(nameof(name));
 
-        return await PutAsync<GroupDetail>($"/groups/{groupId}", new { name = nickName, login = name, description });
-    }
+    //    return await PutAsync<GroupDetail>($"/groups/{groupId}", new { name = nickName, login = name, description });
+    //}
 
-    /// <summary>
-    /// 删除组织
-    /// </summary>
-    /// <param name="groupName">组织名</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> DeleteGroup(String groupName)
-    {
-        if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
+    ///// <summary>
+    ///// 删除组织
+    ///// </summary>
+    ///// <param name="groupName">组织名</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> DeleteGroup(String groupName)
+    //{
+    //    if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
 
-        return await DeleteAsync<GroupDetail>($"/groups/{groupName}");
-    }
+    //    return await DeleteAsync<GroupDetail>($"/groups/{groupName}");
+    //}
 
-    /// <summary>
-    /// 删除组织
-    /// </summary>
-    /// <param name="groupId">组织编号</param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<GroupDetail> DeleteGroup(Int32 groupId)
-    {
-        if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
+    ///// <summary>
+    ///// 删除组织
+    ///// </summary>
+    ///// <param name="groupId">组织编号</param>
+    ///// <returns></returns>
+    ///// <exception cref="ArgumentNullException"></exception>
+    //public virtual async Task<GroupDetail> DeleteGroup(Int32 groupId)
+    //{
+    //    if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
 
-        return await DeleteAsync<GroupDetail>($"/groups/{groupId}");
-    }
+    //    return await DeleteAsync<GroupDetail>($"/groups/{groupId}");
+    //}
 
     /// <summary>
     /// 获取组织成员信息

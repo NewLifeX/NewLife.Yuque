@@ -24,40 +24,40 @@ public class GroupTests
         Assert.True(list.Length > 0);
     }
 
-    [Fact]
-    public async void GetCurrentGroup()
-    {
-        var list = await _client.GetGroups();
-        Assert.NotNull(list);
-        Assert.True(list.Length > 0);
-    }
+    //[Fact]
+    //public async void GetCurrentGroup()
+    //{
+    //    var list = await _client.GetGroups();
+    //    Assert.NotNull(list);
+    //    Assert.True(list.Length > 0);
+    //}
 
-    [Fact]
-    public async void GetGroupById()
-    {
-        var group = await _client.GetGroup(1144035);
-        Assert.NotNull(group);
+    //[Fact]
+    //public async void GetGroupById()
+    //{
+    //    var group = await _client.GetGroup(1144035);
+    //    Assert.NotNull(group);
 
-        Assert.Equal("新生命", group.Name);
-    }
+    //    Assert.Equal("新生命", group.Name);
+    //}
 
-    [Fact]
-    public async void GetGroupByName()
-    {
-        var group = await _client.GetGroup("newlifex");
-        Assert.NotNull(group);
+    //[Fact]
+    //public async void GetGroupByName()
+    //{
+    //    var group = await _client.GetGroup("newlifex");
+    //    Assert.NotNull(group);
 
-        Assert.Equal("新生命", group.Name);
-    }
+    //    Assert.Equal("新生命", group.Name);
+    //}
 
-    [Fact(Skip = "不修改数据")]
-    public async void CreateGroup()
-    {
-        var group = await _client.CreateGroup("新生命", "newlifex", null);
-        Assert.NotNull(group);
+    //[Fact(Skip = "不修改数据")]
+    //public async void CreateGroup()
+    //{
+    //    var group = await _client.CreateGroup("新生命", "newlifex", null);
+    //    Assert.NotNull(group);
 
-        Assert.Equal("新生命", group.Name);
-    }
+    //    Assert.Equal("新生命", group.Name);
+    //}
 
     [Fact]
     public async void GetGroupUsers()

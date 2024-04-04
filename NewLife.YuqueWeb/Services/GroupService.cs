@@ -35,9 +35,12 @@ public class GroupService
         // 同步详细
         if (group.Type == "group")
         {
-            var gp = groupId > 100 ?
-                await client.GetGroup(groupId) :
-                await client.GetGroup(group.Code);
+            //var gp = groupId > 100 ?
+            //    await client.GetGroup(groupId) :
+            //    await client.GetGroup(group.Code);
+            var user = await client.GetUser();
+            var groups = await client.GetUserGroups(user.Id);
+            var gp = groups.FirstOrDefault();
             if (gp != null)
             {
                 // 需要更新Id
@@ -52,7 +55,7 @@ public class GroupService
                 group.Code = gp.Login;
                 group.Public = gp.Public > 0;
                 group.Books = gp.Books;
-                group.Topics = gp.Topics;
+                //group.Topics = gp.Topics;
                 group.Members = gp.Members;
                 group.Remark = gp.Description;
                 group.CreateTime = gp.CreateTime;
