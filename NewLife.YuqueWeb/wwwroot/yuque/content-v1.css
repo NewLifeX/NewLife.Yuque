@@ -185,7 +185,7 @@ ne-card[data-card-name="image"] img {
     font-weight: bold;
 }
 
-.page-header h2{
+.page-header h2 {
     font-family: Chinese Quote,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji;
     font-size: 36px;
     line-height: 1.389;
@@ -196,3 +196,124 @@ ne-card[data-card-name="image"] img {
     -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none;
 }
+
+*, :after, :before {
+    box-sizing: border-box
+}
+
+.lark {
+    position: relative;
+    background: #fff;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column
+}
+
+.BookOverview-module_containerWrapper {
+    padding: 64px 32px 0 32px;
+    min-height: 100vh;
+    position: relative
+}
+
+@media (max-width: 1300px) {
+    .BookOverview-module_containerWrapper .BookOverview-module_container {
+        max-width: 696px
+    }
+}
+
+.BookOverview-module_containerWrapper .BookOverview-module_container {
+    background: hsla(0,0%,100%,.9);
+    border-radius: 12px;
+    padding: 32px;
+    min-height: calc(100vh - 64px);
+    max-width: 1024px;
+    margin: 0 auto
+}
+
+    .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between
+    }
+
+        .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle {
+            display: flex
+        }
+
+            .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle .BookOverview-module_bookName {
+                font-size: 28px;
+                color: #262626;
+                font-weight: 700;
+                margin-left: 18px
+            }
+
+.BookOverview-module_tocContainer {
+    margin: 24px 0 0 0
+}
+
+.column-module_columnItem {
+}
+
+    .column-module_columnItem .column-module_content {
+        display: flex;
+        border: 1px solid #e7e9e8;
+        border-radius: 8px;
+        text-align: left;
+        font-size: 18px;
+        color: #585a5a;
+        cursor: pointer;
+        min-height: 146px
+    }
+
+        .column-module_columnItem .column-module_content .column-module_left {
+            padding: 16px 32px 16px 16px
+        }
+
+            .column-module_columnItem .column-module_content .column-module_left .column-module_title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #262626;
+                letter-spacing: 0;
+                text-align: left;
+                line-height: 26px;
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+            }
+
+            .column-module_columnItem .column-module_content .column-module_left .column-module_desc {
+                margin-top: 12px;
+                font-size: 14px;
+                color: #585a5a;
+                letter-spacing: 0;
+                text-align: left;
+                min-height: 40px;
+                display: -webkit-box;
+                max-height: 40px;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 20px;
+                word-break: break-word
+            }
+
+            .column-module_columnItem .column-module_content .column-module_left .column-module_date {
+                margin-top: 16px;
+                font-size: 14px;
+                line-height: 20px;
+                color: #585a5a;
+                letter-spacing: 0;
+                text-align: left
+            }
+
+        .column-module_columnItem .column-module_content .column-module_right {
+            border-radius: 0 8px 8px 0;
+            background-color: #fafafa;
+            background-position: 50%;
+            background-size: 50%;
+            background-repeat: no-repeat;
+            border-left: 1px solid rbga(0,0,0,0.04)
+        }
