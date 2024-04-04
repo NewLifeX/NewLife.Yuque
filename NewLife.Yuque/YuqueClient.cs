@@ -435,7 +435,7 @@ public class YuqueClient
     /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<Book[]> GetRepos(String userName, String type = "all", Int32 offset = 0)
+    public virtual async Task<Book[]> GetRepos(String userName, String type = null, Int32 offset = 0)
     {
         if (userName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(userName));
 
@@ -450,7 +450,7 @@ public class YuqueClient
     /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<Book[]> GetRepos(Int32 userId, String type = "all", Int32 offset = 0)
+    public virtual async Task<Book[]> GetRepos(Int32 userId, String type = null, Int32 offset = 0)
     {
         if (userId <= 0) throw new ArgumentNullException(nameof(userId));
 
@@ -465,7 +465,7 @@ public class YuqueClient
     /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<Book[]> GetGroupRepos(String groupName, String type = "all", Int32 offset = 0)
+    public virtual async Task<Book[]> GetGroupRepos(String groupName, String type = null, Int32 offset = 0)
     {
         if (groupName.IsNullOrEmpty()) throw new ArgumentNullException(nameof(groupName));
 
@@ -480,7 +480,7 @@ public class YuqueClient
     /// <param name="offset">用于分页，效果类似 MySQL 的 limit offset，一页 20 条</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public virtual async Task<Book[]> GetGroupRepos(Int32 groupId, String type = "all", Int32 offset = 0)
+    public virtual async Task<Book[]> GetGroupRepos(Int32 groupId, String type = null, Int32 offset = 0)
     {
         if (groupId <= 0) throw new ArgumentNullException(nameof(groupId));
 
