@@ -215,8 +215,9 @@ public partial class Document : Entity<Document>
         if (!doc.Public) doc.Public = detail.Public > 0;
         if (!doc.Status) doc.Status = detail.Status > 0;
 
-        doc.UserName = detail.LastEditor?.Name;
-        doc.Format = detail.Format;
+        if (detail.LastEditor != null)
+            doc.UserName = detail.LastEditor?.Name;
+        if (!detail.Format.IsNullOrEmpty()) doc.Format = detail.Format;
         //doc.Hits = item.Hits;
         doc.Likes = detail.Likes;
         doc.Reads = detail.Reads;
@@ -253,7 +254,7 @@ public partial class Document : Entity<Document>
 
         if (detail.Creator != null)
             doc.UserName = detail.Creator?.Name;
-        doc.Format = detail.Format;
+        if (!detail.Format.IsNullOrEmpty()) doc.Format = detail.Format;
 
         // 只能草稿向正式转变，不能反向
         if (!doc.Public) doc.Public = detail.Public > 0;

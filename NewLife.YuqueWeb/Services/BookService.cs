@@ -377,6 +377,10 @@ public partial class BookService
         var url = att.Source;
         if (url.IsNullOrEmpty()) return 0;
 
+        // 清理url的#后续部分
+        var p = url.IndexOf('#');
+        if (p > 0) url = url[..p];
+
         //!! 强行设置HttpClient，设置UserAgent，避免被列入黑名单而无法抓取图片
         var client = att.GetType().GetValue("_client") as HttpClient;
         if (client == null)

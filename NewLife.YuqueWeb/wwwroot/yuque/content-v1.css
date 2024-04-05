@@ -197,10 +197,6 @@ ne-card[data-card-name="image"] img {
     font-variant-ligatures: none;
 }
 
-*, :after, :before {
-    box-sizing: border-box
-}
-
 .lark {
     position: relative;
     background: #fff;
@@ -210,19 +206,7 @@ ne-card[data-card-name="image"] img {
     flex-direction: column
 }
 
-.BookOverview-module_containerWrapper {
-    padding: 64px 32px 0 32px;
-    min-height: 100vh;
-    position: relative
-}
-
-@media (max-width: 1300px) {
-    .BookOverview-module_containerWrapper .BookOverview-module_container {
-        max-width: 696px
-    }
-}
-
-.BookOverview-module_containerWrapper .BookOverview-module_container {
+.BookOverview-module_container {
     background: hsla(0,0%,100%,.9);
     border-radius: 12px;
     padding: 32px;
@@ -231,22 +215,28 @@ ne-card[data-card-name="image"] img {
     margin: 0 auto
 }
 
-    .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead {
-        display: flex;
-        align-items: center;
-        justify-content: space-between
+@media (max-width: 1300px) {
+    .BookOverview-module_container {
+        max-width: 696px
+    }
+}
+
+.BookOverview-module_container .BookOverview-module_bookHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+    .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle {
+        display: flex
     }
 
-        .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle {
-            display: flex
+        .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle .BookOverview-module_bookName {
+            font-size: 28px;
+            color: #262626;
+            font-weight: 700;
+            margin-left: 18px
         }
-
-            .BookOverview-module_containerWrapper .BookOverview-module_container .BookOverview-module_bookHead .BookOverview-module_bookTitle .BookOverview-module_bookName {
-                font-size: 28px;
-                color: #262626;
-                font-weight: 700;
-                margin-left: 18px
-            }
 
 .BookOverview-module_tocContainer {
     margin: 24px 0 0 0
