@@ -241,14 +241,15 @@ ne-card[data-card-name="image"] img {
 .BookOverview-module_tocContainer {
     margin: 24px 0 0 0;
     list-style-type: none;
-    padding-left:20px;
+    padding-left: 20px;
 }
 
     .BookOverview-module_tocContainer li a {
-        text-decoration:none;
+        text-decoration: none;
     }
 
 .column-module_columnItem {
+    height: 172px;
 }
 
     .column-module_columnItem .column-module_content {
@@ -306,10 +307,11 @@ ne-card[data-card-name="image"] img {
             }
 
         .column-module_columnItem .column-module_content .column-module_right {
-            border-radius: 0 8px 8px 0;
-            background-color: #fafafa;
-            background-position: 50%;
-            background-size: 50%;
+            background-position: 0;
+            background-size: 100%;
             background-repeat: no-repeat;
-            border-left: 1px solid rbga(0,0,0,0.04)
+            border-left: 1px solid rbga(0,0,0,0.04);
+            /*background: url("/images/7182420270922223616.png") no-repeat 0/100%;*/
+            border-radius: 0 8px 8px 0;
+            width: 204px;
         }

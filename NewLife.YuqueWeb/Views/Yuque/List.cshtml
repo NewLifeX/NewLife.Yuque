@@ -23,7 +23,7 @@
                 {
                     <li>
                         <a href="/@cat.Code/@doc.Code">
-                            <div class="column-module_columnItem" style="height: 172px;">
+                            <div class="column-module_columnItem">
                                 <div class="column-module_content">
                                     @if (!doc.Cover.IsNullOrEmpty())
                                     {
@@ -34,12 +34,12 @@
                                                 <span>@doc.PublishTime.ToFullString()</span>
                                             </div>
                                         </div>
-                                        <div class="column-module_right" style="background-image: url(&quot;@doc.Cover&quot;); background-size: 100%; width: 204px;">
+                                        <div class="column-module_right" style="background-image: url(&quot;@doc.Cover&quot;);">
                                         </div>
                                     }
                                     else
                                     {
-                                        <div class="column-module_left" style="width: 100%;">
+                                        <div class="column-module_left">
                                             <div class="column-module_title">@doc.Title</div>
                                             <div class="column-module_desc">@doc.Summary</div>
                                             <div class="column-module_date">
