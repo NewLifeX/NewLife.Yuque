@@ -209,7 +209,7 @@ ne-card[data-card-name="image"] img {
 .BookOverview-module_container {
     background: hsla(0,0%,100%,.9);
     border-radius: 12px;
-    padding: 32px;
+    padding: 0px 32px;
     min-height: calc(100vh - 64px);
     max-width: 1024px;
     margin: 0 auto
@@ -239,8 +239,14 @@ ne-card[data-card-name="image"] img {
         }
 
 .BookOverview-module_tocContainer {
-    margin: 24px 0 0 0
+    margin: 24px 0 0 0;
+    list-style-type: none;
+    padding-left:20px;
 }
+
+    .BookOverview-module_tocContainer li a {
+        text-decoration:none;
+    }
 
 .column-module_columnItem {
 }

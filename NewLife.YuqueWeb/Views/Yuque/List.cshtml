@@ -18,58 +18,41 @@
             </div>
         </div>
         @{
-            // <ul class="lead">
-            //     @foreach (var item in infos)
-            //     {
-            //         <li>
-            //             <a href="/@cat.Code/@item.Code" title="@item.Remark">
-            //                 <i></i>@item.Title
-            //             </a>
-            //         </li>
-            //     }
-            // </ul>
-            <div>
-                <div style="overflow: visible;">
-                    <div class="BookOverview-module_tocContainer">
-                        <div style="overflow: hidden; will-change: transform; direction: ltr;">
-                            <div style="width: 100%;">
-                                @foreach (var doc in infos)
-                                {
-                                    <a href="/@cat.Code/@doc.Code">
-                                        <div class="column-module_columnItem" style="left: 0px; top: 344px; height: 172px; width: 100%;">
-                                            <div class="column-module_content">
-                                                @if (!doc.Cover.IsNullOrEmpty())
-                                                {
-                                                    <div class="column-module_left" style="width: calc(100% - 204px);">
-                                                        <div class="column-module_title">@doc.Title</div>
-                                                        <div class="column-module_desc">@doc.Summary</div>
-                                                        <div class="column-module_date">
-                                                            <span>@doc.PublishTime.ToFullString()</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="column-module_right" style="background-image: url(&quot;@doc.Cover&quot;); background-size: 100%; width: 204px;">
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="column-module_left" style="width: 100%;">
-                                                        <div class="column-module_title">@doc.Title</div>
-                                                        <div class="column-module_desc">@doc.Summary</div>
-                                                        <div class="column-module_date">
-                                                            <span>@doc.PublishTime.ToFullString()</span>
-                                                        </div>
-                                                    </div>
-                                                }
+            <ul class="BookOverview-module_tocContainer">
+                @foreach (var doc in infos)
+                {
+                    <li>
+                        <a href="/@cat.Code/@doc.Code">
+                            <div class="column-module_columnItem" style="height: 172px;">
+                                <div class="column-module_content">
+                                    @if (!doc.Cover.IsNullOrEmpty())
+                                    {
+                                        <div class="column-module_left" style="width: calc(100% - 204px);">
+                                            <div class="column-module_title">@doc.Title</div>
+                                            <div class="column-module_desc">@doc.Summary</div>
+                                            <div class="column-module_date">
+                                                <span>@doc.PublishTime.ToFullString()</span>
                                             </div>
                                         </div>
-                                    </a>
-                                }
+                                        <div class="column-module_right" style="background-image: url(&quot;@doc.Cover&quot;); background-size: 100%; width: 204px;">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="column-module_left" style="width: 100%;">
+                                            <div class="column-module_title">@doc.Title</div>
+                                            <div class="column-module_desc">@doc.Summary</div>
+                                            <div class="column-module_date">
+                                                <span>@doc.PublishTime.ToFullString()</span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                        </a>
+                    </li>
+                }
+            </ul>
             @await Html.PartialAsync("_Pager", page)
         }
     </div>
