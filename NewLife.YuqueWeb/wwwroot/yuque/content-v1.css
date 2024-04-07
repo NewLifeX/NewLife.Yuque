@@ -202,14 +202,12 @@ ne-card[data-card-name="image"] img {
     background: #fff;
     margin: 0 auto;
     min-height: 100vh;
-    display: flex;
     flex-direction: column
 }
 
 .BookOverview-module_container {
     background: hsla(0,0%,100%,.9);
     border-radius: 12px;
-    padding: 0px 32px;
     min-height: calc(100vh - 64px);
     max-width: 1024px;
     margin: 0 auto
@@ -241,7 +239,7 @@ ne-card[data-card-name="image"] img {
 .BookOverview-module_tocContainer {
     margin: 24px 0 0 0;
     list-style-type: none;
-    padding-left: 20px;
+    padding-left: 0px;
 }
 
     .BookOverview-module_tocContainer li a {
@@ -311,7 +309,18 @@ ne-card[data-card-name="image"] img {
             background-size: 100%;
             background-repeat: no-repeat;
             border-left: 1px solid rbga(0,0,0,0.04);
-            /*background: url("/images/7182420270922223616.png") no-repeat 0/100%;*/
             border-radius: 0 8px 8px 0;
             width: 204px;
         }
+
+@media (max-width:979px) {
+
+    .navbar .container {
+        padding: 0 15px;
+        margin-left: 15px !important;
+    }
+
+    .navbar-fixed-top {
+        position: fixed !important;
+    }
+}
