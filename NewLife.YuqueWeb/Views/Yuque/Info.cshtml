@@ -4,6 +4,40 @@
 
     var inf = Model;
 }
+@section css{
+    @* 当前页面单独使用的样式，后续再考虑放到整体样式文件中去 *@
+    <style>
+        .bs-docs-sidebar .nav>li>a{
+    display:block;
+    padding:4px 20px;
+    font-size:13px;
+    color:#333333;
+}
+.bs-docs-sidebar .nav>li>a:focus,.bs-docs-sidebar .nav>li>a:hover{
+    padding-left:19px;
+    color:#111111;
+                font-weight: bold;
+    text-decoration:none;
+    background-color:transparent;
+    border-left: 1px solid #CCCCCC;
+    font-size:14px;
+}
+.bs-docs-sidebar .nav .nav{
+    display:inherit;
+    padding-left:10px;
+}
+.bs-docs-sidebar .nav .nav>li>a{
+    padding-top:3px;
+    padding-bottom:3px;
+    padding-left:30px;
+    font-size:12px;
+}
+
+
+
+
+    </style>
+}
 <div class="container">
     <div class="row">
         <div class="page-header">
@@ -11,10 +45,46 @@
                 @inf.Title
             </h2>
         </div>
-        <div class="content">
-            <div>
-                @Html.Raw(inf.Html)
+        <div class="content bs-docs-container">
+            <div class="row">
+                <div class="col-md-9" role="main">
+                    @Html.Raw(inf.Html)
+                </div>
+                <div class="col-md-3" role="complementary">
+                    <!--正文目录 开始-->
+                    @* 目前未完成问题：无法响应页面滚动到相关标题处时，左侧高亮对应标题项，如果标题很多，超过浏览器高度，会显示不全 *@
+                    <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
+                        <ul class="nav bs-docs-sidenav">
+                            <li><a href="#a">目录一</a></li>
+                            <li>
+                                <a href="#b">目录二</a>
+                                <ul class="nav">
+                                    <li><a href="#b1">子目录一</a></li>
+                                    <li><a href="#b2">子目录二，且我是一个很长的标题啊，你知道吗？</a></li>
+                                    <li>
+                                        <a href="#b3">子目录三</a>
+                                        <ul class="nav">
+                                            <li><a href="#b31">子子目录一</a>
+                                                <ul class="nav">
+                                                    <li><a href="#b311">子子子目录一</a></li>
+                                                    <li><a href="#b312">子子子目录二</a></li>
+                                                </ul>
+                                                </li>
+                                            <li><a href="#b32">子子目录二</a></li>
+                                        </ul>
+
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li><a href="#c">目录三</a></li>
+                        </ul>
+                    </nav>
+                    <!--正文目录 结束-->
+                </div>
             </div>
+            
+            
         </div>
         <p></p>
         <span class="text-center">

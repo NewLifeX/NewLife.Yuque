@@ -316,8 +316,11 @@ ne-card[data-card-name="image"] img {
             width: 204px;
         }
 
-@media (max-width:979px) {
+.bs-docs-sidebar {
+    top:inherit !important;
+}
 
+@media (max-width:979px) {
     .navbar .container {
         padding: 0 15px;
         margin-left: 15px !important;
