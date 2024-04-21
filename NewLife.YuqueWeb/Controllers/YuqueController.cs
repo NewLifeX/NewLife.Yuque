@@ -251,6 +251,11 @@ public class YuqueController : Controller
                 doc.Sync = true;
                 doc.SyncTime = DateTime.Now;
 
+                // 简化埋点数据
+                detail.Body = null;
+                detail.BodyHtml = null;
+                span.SetTag(detail);
+
                 doc.Save();
             }
         }
