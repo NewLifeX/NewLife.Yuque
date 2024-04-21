@@ -24,6 +24,7 @@ public static class YuqueService
 
         services.AddSingleton<BookService>();
         services.AddSingleton<GroupService>();
+        services.AddSingleton<DocumentService>();
 
         services.AddHostedService<SyncService>();
 

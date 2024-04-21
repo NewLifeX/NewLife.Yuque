@@ -24,11 +24,13 @@ public class YuqueController : Controller
     public static Int32 PageSize => 20;
 
     private readonly BookService _bookService;
+    private readonly DocumentService _documentService;
     private readonly ITracer _tracer;
 
-    public YuqueController(BookService bookService, ITracer tracer)
+    public YuqueController(BookService bookService, DocumentService documentService, ITracer tracer)
     {
         _bookService = bookService;
+        _documentService = documentService;
         _tracer = tracer;
     }
 
@@ -150,7 +152,13 @@ public class YuqueController : Controller
 
         ViewBag.Title = inf.Title;
 
-        return View("Info", inf);
+        var model = new InfoView
+        {
+            Document = inf,
+            Navs = _documentService.BuildNavs(inf.Html),
+        };
+
+        return View("Info", model);
     }
     #endregion
 
