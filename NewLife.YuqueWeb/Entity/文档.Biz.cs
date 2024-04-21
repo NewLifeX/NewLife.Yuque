@@ -283,7 +283,7 @@ public partial class Document : Entity<Document>
 
     public static Document GetOrAdd(Int32 id)
     {
-        return GetOrAdd(id, FindByIdWithCache, k => new Document { Id = k });
+        return GetOrAdd(id, FindByIdWithCache, k => new Document { Id = k, Enable = true });
     }
     #endregion
 }
