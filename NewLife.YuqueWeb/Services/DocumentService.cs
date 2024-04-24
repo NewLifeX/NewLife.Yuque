@@ -35,6 +35,8 @@ public partial class DocumentService
             list.Add(nav);
         }
 
+        if (list.Count == 0) return list;
+
         // 构建树状结构
         var tree = BuildTree(list);
 
