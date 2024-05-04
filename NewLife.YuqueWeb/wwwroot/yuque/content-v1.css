@@ -344,9 +344,10 @@ ne-card[data-card-name="image"] img {
     }
 
     .column-module_columnItem .column-module_content .column-module_left_pic {
-        width: calc(100% - 136px);
+        /*width: calc(100% - 136px);*/
+        width:100%
     }
     .column-module_columnItem .column-module_content .column-module_right {
-        width: 120px;
+        width: 0px;
     }
 }
