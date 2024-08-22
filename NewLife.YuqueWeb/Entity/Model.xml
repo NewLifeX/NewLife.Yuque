@@ -1,165 +1,205 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Tables xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model2022.xsd" NameSpace="NewLife.YuqueWeb.Entity" ConnName="Yuque" Output="" BaseClass="Entity" Version="11.2.2022.0714" Document="https://newlifex.com/xcode/model" xmlns="https://newlifex.com/Model2022.xsd">
-  <Table Name="Group" Description="知识组。管理用户或团队的令牌等">
-    <Columns>
-      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
-      <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
-      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
-      <Column Name="Type" DataType="String" Description="类型" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="Books" DataType="Int32" Description="知识库数" />
-      <Column Name="Topics" DataType="Int32" Description="主题数" />
-      <Column Name="Members" DataType="Int32" Description="成员数" />
-      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
-      <Column Name="Token" DataType="String" Description="令牌" />
-      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Code" Unique="True" />
-      <Index Columns="Name" />
-    </Indexes>
-  </Table>
-  <Table Name="Book" Description="知识库。管理知识库">
-    <Columns>
-      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
-      <Column Name="GroupId" DataType="Int32" Description="知识组" />
-      <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
-      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
-      <Column Name="Type" DataType="String" Description="类型" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
-      <Column Name="UserName" DataType="String" Description="用户" />
-      <Column Name="Docs" DataType="Int32" Description="文章数" />
-      <Column Name="Likes" DataType="Int32" Description="点赞数" />
-      <Column Name="Watches" DataType="Int32" Description="关注" />
-      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
-      <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
-      <Column Name="Slug" DataType="String" Description="路径" />
-      <Column Name="Namespace" DataType="String" Description="全路径" />
-      <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
-      <Column Name="ToC" DataType="String" Length="5000" Description="目录" />
-      <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
-      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Code" Unique="True" />
-      <Index Columns="Name" />
-    </Indexes>
-  </Table>
-  <Table Name="Document" Description="文档。文档内容">
-    <Columns>
-      <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
-      <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
-      <Column Name="Title" DataType="String" Master="True" Length="200" Nullable="False" Description="标题" />
-      <Column Name="BookId" DataType="Int32" Description="知识库" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
-      <Column Name="UserName" DataType="String" Description="用户" />
-      <Column Name="Slug" DataType="String" Description="路径" />
-      <Column Name="Format" DataType="String" Description="格式" />
-      <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
-      <Column Name="Status" DataType="Boolean" Description="正式。正式或草稿" />
-      <Column Name="DraftVersion" DataType="Int32" Description="版本。草案版本" />
-      <Column Name="Hits" DataType="Int32" Description="点击量" />
-      <Column Name="Likes" DataType="Int32" Description="点赞数" />
-      <Column Name="Reads" DataType="Int32" Description="阅读数" />
-      <Column Name="Comments" DataType="Int32" Description="评论数" />
-      <Column Name="LocalHits" DataType="Int32" Description="本地点击" />
-      <Column Name="TotalHits" DataType="Int32" Description="总点击" />
-      <Column Name="WordCount" DataType="Int32" Description="单词数" />
-      <Column Name="Cover" DataType="String" Length="200" Description="封面" />
-      <Column Name="Summary" DataType="String" Length="500" Description="摘要" />
-      <Column Name="Body" DataType="String" Length="-1" Description="正文。Markdown格式" />
-      <Column Name="BodyHtml" DataType="String" Length="-1" Description="HTML正文" />
-      <Column Name="Html" DataType="String" Length="-1" Description="HTML。处理后的HTML内容，用于前端展示" />
-      <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
-      <Column Name="PublishTime" DataType="DateTime" Description="发布时间" />
-      <Column Name="FirstPublishTime" DataType="DateTime" Description="首次发布" />
-      <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
-      <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
-      <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
-      <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
-      <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
-      <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
-    </Columns>
-    <Indexes>
-      <Index Columns="BookId,Code" Unique="True" />
-      <Index Columns="BookId,Slug" />
-      <Index Columns="BookId,Sort" />
-      <Index Columns="Title" />
-      <Index Columns="UpdateTime" />
-      <Index Columns="SyncTime" />
-    </Indexes>
-  </Table>
-  <Table Name="Nav" Description="导航" DbType="SqlServer" BaseType="EntityTree">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="Name" DataType="String" Master="True" Description="名称" />
-      <Column Name="ParentId" DataType="Int32" Description="父类" />
-      <Column Name="CategoryId" DataType="Int32" Description="分类" />
-      <Column Name="Url" DataType="String" Description="地址" />
-      <Column Name="NewWindow" DataType="Boolean" Description="新窗口打开" />
-      <Column Name="Sort" DataType="Int32" Description="排序" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
-      <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
-      <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
-    </Columns>
-    <Indexes>
-      <Index Columns="ParentId,Name" Unique="True" />
-      <Index Columns="Name" />
-    </Indexes>
-  </Table>
-  <Table Name="HtmlRule" Description="Html规则。用于替换Html中的连接或字符串">
-    <Columns>
-      <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="Kind" DataType="Int32" Description="种类。图片、链接、文本" Type="RuleKinds" />
-      <Column Name="Rule" DataType="String" Master="True" Description="规则" />
-      <Column Name="Target" DataType="String" Description="目标" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="Priority" DataType="Int32" Description="优先级。较大优先" />
-      <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
-      <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
-      <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
-      <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
-      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
-      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
-      <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
-      <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
-    </Columns>
-    <Indexes>
-      <Index Columns="Kind" />
-    </Indexes>
-  </Table>
-</Tables>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityModel xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model202407.xsd" Version="11.2.2022.0714" Document="https://newlifex.com/xcode/model" xmlns="https://newlifex.com/Model202407.xsd">
+  <Option>
+    <!--类名模板。其中{name}替换为Table.Name，如{name}Model/I{name}Dto等-->
+    <ClassNameTemplate />
+    <!--显示名模板。其中{displayName}替换为Table.DisplayName-->
+    <DisplayNameTemplate />
+    <!--基类。可能包含基类和接口，其中{name}替换为Table.Name-->
+    <BaseClass>Entity</BaseClass>
+    <!--命名空间-->
+    <Namespace>NewLife.YuqueWeb.Entity</Namespace>
+    <!--输出目录-->
+    <Output>.\</Output>
+    <!--是否使用中文文件名。默认false-->
+    <ChineseFileName>False</ChineseFileName>
+    <!--用于生成Copy函数的参数类型。例如{name}或I{name}-->
+    <ModelNameForCopy />
+    <!--带有索引器。实现IModel接口-->
+    <HasIModel>False</HasIModel>
+    <!--可为null上下文。生成String?等-->
+    <Nullable>False</Nullable>
+    <!--数据库连接名-->
+    <ConnName>Yuque</ConnName>
+    <!--模型类模版。设置后生成模型类，用于接口数据传输，例如{name}Model-->
+    <ModelClass />
+    <!--模型类输出目录。默认当前目录的Models子目录-->
+    <ModelsOutput>.\Models\</ModelsOutput>
+    <!--模型接口模版。设置后生成模型接口，用于约束模型类和实体类，例如I{name}-->
+    <ModelInterface />
+    <!--模型接口输出目录。默认当前目录的Interfaces子目录-->
+    <InterfacesOutput>.\Interfaces\</InterfacesOutput>
+    <!--用户实体转为模型类的模型类。例如{name}或{name}DTO-->
+    <ModelNameForToModel />
+    <!--命名格式。Default/Upper/Lower/Underline-->
+    <NameFormat>Default</NameFormat>
+    <!--魔方区域显示名-->
+    <DisplayName />
+    <!--魔方控制器输出目录-->
+    <CubeOutput />
+  </Option>
+  <Tables>
+    <Table Name="Group" Description="知识组。管理用户或团队的令牌等">
+      <Columns>
+        <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
+        <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
+        <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+        <Column Name="Type" DataType="String" Description="类型" />
+        <Column Name="Enable" DataType="Boolean" Description="启用" />
+        <Column Name="Books" DataType="Int32" Description="知识库数" />
+        <Column Name="Topics" DataType="Int32" Description="主题数" />
+        <Column Name="Members" DataType="Int32" Description="成员数" />
+        <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
+        <Column Name="Token" DataType="String" Description="令牌" />
+        <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
+        <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+        <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+        <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="Code" Unique="True" />
+        <Index Columns="Name" />
+      </Indexes>
+    </Table>
+    <Table Name="Book" Description="知识库。管理知识库">
+      <Columns>
+        <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
+        <Column Name="GroupId" DataType="Int32" Description="知识组" />
+        <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
+        <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+        <Column Name="Type" DataType="String" Description="类型" />
+        <Column Name="Enable" DataType="Boolean" Description="启用" />
+        <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
+        <Column Name="UserName" DataType="String" Description="用户" />
+        <Column Name="Docs" DataType="Int32" Description="文章数" />
+        <Column Name="Likes" DataType="Int32" Description="点赞数" />
+        <Column Name="Watches" DataType="Int32" Description="关注" />
+        <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
+        <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
+        <Column Name="Slug" DataType="String" Description="路径" />
+        <Column Name="Namespace" DataType="String" Description="全路径" />
+        <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
+        <Column Name="ToC" DataType="String" Length="5000" Description="目录" />
+        <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
+        <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
+        <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+        <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+        <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="Code" Unique="True" />
+        <Index Columns="Name" />
+      </Indexes>
+    </Table>
+    <Table Name="Document" Description="文档。文档内容">
+      <Columns>
+        <Column Name="Id" DataType="Int32" PrimaryKey="True" Description="编号" />
+        <Column Name="Code" DataType="String" Description="编码。路径唯一标识，默认取Slug" />
+        <Column Name="Title" DataType="String" Master="True" Length="200" Nullable="False" Description="标题" />
+        <Column Name="BookId" DataType="Int32" Description="知识库" />
+        <Column Name="Enable" DataType="Boolean" Description="启用" />
+        <Column Name="Sort" DataType="Int32" Description="排序。降序，数字越大越靠前" />
+        <Column Name="UserName" DataType="String" Description="用户" />
+        <Column Name="Slug" DataType="String" Description="路径" />
+        <Column Name="Format" DataType="String" Description="格式" />
+        <Column Name="Public" DataType="Boolean" Description="公开。公开或私密" />
+        <Column Name="Status" DataType="Boolean" Description="正式。正式或草稿" />
+        <Column Name="DraftVersion" DataType="Int32" Description="版本。草案版本" />
+        <Column Name="Hits" DataType="Int32" Description="点击量" />
+        <Column Name="Likes" DataType="Int32" Description="点赞数" />
+        <Column Name="Reads" DataType="Int32" Description="阅读数" />
+        <Column Name="Comments" DataType="Int32" Description="评论数" />
+        <Column Name="LocalHits" DataType="Int32" Description="本地点击" />
+        <Column Name="TotalHits" DataType="Int32" Description="总点击" />
+        <Column Name="WordCount" DataType="Int32" Description="单词数" />
+        <Column Name="Cover" DataType="String" Length="200" Description="封面" />
+        <Column Name="Summary" DataType="String" Length="500" Description="摘要" />
+        <Column Name="Body" DataType="String" Length="-1" Description="正文。Markdown格式" />
+        <Column Name="BodyHtml" DataType="String" Length="-1" Description="HTML正文" />
+        <Column Name="Html" DataType="String" Length="-1" Description="HTML。处理后的HTML内容，用于前端展示" />
+        <Column Name="ContentUpdateTime" DataType="DateTime" Description="内容更新时间" />
+        <Column Name="PublishTime" DataType="DateTime" Description="发布时间" />
+        <Column Name="FirstPublishTime" DataType="DateTime" Description="首次发布" />
+        <Column Name="Sync" DataType="Boolean" Description="同步。是否自动同步远程内容" />
+        <Column Name="SyncTime" DataType="DateTime" Description="同步时间。最后一次同步数据的时间" />
+        <Column Name="TraceId" DataType="String" Description="追踪。用于记录调用链追踪标识，在星尘APM查找调用链" Category="扩展" />
+        <Column Name="CreateUser" DataType="String" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateUserID" DataType="Int32" Description="创建人" Model="False" Category="扩展" />
+        <Column Name="CreateIP" DataType="String" Description="创建地址" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateUserID" DataType="Int32" Description="更新人" Model="False" Category="扩展" />
+        <Column Name="UpdateIP" DataType="String" Description="更新地址" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Remark" DataType="String" Length="500" Description="备注" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="BookId,Code" Unique="True" />
+        <Index Columns="BookId,Slug" />
+        <Index Columns="BookId,Sort" />
+        <Index Columns="Title" />
+        <Index Columns="UpdateTime" />
+        <Index Columns="SyncTime" />
+      </Indexes>
+    </Table>
+    <Table Name="Nav" Description="导航" DbType="SqlServer" BaseType="EntityTree">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="Name" DataType="String" Master="True" Description="名称" />
+        <Column Name="ParentId" DataType="Int32" Description="父类" />
+        <Column Name="CategoryId" DataType="Int32" Description="分类" />
+        <Column Name="Url" DataType="String" Description="地址" />
+        <Column Name="NewWindow" DataType="Boolean" Description="新窗口打开" />
+        <Column Name="Sort" DataType="Int32" Description="排序" />
+        <Column Name="Enable" DataType="Boolean" Description="启用" />
+        <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
+        <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
+        <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
+        <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
+        <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
+        <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ParentId,Name" Unique="True" />
+        <Index Columns="Name" />
+      </Indexes>
+    </Table>
+    <Table Name="HtmlRule" Description="Html规则。用于替换Html中的连接或字符串">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="Kind" DataType="Int32" Description="种类。图片、链接、文本" Type="RuleKinds" />
+        <Column Name="Rule" DataType="String" Master="True" Description="规则" />
+        <Column Name="Target" DataType="String" Description="目标" />
+        <Column Name="Enable" DataType="Boolean" Description="启用" />
+        <Column Name="Priority" DataType="Int32" Description="优先级。较大优先" />
+        <Column Name="CreateUser" DataType="String" Description="创建人" Category="扩展" />
+        <Column Name="CreateUserID" DataType="Int32" Description="创建者" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Category="扩展" />
+        <Column Name="CreateIP" DataType="String" Description="创建地址" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Description="更新人" Category="扩展" />
+        <Column Name="UpdateUserID" DataType="Int32" Description="更新者" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Category="扩展" />
+        <Column Name="UpdateIP" DataType="String" Description="更新地址" Category="扩展" />
+        <Column Name="Remark" DataType="String" Length="200" Description="备注" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="Kind" />
+      </Indexes>
+    </Table>
+  </Tables>
+</EntityModel>
