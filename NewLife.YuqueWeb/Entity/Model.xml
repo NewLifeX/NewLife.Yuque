@@ -160,7 +160,7 @@
         <Column Name="Name" DataType="String" Master="True" Description="名称" />
         <Column Name="ParentId" DataType="Int32" Description="父类" />
         <Column Name="CategoryId" DataType="Int32" Description="分类" />
-        <Column Name="Url" DataType="String" Description="地址" />
+        <Column Name="Url" DataType="String" Length="200" Description="地址" />
         <Column Name="NewWindow" DataType="Boolean" Description="新窗口打开" />
         <Column Name="Sort" DataType="Int32" Description="排序" />
         <Column Name="Enable" DataType="Boolean" Description="启用" />
