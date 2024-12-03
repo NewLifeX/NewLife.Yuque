@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <AssemblyTitle>语雀Web</AssemblyTitle>
     <Description>自动同步语雀内容到本系统，对外呈现内容页面</Description>
     <Company>新生命开发团队</Company>
@@ -43,9 +43,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NewLife.Core" Version="11.0.2024.1115" />
-    <PackageReference Include="NewLife.Cube.Core" Version="6.2.2024.1115" />
-    <PackageReference Include="NewLife.XCode" Version="11.16.2024.1114" />
+    <PackageReference Include="NewLife.Core" Version="11.0.2024.1201" />
+    <PackageReference Include="NewLife.Cube.Core" Version="6.2.2024.1203" />
+    <PackageReference Include="NewLife.XCode" Version="11.16.2024.1202" />
   </ItemGroup>
 
   <ItemGroup>

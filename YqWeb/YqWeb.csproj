@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <AssemblyTitle>语雀Web</AssemblyTitle>
     <Description>自动同步语雀内容到本系统，对外呈现内容页面</Description>
     <Company>新生命开发团队</Company>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Stardust.Extensions" Version="3.2.2024.1117" />
+    <PackageReference Include="NewLife.Stardust.Extensions" Version="3.2.2024.1203" />
   </ItemGroup>
 
   <ItemGroup>
