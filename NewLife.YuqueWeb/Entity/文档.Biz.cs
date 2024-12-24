@@ -240,7 +240,11 @@ public partial class Document : Entity<Document>
         var doc = this;
 
         //doc.Id = detail.Id;
-        if (doc.Code.IsNullOrEmpty()) doc.Code = detail.Slug;
+        if (!detail.Slug.IsNullOrEmpty())
+        {
+            // 文档编码为空，或者长度为16且不包含-时，使用Slug作为Code
+            if (doc.Code.IsNullOrEmpty() || doc.Code.Length == 16 && !doc.Code.Contains('-')) doc.Code = detail.Slug;
+        }
 
         // 未正式公开时，允许修改Code
         if (detail.Status == 0) doc.Code = detail.Slug;
