@@ -246,6 +246,17 @@ public class YuqueController : Controller
             {
                 var doc = Document.GetOrAdd(detail.Id);
 
+                // 如果是更新，则特殊处理发布，默认公开文档
+                if (detail.ActionType == "publish")
+                {
+                    var dic2 = data as IDictionary<String, Object>;
+                    if (dic2 != null && !dic2.ContainsKey("public"))
+                    {
+                        detail.Public = 1;
+                        detail.Status = 1;
+                    }
+                }
+
                 doc.Fill(detail);
 
                 _bookService.ProcessHtml(doc);
@@ -262,7 +273,8 @@ public class YuqueController : Controller
                 // 简化埋点数据
                 detail.Body = null;
                 detail.BodyHtml = null;
-                span.SetTag(detail);
+
+                span.AppendTag(detail);
 
                 doc.Save();
             }
