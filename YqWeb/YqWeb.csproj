@@ -5,7 +5,7 @@
     <AssemblyTitle>语雀Web</AssemblyTitle>
     <Description>自动同步语雀内容到本系统，对外呈现内容页面</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2025 NewLife</Copyright>
+    <Copyright>©2002-2026 NewLife</Copyright>
     <VersionPrefix>1.0</VersionPrefix>
     <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
     <Version>$(VersionPrefix).$(VersionSuffix)</Version>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Stardust.Extensions" Version="3.4.2025.1001" />
+    <PackageReference Include="NewLife.Stardust.Extensions" Version="3.6.2026.102" />
   </ItemGroup>
 
   <ItemGroup>
