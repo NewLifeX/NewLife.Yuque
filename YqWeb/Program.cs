@@ -1,5 +1,4 @@
 ﻿using NewLife.Cube;
-using NewLife.Cube.WebMiddleware;
 using NewLife.Log;
 using NewLife.YuqueWeb;
 
@@ -8,8 +7,7 @@ XTrace.UseConsole();
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-var star = services.AddStardust(null);
-TracerMiddleware.Tracer = star.Tracer;
+services.AddStardust();
 
 // 启用接口响应压缩
 services.AddResponseCompression();

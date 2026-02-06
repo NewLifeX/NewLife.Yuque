@@ -498,6 +498,41 @@ public partial class Document
     }
     #endregion
 
+    #region 高级查询
+    /// <summary>高级查询</summary>
+    /// <param name="code">编码。路径唯一标识，默认取Slug</param>
+    /// <param name="bookId">知识库</param>
+    /// <param name="sort">排序。降序，数字越大越靠前</param>
+    /// <param name="slug">路径</param>
+    /// <param name="updateTime">更新时间</param>
+    /// <param name="@public">公开。公开或私密</param>
+    /// <param name="status">正式。正式或草稿</param>
+    /// <param name="sync">同步。是否自动同步远程内容</param>
+    /// <param name="enable">启用</param>
+    /// <param name="start">同步时间开始</param>
+    /// <param name="end">同步时间结束</param>
+    /// <param name="key">关键字</param>
+    /// <param name="page">分页参数信息。可携带统计和数据权限扩展查询等信息</param>
+    /// <returns>实体列表</returns>
+    public static IList<Document> Search(String code, Int32 bookId, Int32 sort, String slug, DateTime updateTime, Boolean? @public, Boolean? status, Boolean? sync, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
+    {
+        var exp = new WhereExpression();
+
+        if (!code.IsNullOrEmpty()) exp &= _.Code == code;
+        if (bookId >= 0) exp &= _.BookId == bookId;
+        if (sort >= 0) exp &= _.Sort == sort;
+        if (!slug.IsNullOrEmpty()) exp &= _.Slug == slug;
+        if (@public != null) exp &= _.Public == @public;
+        if (status != null) exp &= _.Status == status;
+        if (sync != null) exp &= _.Sync == sync;
+        if (enable != null) exp &= _.Enable == enable;
+        exp &= _.SyncTime.Between(start, end);
+        if (!key.IsNullOrEmpty()) exp &= SearchWhereByKeys(key);
+
+        return FindAll(exp, page);
+    }
+    #endregion
+
     #region 字段名
     /// <summary>取得文档字段信息的快捷方式</summary>
     public partial class _
